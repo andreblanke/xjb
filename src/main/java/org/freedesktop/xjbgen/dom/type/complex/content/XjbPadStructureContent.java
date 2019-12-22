@@ -7,7 +7,8 @@ public final class XjbPadStructureContent extends XjbStructureContent {
     @XmlAttribute
     private int bytes;
 
-    public int getBytes() {
+    @Override
+    public int byteSize() {
         return bytes;
     }
 }

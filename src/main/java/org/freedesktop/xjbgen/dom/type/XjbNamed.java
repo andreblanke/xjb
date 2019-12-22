@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 
 public interface XjbNamed {
 
-    @NotNull String getXmlName();
+    String getXmlName();
 
     default @NotNull String getSrcName() {
         return getXmlName();

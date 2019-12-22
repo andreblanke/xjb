@@ -9,13 +9,17 @@ import javax.xml.bind.annotation.XmlElements;
 
 import org.jetbrains.annotations.NotNull;
 
+import org.freedesktop.xjbgen.dom.XjbElement;
+import org.freedesktop.xjbgen.dom.XjbModule;
 import org.freedesktop.xjbgen.dom.expr.XjbIntegerExpression;
 import org.freedesktop.xjbgen.dom.expr.XjbIntegerExpression.*;
 
 /**
- * Represents a Java {@code enum} type which can take on any of the values given by the contained {@link #items}.
+ * Represents a Java {@code enum} type which can take on any of the values returned by {@link #getItems()}.
+ *
+ * {@code XjbEnum}s are not considered a complex type.
  */
-public final class XjbEnum implements XjbNamed, XjbType {
+public final class XjbEnum extends XjbElement<XjbModule> implements XjbNamed, XjbType {
 
     @XmlAttribute(name = "name", required = true)
     private String xmlName;
@@ -38,9 +42,7 @@ public final class XjbEnum implements XjbNamed, XjbType {
     }
 
     /** Represents one possible value of an {@link XjbEnum}. */
-    public static final class Item implements XjbNamed {
-
-        private XjbEnum parent;
+    public static final class Item extends XjbElement<XjbEnum> implements XjbNamed {
 
         @XmlAttribute(name = "name", required = true)
         private String xmlName;
@@ -51,12 +53,6 @@ public final class XjbEnum implements XjbNamed, XjbType {
         })
         private XjbIntegerExpression expression;
 
-        @SuppressWarnings("unused")
-        public void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
-            /* JAXB cannot handle non-static inner classes, which is why we have to go this route instead. */
-            this.parent = (XjbEnum) parent;
-        }
-
         @Override
         public @NotNull String getXmlName() {
             return xmlName;
@@ -64,13 +60,13 @@ public final class XjbEnum implements XjbNamed, XjbType {
 
         public XjbIntegerExpression getExpression() {
             if (expression == null) {
-                final int index = parent.getItems().indexOf(this);
+                final int index = getParent().getItems().indexOf(this);
 
                 if (index == 0)
                     return (expression = new XjbValueExpression());
 
                 final XjbIntegerExpression previousItemExpression =
-                    parent
+                    getParent()
                         .getItems()
                         .get(index - 1)
                         .getExpression();

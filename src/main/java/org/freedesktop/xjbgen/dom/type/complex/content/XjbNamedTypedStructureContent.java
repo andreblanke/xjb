@@ -9,6 +9,11 @@ public abstract class XjbNamedTypedStructureContent extends XjbNamedStructureCon
     @XmlAttribute(name = "type", required = true)
     private String xmlType;
 
+    @Override
+    public int byteSize() {
+        return getModule().getRegisteredTypes().get(xmlType).byteSize();
+    }
+
     public @NotNull String getXmlType() {
         return xmlType;
     }

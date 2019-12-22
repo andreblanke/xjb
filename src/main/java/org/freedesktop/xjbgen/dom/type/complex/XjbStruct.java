@@ -1,9 +1,6 @@
 package org.freedesktop.xjbgen.dom.type.complex;
 
-public final class XjbStruct extends XjbNamedComplexType {
+import org.freedesktop.xjbgen.dom.XjbModule;
 
-    @Override
-    public int byteSize() {
-        return 0;
-    }
+public final class XjbStruct extends XjbComplexType<XjbModule> {
 }

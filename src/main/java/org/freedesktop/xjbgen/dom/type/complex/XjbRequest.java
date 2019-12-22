@@ -1,22 +1,19 @@
 package org.freedesktop.xjbgen.dom.type.complex;
 
-import org.jetbrains.annotations.NotNull;
-
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
-public final class XjbRequest extends XjbNamedComplexType {
+import org.jetbrains.annotations.NotNull;
+
+import org.freedesktop.xjbgen.dom.XjbModule;
+
+public final class XjbRequest extends XjbComplexType<XjbModule> {
 
     @XmlAttribute(required = true)
     private int opcode;
 
     @XmlElement
     private Reply reply;
-
-    @Override
-    public int byteSize() {
-        return 0;
-    }
 
     @Override
     public @NotNull String getSrcName() {
@@ -31,11 +28,11 @@ public final class XjbRequest extends XjbNamedComplexType {
         return reply;
     }
 
-    public static final class Reply extends XjbComplexType {
+    public static final class Reply extends XjbComplexType<XjbRequest> {
 
         @Override
-        public int byteSize() {
-            return 0;
+        public @NotNull String getSrcName() {
+            return getParent().getXmlName() + "Reply";
         }
     }
 }

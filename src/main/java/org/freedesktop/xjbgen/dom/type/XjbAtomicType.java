@@ -1,8 +1,14 @@
 package org.freedesktop.xjbgen.dom.type;
 
+import java.util.Arrays;
+import java.util.Map;
+
 import org.jetbrains.annotations.NotNull;
 
-public enum AtomicType implements XjbType, XjbNamed {
+import static java.util.function.Function.identity;
+import static java.util.stream.Collectors.toMap;
+
+public enum XjbAtomicType implements XjbNamed, XjbType {
 
     CARD_8 ("CARD8",  int.class,   Integer.BYTES),
     CARD_16("CARD16", int.class,   Integer.BYTES),
@@ -19,10 +25,16 @@ public enum AtomicType implements XjbType, XjbNamed {
 
     private final int byteSize;
 
-    AtomicType(@NotNull final String xmlName, @NotNull final Class<?> javaType, final int byteSize) {
+    XjbAtomicType(@NotNull final String xmlName, @NotNull final Class<?> javaType, final int byteSize) {
         this.xmlName  = xmlName;
         this.javaType = javaType;
         this.byteSize = byteSize;
+    }
+
+    public static Map<String, XjbAtomicType> getXmlNameMappings() {
+        return Arrays
+            .stream(values())
+            .collect(toMap(XjbAtomicType::getXmlName, identity()));
     }
 
     @Override
