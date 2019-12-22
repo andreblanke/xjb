@@ -2,7 +2,7 @@ package org.freedesktop.xjbgen.dom.type;
 
 import org.jetbrains.annotations.NotNull;
 
-public enum AtomicType implements XjbNamedType {
+public enum AtomicType implements XjbType, XjbNamed {
 
     CARD_8 ("CARD8",  int.class,   Integer.BYTES),
     CARD_16("CARD16", int.class,   Integer.BYTES),

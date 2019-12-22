@@ -1,4 +1,4 @@
-package org.freedesktop.xjbgen.dom;
+package org.freedesktop.xjbgen.dom.type;
 
 import org.jetbrains.annotations.NotNull;
 

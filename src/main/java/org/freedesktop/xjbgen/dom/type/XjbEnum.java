@@ -9,14 +9,13 @@ import javax.xml.bind.annotation.XmlElements;
 
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.dom.XjbNamed;
 import org.freedesktop.xjbgen.dom.expr.XjbIntegerExpression;
 import org.freedesktop.xjbgen.dom.expr.XjbIntegerExpression.*;
 
 /**
  * Represents a Java {@code enum} type which can take on any of the values given by the contained {@link #items}.
  */
-public final class XjbEnum implements XjbNamedType {
+public final class XjbEnum implements XjbNamed, XjbType {
 
     @XmlAttribute(name = "name", required = true)
     private String xmlName;

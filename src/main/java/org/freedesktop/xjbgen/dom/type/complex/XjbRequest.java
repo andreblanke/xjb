@@ -1,14 +1,11 @@
-package org.freedesktop.xjbgen.dom.type;
+package org.freedesktop.xjbgen.dom.type.complex;
+
+import org.jetbrains.annotations.NotNull;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
-import org.jetbrains.annotations.NotNull;
-
-public final class XjbRequest implements XjbNamedType {
-
-    @XmlAttribute(name = "name", required = true)
-    private String xmlName;
+public final class XjbRequest extends XjbNamedComplexType {
 
     @XmlAttribute(required = true)
     private int opcode;
@@ -22,8 +19,8 @@ public final class XjbRequest implements XjbNamedType {
     }
 
     @Override
-    public @NotNull String getXmlName() {
-        return xmlName;
+    public @NotNull String getSrcName() {
+        return getXmlName() + "Request";
     }
 
     public int getOpcode() {
@@ -34,7 +31,7 @@ public final class XjbRequest implements XjbNamedType {
         return reply;
     }
 
-    public static final class Reply implements XjbType {
+    public static final class Reply extends XjbComplexType {
 
         @Override
         public int byteSize() {

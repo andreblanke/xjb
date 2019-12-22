@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import org.freedesktop.xjbgen.dom.type.XjbEnum;
-import org.freedesktop.xjbgen.dom.type.XjbRequest;
+import org.freedesktop.xjbgen.dom.type.complex.XjbRequest;
 
 @XmlRootElement(name = "xcb")
 public final class XjbModule {
