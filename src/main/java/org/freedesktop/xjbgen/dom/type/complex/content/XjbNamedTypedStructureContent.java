@@ -4,6 +4,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 import org.jetbrains.annotations.NotNull;
 
+import org.freedesktop.xjbgen.dom.type.XjbType;
+
 public abstract class XjbNamedTypedStructureContent extends XjbNamedStructureContent {
 
     @XmlAttribute(name = "type", required = true)
@@ -11,14 +13,14 @@ public abstract class XjbNamedTypedStructureContent extends XjbNamedStructureCon
 
     @Override
     public int byteSize() {
-        return getModule().getRegisteredTypes().get(xmlType).byteSize();
+        return getSrcType().byteSize();
     }
 
     public @NotNull String getXmlType() {
         return xmlType;
     }
 
-    public @NotNull String getSrcType() {
-        return getXmlType();
+    public @NotNull XjbType getSrcType() {
+        return getModule().getRegisteredTypes().get(getXmlType());
     }
 }

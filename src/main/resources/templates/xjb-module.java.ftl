@@ -10,10 +10,14 @@
 <#macro generateExternalizableImplementation complexType>
         @Override
         public void readExternal(final ObjectInput input) {
+            <#list complexType.contents as content>
+            </#list>
         }
 
         @Override
         public void writeExternal(final ObjectOutput output) {
+            <#list complexType.contents as content>
+            </#list>
         }
 </#macro>
 

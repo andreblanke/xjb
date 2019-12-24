@@ -2,6 +2,14 @@ package org.freedesktop.xjbgen.dom;
 
 import javax.xml.bind.Unmarshaller;
 
+/**
+ * The {@code XjbElement} class is the common superclass of all classes representing XML tags of a protocol description.
+ *
+ * Each {@code XjbElement} stores a reference to the parent {@code XjbElement} inside the {@link #parent} attribute,
+ * which allows walking the tree both from top to bottom, as well as bottom to top.
+ *
+ * @param <P> The type of the parent {@code XjbElement}.
+ */
 public abstract class XjbElement<P extends XjbElement<?>> {
 
     private P parent;
