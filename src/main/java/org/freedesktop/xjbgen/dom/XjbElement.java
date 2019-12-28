@@ -1,6 +1,7 @@
 package org.freedesktop.xjbgen.dom;
 
 import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  * The {@code XjbElement} class is the common superclass of all classes representing XML tags of a protocol description.
@@ -10,6 +11,7 @@ import javax.xml.bind.Unmarshaller;
  *
  * @param <P> The type of the parent {@code XjbElement}.
  */
+@XmlTransient
 public abstract class XjbElement<P extends XjbElement<?>> {
 
     private P parent;

@@ -7,10 +7,12 @@
       <w>freedesktop</w>
       <w>randr</w>
       <w>vidmode</w>
+      <w>xcbproto</w>
       <w>xevie</w>
       <w>xfixes</w>
       <w>xinerama</w>
       <w>xinput</w>
+      <w>xjbgen</w>
       <w>xname</w>
       <w>xprint</w>
       <w>xproto</w>

@@ -45,7 +45,7 @@ class XjbModuleTest {
         "/xvmc.xml"
     })
     @ParameterizedTest
-    void testDeserialize(final String xprotoXmlFileLocation) throws Exception {
+    void testDeserialization(final String xprotoXmlFileLocation) throws Exception {
         final Unmarshaller unmarshaller =
             JAXBContext
                 .newInstance(XjbModule.class, XjbIntegerExpression.class, XjbBitExpression.class, XjbValueExpression.class)
