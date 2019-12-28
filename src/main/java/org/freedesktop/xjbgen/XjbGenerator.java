@@ -8,6 +8,8 @@ import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.validation.Schema;
+import javax.xml.validation.SchemaFactory;
 
 import freemarker.template.Configuration;
 import freemarker.template.Template;
@@ -28,24 +30,29 @@ import static freemarker.template.Configuration.VERSION_2_3_29;
 
 public final class XjbGenerator {
 
-    private static final JAXBContext XJB_MODULE_CONTEXT = createXjbModuleContext();
-    private static JAXBContext createXjbModuleContext() {
+    private static final Template XJB_MODULE_TEMPLATE;
+
+    private static final JAXBContext JAXB_XJB_MODULE_CONTEXT;
+
+    private static final Schema XCB_SCHEMA;
+
+    static {
         try {
-            return JAXBContext.newInstance(XjbModule.class);
-        } catch (final JAXBException exception) {
+            final var configuration = new Configuration(VERSION_2_3_29);
+            configuration.setClassForTemplateLoading(XjbGenerator.class, "/templates");
+
+            XJB_MODULE_TEMPLATE = configuration.getTemplate("xjb-module.java.ftl");
+
+            JAXB_XJB_MODULE_CONTEXT =
+                JAXBContext.newInstance(XjbModule.class);
+            XCB_SCHEMA =
+                SchemaFactory
+                    .newDefaultInstance()
+                    .newSchema(XjbGenerator.class.getResource("/xcbproto/xcb.xsd"));
+        } catch (final RuntimeException exception) {
+            throw exception;
+        } catch (final Exception exception) {
             throw new RuntimeException(exception);
-        }
-    }
-
-    private static final Template XJB_MODULE_TEMPLATE = createXjbModuleTemplate();
-    private static Template createXjbModuleTemplate() {
-        final Configuration configuration = new Configuration(VERSION_2_3_29);
-
-        configuration.setClassForTemplateLoading(XjbGenerator.class, "/templates");
-        try {
-            return configuration.getTemplate("xjb-module.java.ftl");
-        } catch (final IOException exception) {
-            throw new UncheckedIOException(exception);
         }
     }
 
@@ -74,7 +81,8 @@ public final class XjbGenerator {
 
     private static XjbModule deserializeModule(@NotNull final String xcbprotoResource) {
         try {
-            final var unmarshaller = XJB_MODULE_CONTEXT.createUnmarshaller();
+            final var unmarshaller = JAXB_XJB_MODULE_CONTEXT.createUnmarshaller();
+            unmarshaller.setSchema(XCB_SCHEMA);
 
             return (XjbModule) unmarshaller.unmarshal(XjbGenerator.class.getClassLoader().getResource(xcbprotoResource));
         } catch (final JAXBException exception) {
