@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="" type="org.freedesktop.xjbgen.dom.XjbModule" -->
+<#-- @ftlvariable name="" type="org.freedesktop.xjbgen.xml.XjbModule" -->
 
 <#macro generateComplexTypeFields complexType>
     <#list complexType.namedTypedContents as content>

@@ -1,10 +1,12 @@
-package org.freedesktop.xjbgen.dom.type.complex.content;
+package org.freedesktop.xjbgen.xml.type.complex.content;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.dom.type.XjbType;
+import org.freedesktop.xjbgen.XjbGenerationContext;
+import org.freedesktop.xjbgen.xml.XjbModule;
+import org.freedesktop.xjbgen.xml.type.XjbType;
 
 public abstract class XjbNamedTypedStructureContent extends XjbNamedStructureContent {
 
@@ -21,6 +23,11 @@ public abstract class XjbNamedTypedStructureContent extends XjbNamedStructureCon
     }
 
     public @NotNull XjbType getSrcType() {
-        return getModule().getRegisteredTypes().get(getXmlType());
+        final XjbModule module = getModule();
+
+        return
+            XjbGenerationContext
+                .getInstance()
+                .lookupType(module, getXmlType());
     }
 }

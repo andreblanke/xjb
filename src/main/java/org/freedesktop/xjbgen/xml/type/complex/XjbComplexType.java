@@ -1,22 +1,20 @@
-package org.freedesktop.xjbgen.dom.type.complex;
+package org.freedesktop.xjbgen.xml.type.complex;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.dom.XjbElement;
-import org.freedesktop.xjbgen.dom.type.XjbNamed;
-import org.freedesktop.xjbgen.dom.type.XjbType;
-import org.freedesktop.xjbgen.dom.type.complex.content.XjbFieldStructureContent;
-import org.freedesktop.xjbgen.dom.type.complex.content.XjbNamedTypedStructureContent;
-import org.freedesktop.xjbgen.dom.type.complex.content.XjbPadStructureContent;
-import org.freedesktop.xjbgen.dom.type.complex.content.XjbStructureContent;
+import org.freedesktop.xjbgen.xml.XjbElement;
+import org.freedesktop.xjbgen.xml.type.XjbType;
+import org.freedesktop.xjbgen.xml.type.complex.content.XjbFieldStructureContent;
+import org.freedesktop.xjbgen.xml.type.complex.content.XjbNamedTypedStructureContent;
+import org.freedesktop.xjbgen.xml.type.complex.content.XjbPadStructureContent;
+import org.freedesktop.xjbgen.xml.type.complex.content.XjbStructureContent;
 
 import static java.util.stream.Collectors.toList;
 
@@ -25,7 +23,7 @@ import static java.util.stream.Collectors.toList;
  *
  * @param <P> The type of the parent {@link XjbElement}.
  */
-public abstract class XjbComplexType<P extends XjbElement<?>> extends XjbElement<P> implements XjbType, XjbNamed {
+public abstract class XjbComplexType<P extends XjbElement<?>> extends XjbElement<P> implements XjbType {
 
     /**
      * Not all complex types are required to have this XML attribute.
@@ -45,10 +43,6 @@ public abstract class XjbComplexType<P extends XjbElement<?>> extends XjbElement
     @Override
     public int byteSize() {
         return contents.stream().mapToInt(XjbStructureContent::byteSize).sum();
-    }
-
-    public void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
-        getModule().registerType(getXmlName(), this);
     }
 
     public @NotNull List<XjbNamedTypedStructureContent> getNamedTypedContents() {

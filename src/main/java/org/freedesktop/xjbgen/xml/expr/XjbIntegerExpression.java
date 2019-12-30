@@ -1,4 +1,4 @@
-package org.freedesktop.xjbgen.dom.expr;
+package org.freedesktop.xjbgen.xml.expr;
 
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlValue;

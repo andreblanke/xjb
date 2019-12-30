@@ -1,4 +1,4 @@
-package org.freedesktop.xjbgen.dom.type;
+package org.freedesktop.xjbgen.xml.type;
 
 public interface XjbNamed {
 

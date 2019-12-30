@@ -1,4 +1,4 @@
-package org.freedesktop.xjbgen.dom.type;
+package org.freedesktop.xjbgen.xml.type;
 
 import java.util.Arrays;
 import java.util.Map;
@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
-public enum XjbAtomicType implements XjbNamed, XjbType {
+public enum XjbAtomicType implements XjbType {
 
     CARD_8 ("CARD8",  int.class,     Integer.BYTES, true),
     CARD_16("CARD16", int.class,     Integer.BYTES, true),

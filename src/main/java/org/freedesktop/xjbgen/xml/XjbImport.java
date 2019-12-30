@@ -1,4 +1,4 @@
-package org.freedesktop.xjbgen.dom;
+package org.freedesktop.xjbgen.xml;
 
 import java.util.Objects;
 

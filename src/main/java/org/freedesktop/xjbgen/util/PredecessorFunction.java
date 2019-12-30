@@ -8,7 +8,7 @@ import java.util.Collection;
  *
  * @param <N> The type of the predecessors which, in most situations, will be the type implementing this interface.
  *
- * @see org.freedesktop.xjbgen.dom.XjbModule
+ * @see org.freedesktop.xjbgen.xml.XjbModule
  */
 public interface PredecessorFunction<N extends PredecessorFunction<N>> {
 

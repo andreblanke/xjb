@@ -1,11 +1,11 @@
-package org.freedesktop.xjbgen.dom.type.complex;
+package org.freedesktop.xjbgen.xml.type.complex;
 
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.dom.XjbModule;
+import org.freedesktop.xjbgen.xml.XjbModule;
 
 public final class XjbRequest extends XjbComplexType<XjbModule> {
 

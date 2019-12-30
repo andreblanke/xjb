@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.reflections8.Reflections;
 import org.reflections8.scanners.ResourcesScanner;
 
-import org.freedesktop.xjbgen.dom.XjbModule;
+import org.freedesktop.xjbgen.xml.XjbModule;
 import org.freedesktop.xjbgen.util.TopologicalOrderIterator;
 
 import static java.util.function.Function.identity;
@@ -67,10 +67,6 @@ public final class XjbGenerator {
                 .stream()
                 .map(XjbGenerator::deserializeModule)
                 .collect(toUnmodifiableMap(XjbModule::getHeader, identity()));
-
-        final var context = new XjbGenerationContext(registeredModules);
-        for (var module : registeredModules.values())
-            module.setGenerationContext(context);
 
         new TopologicalOrderIterator<>(registeredModules.values()).forEachRemaining(module -> {
             try {

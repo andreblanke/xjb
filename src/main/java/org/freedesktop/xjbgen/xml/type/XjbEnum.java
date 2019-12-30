@@ -1,25 +1,24 @@
-package org.freedesktop.xjbgen.dom.type;
+package org.freedesktop.xjbgen.xml.type;
 
 import java.util.List;
 
-import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.dom.XjbElement;
-import org.freedesktop.xjbgen.dom.XjbModule;
-import org.freedesktop.xjbgen.dom.expr.XjbIntegerExpression;
-import org.freedesktop.xjbgen.dom.expr.XjbIntegerExpression.*;
+import org.freedesktop.xjbgen.xml.XjbElement;
+import org.freedesktop.xjbgen.xml.XjbModule;
+import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression;
+import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression.*;
 
 /**
  * Represents a Java {@code enum} type which can take on any of the values returned by {@link #getItems()}.
  *
  * {@code XjbEnum}s are not considered a complex type.
  */
-public final class XjbEnum extends XjbElement<XjbModule> implements XjbNamed, XjbType {
+public final class XjbEnum extends XjbElement<XjbModule> implements XjbType {
 
     @XmlAttribute(name = "name", required = true)
     private String xmlName;

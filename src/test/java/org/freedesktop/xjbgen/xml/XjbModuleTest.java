@@ -1,4 +1,4 @@
-package org.freedesktop.xjbgen.dom;
+package org.freedesktop.xjbgen.xml;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
@@ -6,8 +6,8 @@ import javax.xml.bind.Unmarshaller;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import org.freedesktop.xjbgen.dom.expr.XjbIntegerExpression;
-import org.freedesktop.xjbgen.dom.expr.XjbIntegerExpression.*;
+import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression;
+import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression.*;
 
 class XjbModuleTest {
 

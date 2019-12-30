@@ -1,4 +1,4 @@
-package org.freedesktop.xjbgen.dom.type.complex.content;
+package org.freedesktop.xjbgen.xml.type.complex.content;
 
 import javax.xml.bind.annotation.XmlAttribute;
 

@@ -1,12 +1,9 @@
-package org.freedesktop.xjbgen.dom;
+package org.freedesktop.xjbgen.xml;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import javax.xml.bind.Unmarshaller;
@@ -14,14 +11,9 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-
 import org.freedesktop.xjbgen.XjbGenerationContext;
-import org.freedesktop.xjbgen.dom.type.XjbAtomicType;
-import org.freedesktop.xjbgen.dom.type.XjbEnum;
-import org.freedesktop.xjbgen.dom.type.XjbType;
-import org.freedesktop.xjbgen.dom.type.complex.XjbRequest;
+import org.freedesktop.xjbgen.xml.type.XjbEnum;
+import org.freedesktop.xjbgen.xml.type.complex.XjbRequest;
 import org.freedesktop.xjbgen.util.PredecessorFunction;
 
 import static java.util.stream.Collectors.toList;
@@ -52,18 +44,10 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
     @XmlElement(name = "request")
     private List<XjbRequest> requests = new ArrayList<>();
 
-    private XjbGenerationContext generationContext;
-
-    private final Map<String, XjbType> registeredTypes = new HashMap<>();
-
-    public XjbModule() {
-        registeredTypes.putAll(XjbAtomicType.getXmlNameMappings());
-    }
-
     @Override
     public Collection<? extends XjbModule> predecessors() {
         return imports.stream()
-            .map(generationContext::lookupModule)
+            .map(XjbGenerationContext.getInstance()::lookupModule)
             .collect(toList());
     }
 
@@ -72,10 +56,7 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
         /* Every extension implicitly imports the XProto module. */
         if (isExtension())
             imports.add(XjbImport.XPROTO_IMPORT);
-    }
-
-    public void registerType(final String xmlName, final XjbType type) {
-        registeredTypes.put(xmlName, type);
+        XjbGenerationContext.getInstance().registerModule(this);
     }
 
     public String getClassName() {
@@ -84,19 +65,6 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
 
     public boolean isExtension() {
         return !header.equals("xproto");
-    }
-
-    public void setGenerationContext(@NotNull final XjbGenerationContext generationContext) {
-        this.generationContext = generationContext;
-    }
-
-    public XjbGenerationContext getGenerationContext() {
-        return generationContext;
-    }
-
-    @Contract(pure = true)
-    public @NotNull Map<String, XjbType> getRegisteredTypes() {
-        return Collections.unmodifiableMap(registeredTypes);
     }
 
     // <editor-fold desc="XML getters">

@@ -1,4 +1,4 @@
-package org.freedesktop.xjbgen.dom;
+package org.freedesktop.xjbgen.xml;
 
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlTransient;
