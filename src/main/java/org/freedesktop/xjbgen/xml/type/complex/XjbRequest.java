@@ -1,5 +1,6 @@
 package org.freedesktop.xjbgen.xml.type.complex;
 
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
@@ -29,6 +30,14 @@ public final class XjbRequest extends XjbComplexType<XjbModule> {
     }
 
     public static final class Reply extends XjbComplexType<XjbRequest> {
+
+        @Override
+        public void afterUnmarshal(final Unmarshaller unmarshaller, final Object Parent) {
+            /*
+             * Do not register replies as types, as they do not have their own XML name and are solely meant for the
+             * consumer of the API and thus do not appear as a structure content of other complex types.
+             */
+        }
 
         @Override
         public @NotNull String getSrcName() {

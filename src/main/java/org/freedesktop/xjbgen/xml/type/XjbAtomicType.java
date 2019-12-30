@@ -21,7 +21,8 @@ public enum XjbAtomicType implements XjbType {
     BYTE   ("BYTE",   int.class,     Integer.BYTES, true),
     BOOLEAN("BOOL",   boolean.class, 1,             false),
     FLOAT  ("float",  float.class,   Float.BYTES,   false),
-    DOUBLE ("double", double.class,  Double.BYTES,  false);
+    DOUBLE ("double", double.class,  Double.BYTES,  false),
+    CHAR   ("char",   byte.class,    Byte.BYTES,    false);
 
     private final @NotNull String xmlName;
 

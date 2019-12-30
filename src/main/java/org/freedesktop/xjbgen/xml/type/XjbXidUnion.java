@@ -4,16 +4,14 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 import org.freedesktop.xjbgen.xml.XjbModule;
 
-public class XjbXidType extends XjbTypeElement<XjbModule> {
+public final class XjbXidUnion extends XjbTypeElement<XjbModule> {
 
-    @XmlAttribute(name = "name")
+    @XmlAttribute(name = "name", required = true)
     private String xmlName;
-
-    static int BYTE_SIZE = Integer.BYTES;
 
     @Override
     public int byteSize() {
-        return BYTE_SIZE;
+        return XjbXidType.BYTE_SIZE;
     }
 
     @Override
