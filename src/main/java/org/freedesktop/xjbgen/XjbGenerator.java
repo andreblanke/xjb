@@ -24,7 +24,7 @@ import org.freedesktop.xjbgen.dom.XjbModule;
 import org.freedesktop.xjbgen.util.TopologicalOrderIterator;
 
 import static java.util.function.Function.identity;
-import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toUnmodifiableMap;
 
 import static freemarker.template.Configuration.VERSION_2_3_29;
 
@@ -66,7 +66,11 @@ public final class XjbGenerator {
                 .getResources(Pattern.compile(".*\\.xml"))
                 .stream()
                 .map(XjbGenerator::deserializeModule)
-                .collect(toMap(XjbModule::getHeader, identity()));
+                .collect(toUnmodifiableMap(XjbModule::getHeader, identity()));
+
+        final var context = new XjbGenerationContext(registeredModules);
+        for (var module : registeredModules.values())
+            module.setGenerationContext(context);
 
         new TopologicalOrderIterator<>(registeredModules.values()).forEachRemaining(module -> {
             try {

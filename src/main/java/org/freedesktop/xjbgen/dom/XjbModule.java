@@ -17,11 +17,14 @@ import javax.xml.bind.annotation.XmlRootElement;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
+import org.freedesktop.xjbgen.XjbGenerationContext;
 import org.freedesktop.xjbgen.dom.type.XjbAtomicType;
 import org.freedesktop.xjbgen.dom.type.XjbEnum;
 import org.freedesktop.xjbgen.dom.type.XjbType;
 import org.freedesktop.xjbgen.dom.type.complex.XjbRequest;
 import org.freedesktop.xjbgen.util.PredecessorFunction;
+
+import static java.util.stream.Collectors.toList;
 
 /**
  * This class implements the {@link PredecessorFunction} interface to allow iteration of a collection of
@@ -49,6 +52,8 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
     @XmlElement(name = "request")
     private List<XjbRequest> requests = new ArrayList<>();
 
+    private XjbGenerationContext generationContext;
+
     private final Map<String, XjbType> registeredTypes = new HashMap<>();
 
     public XjbModule() {
@@ -57,7 +62,9 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
 
     @Override
     public Collection<? extends XjbModule> predecessors() {
-        return null;
+        return imports.stream()
+            .map(generationContext::lookupModule)
+            .collect(toList());
     }
 
     @SuppressWarnings("unused")
@@ -79,12 +86,22 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
         return !header.equals("xproto");
     }
 
-    public String getHeader() {
-        return header;
+    public void setGenerationContext(@NotNull final XjbGenerationContext generationContext) {
+        this.generationContext = generationContext;
     }
 
-    public Set<XjbImport> getImports() {
-        return imports;
+    public XjbGenerationContext getGenerationContext() {
+        return generationContext;
+    }
+
+    @Contract(pure = true)
+    public @NotNull Map<String, XjbType> getRegisteredTypes() {
+        return Collections.unmodifiableMap(registeredTypes);
+    }
+
+    // <editor-fold desc="XML getters">
+    public String getHeader() {
+        return header;
     }
 
     public List<XjbEnum> getEnums() {
@@ -94,9 +111,5 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
     public List<XjbRequest> getRequests() {
         return requests;
     }
-
-    @Contract(pure = true)
-    public @NotNull Map<String, XjbType> getRegisteredTypes() {
-        return Collections.unmodifiableMap(registeredTypes);
-    }
+    // </editor-fold>
 }
