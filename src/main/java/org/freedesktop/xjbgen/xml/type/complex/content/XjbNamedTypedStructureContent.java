@@ -25,9 +25,8 @@ public abstract class XjbNamedTypedStructureContent extends XjbNamedStructureCon
     public @NotNull XjbType getSrcType() {
         final XjbModule module = getModule();
 
-        return
-            XjbGenerationContext
-                .getInstance()
-                .lookupType(module, getXmlType());
+        return XjbGenerationContext
+            .getInstance()
+            .lookupType(module, getXmlType());
     }
 }

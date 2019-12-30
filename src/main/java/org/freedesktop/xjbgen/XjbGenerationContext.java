@@ -1,20 +1,16 @@
 package org.freedesktop.xjbgen;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.Objects;
-import java.util.Set;
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import org.freedesktop.xjbgen.xml.XjbImport;
 import org.freedesktop.xjbgen.xml.XjbModule;
-import org.freedesktop.xjbgen.xml.type.XjbAtomicType;
 import org.freedesktop.xjbgen.xml.type.XjbType;
+
+import static java.util.Map.Entry;
+import static java.util.stream.Collectors.toMap;
 
 public final class XjbGenerationContext {
 
@@ -27,12 +23,6 @@ public final class XjbGenerationContext {
 
     public static XjbGenerationContext getInstance() {
         return instance;
-    }
-
-    @NotNull
-    @Contract(" -> new")
-    private static Set<XjbType> newDefaultTypeSet() {
-        return new HashSet<>(Arrays.asList(XjbAtomicType.values()));
     }
 
     public void registerModule(@NotNull final XjbModule module) {
@@ -61,21 +51,19 @@ public final class XjbGenerationContext {
             registeredModules
                 .get(header)
                 .getRegisteredTypes()
-                .values()
-                .stream()
-                .filter(type -> typeName.equals(type.getXmlName()))
-                .findFirst()
-                .orElseThrow();
+                .get(typeName);
     }
 
     private XjbType lookupTypeInImports(@NotNull final XjbModule module, @NotNull final String xmlType) {
         return module
             .predecessors()
             .stream()
-            .map(XjbModule::getRegisteredTypes)
-            .flatMap(types -> types.values().stream())
-            .filter(type -> Objects.equals(xmlType, type.getXmlName()))
-            .findFirst()
-            .orElseThrow(() -> new NoSuchElementException(module.getHeader() + " " + xmlType));
+            .flatMap(xjbModule ->
+                xjbModule
+                    .getRegisteredTypes()
+                    .entrySet()
+                    .stream())
+            .collect(toMap(Entry::getKey, Entry::getValue, (left, right) -> left))
+            .get(xmlType);
     }
 }

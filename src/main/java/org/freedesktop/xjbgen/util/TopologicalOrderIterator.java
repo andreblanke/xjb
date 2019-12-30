@@ -70,7 +70,7 @@ public final class TopologicalOrderIterator<E extends PredecessorFunction<E>> im
         final E result = queue.poll();
 
         if ((result == null) && (remainingElements > 0))
-            throw new IllegalStateException();
+            throw new IllegalArgumentException();
 
         if (result != null) {
             for (E successor : successors(result)) {

@@ -79,15 +79,15 @@ public final class TopologicalOrderIteratorTest {
     @NotNull
     @Contract(pure = true)
     @SuppressWarnings("unused")
-    public static Stream<Arguments> testThrowsIllegalArgumentExceptionWhenCycleDetected() {
-        final Arguments sizeTwoCycleArguments;
+    public static Stream<Arguments> testThrowsIllegalArgumentExceptionWhenSimpleCycleDetected() {
+        final Arguments size2CycleArguments;
         {
             final var element0 = new TestPredecessorFunction();
             final var element1 = new TestPredecessorFunction(element0);
 
             element0.setPredecessors(element1);
 
-            sizeTwoCycleArguments = Arguments.of(List.of(element0, element1));
+            size2CycleArguments = Arguments.of(List.of(element0, element1));
         }
 
         final Arguments selfCycleArguments;
@@ -100,12 +100,12 @@ public final class TopologicalOrderIteratorTest {
 
             selfCycleArguments = Arguments.of(List.of(element0, element1, element2));
         }
-        return Stream.of(sizeTwoCycleArguments, selfCycleArguments);
+        return Stream.of(size2CycleArguments, selfCycleArguments);
     }
 
     @MethodSource
     @ParameterizedTest
-    public <E extends PredecessorFunction<E>> void testThrowsIllegalArgumentExceptionWhenCycleDetected(
+    public <E extends PredecessorFunction<E>> void testThrowsIllegalArgumentExceptionWhenSimpleCycleDetected(
             @NotNull final Collection<E> elements) {
         assertThrows(IllegalArgumentException.class, () -> new TopologicalOrderIterator<>(elements));
     }
