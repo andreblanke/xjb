@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -47,7 +49,7 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
     private String extensionXName;
 
     @XmlElement(name = "import")
-    private List<XjbImport> imports = new ArrayList<>();
+    private Set<XjbImport> imports = new HashSet<>();
 
     @XmlElement(name = "struct")
     private List<XjbStruct> structs = new ArrayList<>();
