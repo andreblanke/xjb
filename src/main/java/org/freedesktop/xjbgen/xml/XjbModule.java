@@ -2,9 +2,7 @@ package org.freedesktop.xjbgen.xml;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -13,6 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 import org.freedesktop.xjbgen.XjbGenerationContext;
 import org.freedesktop.xjbgen.xml.type.XjbEnum;
+import org.freedesktop.xjbgen.xml.type.XjbXidType;
 import org.freedesktop.xjbgen.xml.type.complex.XjbRequest;
 import org.freedesktop.xjbgen.util.PredecessorFunction;
 
@@ -36,7 +35,10 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
     private String extensionXName;
 
     @XmlElement(name = "import")
-    private Set<XjbImport> imports = new HashSet<>();
+    private List<XjbImport> imports = new ArrayList<>();
+
+    @XmlElement(name = "xidtype")
+    private List<XjbXidType> xidTypes = new ArrayList<>();
 
     @XmlElement(name = "enum")
     private List<XjbEnum> enums = new ArrayList<>();

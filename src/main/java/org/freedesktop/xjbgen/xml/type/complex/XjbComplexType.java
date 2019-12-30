@@ -7,6 +7,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 
+import org.freedesktop.xjbgen.xml.type.XjbTypeElement;
 import org.jetbrains.annotations.NotNull;
 
 import org.freedesktop.xjbgen.xml.XjbElement;
@@ -23,7 +24,7 @@ import static java.util.stream.Collectors.toList;
  *
  * @param <P> The type of the parent {@link XjbElement}.
  */
-public abstract class XjbComplexType<P extends XjbElement<?>> extends XjbElement<P> implements XjbType {
+public abstract class XjbComplexType<P extends XjbElement<?>> extends XjbTypeElement<P> {
 
     /**
      * Not all complex types are required to have this XML attribute.

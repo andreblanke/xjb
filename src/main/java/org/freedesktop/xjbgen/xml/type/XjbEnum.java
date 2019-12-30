@@ -18,7 +18,7 @@ import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression.*;
  *
  * {@code XjbEnum}s are not considered a complex type.
  */
-public final class XjbEnum extends XjbElement<XjbModule> implements XjbType {
+public final class XjbEnum extends XjbTypeElement<XjbModule>{
 
     @XmlAttribute(name = "name", required = true)
     private String xmlName;
