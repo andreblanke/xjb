@@ -7,6 +7,16 @@
     </#list>
 </#macro>
 
+<#macro generateComplexTypeGetters complexType>
+    <#list complexType.namedTypedContents as content>
+        <#local getterSetterSuffix = content.srcName?capitalize/>
+
+        public ${content.srcType.srcName} get${getterSetterSuffix}() {
+            return ${content.srcName};
+        }
+    </#list>
+</#macro>
+
 <#macro generateComplexTypeGettersAndSetters complexType>
     <#list complexType.namedTypedContents as content>
         <#local getterSetterSuffix = content.srcName?capitalize/>
@@ -100,7 +110,7 @@ public final class ${className} {
         @Deprecated
         public ${request.reply.srcName}() {
         }
-        <@generateComplexTypeGettersAndSetters request.reply/>
+        <@generateComplexTypeGetters request.reply/>
     }
     </#if>
     </#list>
