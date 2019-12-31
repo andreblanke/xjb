@@ -16,13 +16,17 @@ public abstract class XjbElement<P extends XjbElement<?>> {
 
     private P parent;
 
+    private XjbModule module;
+
     @SuppressWarnings({"unchecked", "unused"})
     public void beforeUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
         this.parent = (P) parent;
     }
 
     public XjbModule getModule() {
-        return (parent == null) ? (XjbModule) this : parent.getModule();
+        if (module != null)
+            return module;
+        return (module = (parent == null) ? ((XjbModule) this) : parent.getModule());
     }
 
     public P getParent() {

@@ -2,9 +2,7 @@ package org.freedesktop.xjbgen.xml.type;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
-import org.freedesktop.xjbgen.xml.XjbModule;
-
-public class XjbXidType extends XjbTypeElement<XjbModule> {
+public class XjbXidType extends XjbXidTypeElement {
 
     @XmlAttribute(name = "name")
     private String xmlName;

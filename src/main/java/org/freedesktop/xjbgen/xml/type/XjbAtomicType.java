@@ -51,6 +51,11 @@ public enum XjbAtomicType implements XjbType {
     }
 
     @Override
+    public String toString() {
+        return getSrcName();
+    }
+
+    @Override
     public int byteSize() {
         return byteSize;
     }

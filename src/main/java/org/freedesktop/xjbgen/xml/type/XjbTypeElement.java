@@ -10,4 +10,9 @@ public abstract class XjbTypeElement<P extends XjbElement<?>> extends XjbElement
     public void afterUnmarshal(final Unmarshaller unmarshaller, final Object Parent) {
         getModule().registerType(this);
     }
+
+    @Override
+    public String toString() {
+        return String.format("%1$s.%2$s", getModule().getClassName(), getSrcName());
+    }
 }

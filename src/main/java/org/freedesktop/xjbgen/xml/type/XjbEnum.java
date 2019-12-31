@@ -27,6 +27,11 @@ public final class XjbEnum extends XjbTypeElement<XjbModule>{
     private List<Item> items;
 
     @Override
+    public String toString() {
+        return getSrcName();
+    }
+
+    @Override
     public int byteSize() {
         return Integer.BYTES;
     }

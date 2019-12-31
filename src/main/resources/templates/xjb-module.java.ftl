@@ -2,7 +2,7 @@
 <#macro generateComplexTypeFields complexType>
     <#list complexType.namedTypedContents as content>
 
-        private ${content.srcType.srcName} ${content.srcName};
+        private ${content.srcType} ${content.srcName};
     </#list>
 </#macro>
 
@@ -10,7 +10,7 @@
     <#list complexType.namedTypedContents as content>
         <#local getterSetterSuffix = content.srcName?capitalize/>
 
-        public ${content.srcType.srcName} get${getterSetterSuffix}() {
+        public ${content.srcType} get${getterSetterSuffix}() {
             return ${content.srcName};
         }
     </#list>
@@ -20,11 +20,11 @@
     <#list complexType.namedTypedContents as content>
         <#local getterSetterSuffix = content.srcName?capitalize/>
 
-        public ${content.srcType.srcName} get${getterSetterSuffix}() {
+        public ${content.srcType} get${getterSetterSuffix}() {
             return ${content.srcName};
         }
 
-        public void set${getterSetterSuffix}(final ${content.srcType.srcName} ${content.srcName}) {
+        public void set${getterSetterSuffix}(final ${content.srcType} ${content.srcName}) {
             this.${content.srcName} = ${content.srcName};
         }
     </#list>
@@ -34,7 +34,7 @@
         public static final class Builder {
             <#list complexType.namedTypedContents as content>
 
-            private ${content.srcType.srcName} ${content.srcName};
+            private ${content.srcType} ${content.srcName};
             </#list>
 
             public ${complexType.srcName} build() {
@@ -51,7 +51,7 @@
             }
             <#list complexType.namedTypedContents as content>
 
-            public Builder ${content.srcName}(final ${content.srcType.srcName} ${content.srcName}) {
+            public Builder ${content.srcName}(final ${content.srcType} ${content.srcName}) {
                 this.${content.srcName} = ${content.srcName};
                 return this;
             }
@@ -96,8 +96,8 @@ public final class ${className} {
         <@generateComplexTypeFields request/>
 
         public static final int OPCODE = ${request.opcode};
-
         <@generateComplexTypeGettersAndSetters request/>
+
         <@generateComplexTypeBuilder request/>
     }
     <#if request.reply??>
@@ -105,8 +105,7 @@ public final class ${className} {
     public static final class ${request.reply.srcName} {
         <@generateComplexTypeFields request.reply/>
 
-        @Deprecated
-        public ${request.reply.srcName}() {
+        private ${request.reply.srcName}() {
         }
         <@generateComplexTypeGetters request.reply/>
     }
