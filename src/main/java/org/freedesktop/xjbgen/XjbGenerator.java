@@ -1,7 +1,7 @@
 package org.freedesktop.xjbgen;
 
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UncheckedIOException;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -70,7 +70,7 @@ public final class XjbGenerator {
 
         new TopologicalOrderIterator<>(registeredModules.values()).forEachRemaining(module -> {
             try {
-                XJB_MODULE_TEMPLATE.process(module, new PrintWriter(System.out));
+                XJB_MODULE_TEMPLATE.process(module, new FileWriter(module.getClassName() + ".java"));
             } catch (final IOException exception) {
                 throw new UncheckedIOException(exception);
             } catch (final TemplateException exception) {

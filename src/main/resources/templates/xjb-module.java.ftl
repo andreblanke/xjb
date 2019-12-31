@@ -7,20 +7,6 @@
     </#list>
 </#macro>
 
-<#macro generateExternalizableImplementation complexType>
-        @Override
-        public void readExternal(final ObjectInput input) {
-            <#list complexType.contents as content>
-            </#list>
-        }
-
-        @Override
-        public void writeExternal(final ObjectOutput output) {
-            <#list complexType.contents as content>
-            </#list>
-        }
-</#macro>
-
 <#macro generateComplexTypeGettersAndSetters complexType>
     <#list complexType.namedTypedContents as content>
         <#local getterSetterSuffix = content.srcName?capitalize/>
@@ -46,10 +32,12 @@
                 <#local builtObjectName = complexType.srcName[0]?lower_case + complexType.srcName[1..]/>
                 final var ${builtObjectName} = new ${complexType.srcName}();
 
+                <#if complexType.namedTypedContents?has_content>
                 <#list complexType.namedTypedContents as content>
                 ${builtObjectName}.set${content.srcName?capitalize}(${content.srcName});
                 </#list>
 
+                </#if>
                 return ${builtObjectName};
             }
             <#list complexType.namedTypedContents as content>
@@ -64,26 +52,18 @@
 
 package org.freedesktop.xjb;
 
-<#if xidTypes?has_content>
-import java.lang.annotation.Documented;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.RetentionPolicy;
-import java.lang.annotation.Target;
-</#if>
-import java.io.Externalizable;
-import java.io.ObjectInput;
-import java.io.ObjectOutput;
-
 public final class ${className} {
 
     private ${className}() {
     }
     <#list xidTypes as xidType>
 
-    @Target({ ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.PARAMETER })
-    @Retention(RetentionPolicy.RUNTIME)
-    @Documented
+    @java.lang.annotation.Target({
+        java.lang.annotation.ElementType.FIELD,
+        java.lang.annotation.ElementType.LOCAL_VARIABLE,
+        java.lang.annotation.ElementType.PARAMETER })
+    @java.lang.annotation.Retention(RetentionPolicy.RUNTIME)
+    @java.lang.annotation.Documented
     public @interface ${xidType.srcName} {
     }
     </#list>
@@ -104,26 +84,22 @@ public final class ${className} {
     </#list>
     <#list requests as request>
 
-    public static final class ${request.srcName} implements Externalizable {
+    public static final class ${request.srcName} {
         <@generateComplexTypeFields request/>
 
         public static final int OPCODE = ${request.opcode};
 
-        @Deprecated
-        public ${request.srcName}() {
-        }
-
-        <@generateExternalizableImplementation request/>
         <@generateComplexTypeGettersAndSetters request/>
-
         <@generateComplexTypeBuilder request/>
     }
     <#if request.reply??>
 
-    public static final class ${request.srcName}Reply implements Externalizable {
+    public static final class ${request.reply.srcName} {
         <@generateComplexTypeFields request.reply/>
 
-        <@generateExternalizableImplementation request.reply/>
+        @Deprecated
+        public ${request.reply.srcName}() {
+        }
         <@generateComplexTypeGettersAndSetters request.reply/>
     }
     </#if>

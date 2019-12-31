@@ -3,6 +3,7 @@ package org.freedesktop.xjbgen.xml.type;
 import java.util.Arrays;
 import java.util.Map;
 
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import static java.util.function.Function.identity;
