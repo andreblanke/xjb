@@ -64,6 +64,13 @@
 
 package org.freedesktop.xjb;
 
+<#if xidTypes?has_content>
+import java.lang.annotation.Documented;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
+</#if>
 import java.io.Externalizable;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
@@ -72,6 +79,14 @@ public final class ${className} {
 
     private ${className}() {
     }
+    <#list xidTypes as xidType>
+
+    @Target({ ElementType.FIELD, ElementType.LOCAL_VARIABLE, ElementType.PARAMETER })
+    @Retention(RetentionPolicy.RUNTIME)
+    @Documented
+    public @interface ${xidType.srcName} {
+    }
+    </#list>
     <#list enums as enum>
 
     public enum ${enum.srcName} {

@@ -128,6 +128,10 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
         return header;
     }
 
+    public List<XjbXidType> getXidTypes() {
+        return xidTypes;
+    }
+
     public List<XjbEnum> getEnums() {
         return enums;
     }
