@@ -1,5 +1,4 @@
 <#-- @ftlvariable name="" type="org.freedesktop.xjbgen.xml.XjbModule" -->
-
 <#macro generateComplexTypeFields complexType>
     <#list complexType.namedTypedContents as content>
 
@@ -59,7 +58,6 @@
             </#list>
         }
 </#macro>
-
 package org.freedesktop.xjb;
 
 public final class ${className} {
