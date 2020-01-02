@@ -64,6 +64,8 @@ public final class ${className} {
 
     private ${className}() {
     }
+    <#if isExtension()>
+    </#if>
     <#list enums as enum>
 
     public enum ${enum.srcName} {

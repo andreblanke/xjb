@@ -14,7 +14,8 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.freedesktop.xjbgen.xml.type.XjbXidUnion;
+import freemarker.template.utility.StringUtil;
+
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,6 +25,7 @@ import org.freedesktop.xjbgen.xml.type.XjbEnum;
 import org.freedesktop.xjbgen.xml.type.XjbType;
 import org.freedesktop.xjbgen.xml.type.XjbTypedef;
 import org.freedesktop.xjbgen.xml.type.XjbXidType;
+import org.freedesktop.xjbgen.xml.type.XjbXidUnion;
 import org.freedesktop.xjbgen.xml.type.complex.XjbRequest;
 import org.freedesktop.xjbgen.xml.type.complex.XjbStruct;
 import org.freedesktop.xjbgen.xml.type.complex.XjbUnion;
@@ -35,6 +37,8 @@ import static java.util.stream.Collectors.toList;
  * This class implements the {@link PredecessorFunction} interface to allow iteration of a collection of
  * {@code XjbModule} instance in topological order via the {@link org.freedesktop.xjbgen.util.TopologicalOrderIterator},
  * with the predecessors being the {@code XjbModule} objects this module depends on.
+ *
+ * @see org.freedesktop.xjbgen.util.TopologicalOrderIterator
  */
 @XmlRootElement(name = "xcb")
 public final class XjbModule extends XjbElement<XjbElement<?>> implements PredecessorFunction<XjbModule> {
@@ -98,19 +102,22 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
         registeredTypes.put(xmlName, type);
     }
 
-    @NotNull
     @Contract(pure = true)
-    public Map<String, XjbType> getRegisteredTypes() {
+    public @NotNull Map<String, XjbType> getRegisteredTypes() {
         return Collections.unmodifiableMap(registeredTypes);
     }
 
     /**
      * Returns the name of the Java class which is to be generated from this {@code XjbModule}.
      *
+     * The name of the Java class returned by this method resembles the capitalized {@link #extensionName} if this
+     * {@code XjbModule} describes an X server extension according to {@link #isExtension()}, or {@code XProto} if
+     * that is not the case.
+     *
      * @return The name of the Java class generated from this object.
      */
-    public String getClassName() {
-        return isExtension() ? extensionName : "XProto";
+    public @NotNull String getClassName() {
+        return isExtension() ? StringUtil.capitalize(extensionName) : "XProto";
     }
 
     /**
@@ -126,10 +133,6 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
     // <editor-fold desc="XML getters">
     public String getHeader() {
         return header;
-    }
-
-    public List<XjbXidType> getXidTypes() {
-        return xidTypes;
     }
 
     public List<XjbEnum> getEnums() {
