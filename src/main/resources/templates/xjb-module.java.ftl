@@ -64,17 +64,6 @@ public final class ${className} {
 
     private ${className}() {
     }
-    <#list xidTypes as xidType>
-
-    @java.lang.annotation.Target({
-        java.lang.annotation.ElementType.FIELD,
-        java.lang.annotation.ElementType.LOCAL_VARIABLE,
-        java.lang.annotation.ElementType.PARAMETER })
-    @java.lang.annotation.Retention(RetentionPolicy.RUNTIME)
-    @java.lang.annotation.Documented
-    public @interface ${xidType.srcName} {
-    }
-    </#list>
     <#list enums as enum>
 
     public enum ${enum.srcName} {

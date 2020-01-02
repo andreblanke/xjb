@@ -26,11 +26,11 @@
       <artifactId>jaxb-api</artifactId>
       <version>2.3.1</version>
     </dependency>
-    <!-- https://mvnrepository.com/artifact/org.glassfish.jaxb/jaxb-runtime -->
+    <!-- https://mvnrepository.com/artifact/org.eclipse.persistence/org.eclipse.persistence.moxy -->
     <dependency>
-      <groupId>org.glassfish.jaxb</groupId>
-      <artifactId>jaxb-runtime</artifactId>
-      <version>2.3.2</version>
+      <groupId>org.eclipse.persistence</groupId>
+      <artifactId>org.eclipse.persistence.moxy</artifactId>
+      <version>2.7.5</version>
     </dependency>
 
     <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
@@ -137,7 +137,6 @@
         <version>3.1.1</version>
         <configuration>
           <source>${java.version}</source>
-          <target>${java.version}</target>
         </configuration>
       </plugin>
     </plugins>

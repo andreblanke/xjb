@@ -4,11 +4,14 @@ import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlValue;
 
+import org.eclipse.persistence.oxm.annotations.XmlValueExtension;
+
 import org.jetbrains.annotations.NotNull;
 
 public final class XjbImport extends XjbElement<XjbModule> {
 
     @XmlValue
+    @XmlValueExtension
     private String header;
 
     static final XjbImport XPROTO_IMPORT = new XjbImport();

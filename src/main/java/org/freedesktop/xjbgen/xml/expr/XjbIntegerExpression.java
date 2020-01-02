@@ -3,10 +3,14 @@ package org.freedesktop.xjbgen.xml.expr;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlValue;
 
+import org.eclipse.persistence.oxm.annotations.XmlValueExtension;
+
 import org.jetbrains.annotations.NotNull;
 
+import org.freedesktop.xjbgen.xml.XjbElement;
+
 @XmlTransient
-public abstract class XjbIntegerExpression {
+public abstract class XjbIntegerExpression extends XjbElement<XjbElement<?>> {
 
     public abstract String toString();
 
@@ -15,6 +19,7 @@ public abstract class XjbIntegerExpression {
     public static final class XjbBitExpression extends XjbIntegerExpression {
 
         @XmlValue
+        @XmlValueExtension
         private int shiftAmount;
 
         @Override
@@ -31,6 +36,7 @@ public abstract class XjbIntegerExpression {
     public static final class XjbValueExpression extends XjbIntegerExpression {
 
         @XmlValue
+        @XmlValueExtension
         private int literal;
 
         public XjbValueExpression() {
