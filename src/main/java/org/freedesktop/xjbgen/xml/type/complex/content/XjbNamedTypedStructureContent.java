@@ -13,20 +13,28 @@ public abstract class XjbNamedTypedStructureContent extends XjbNamedStructureCon
     @XmlAttribute(name = "type", required = true)
     private String xmlType;
 
+    private int byteSize;
+
     @Override
     public int byteSize() {
-        return getSrcType().byteSize();
+        return (byteSize == 0) ? (byteSize = getSrcType().byteSize()) : byteSize;
     }
 
     public @NotNull String getXmlType() {
         return xmlType;
     }
 
-    public @NotNull XjbType getSrcType() {
-        final XjbModule module = getModule();
+    private XjbType srcType;
 
-        return XjbGenerationContext
-            .getInstance()
-            .lookupType(module, getXmlType());
+    public @NotNull XjbType getSrcType() {
+        if (srcType == null) {
+            final XjbModule module = getModule();
+
+            srcType =
+                XjbGenerationContext
+                    .getInstance()
+                    .lookupType(module, getXmlType());
+        }
+        return srcType;
     }
 }

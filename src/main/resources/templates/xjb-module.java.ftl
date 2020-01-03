@@ -8,7 +8,7 @@
 
 <#macro generateComplexTypeGetters complexType>
     <#list complexType.namedTypedContents as content>
-        <#local getterSetterSuffix = content.srcName?capitalize/>
+        <#local getterSetterSuffix = content.srcName?cap_first/>
 
         public ${content.srcType} get${getterSetterSuffix}() {
             return ${content.srcName};
@@ -18,7 +18,7 @@
 
 <#macro generateComplexTypeGettersAndSetters complexType>
     <#list complexType.namedTypedContents as content>
-        <#local getterSetterSuffix = content.srcName?capitalize/>
+        <#local getterSetterSuffix = content.srcName?cap_first/>
 
         public ${content.srcType} get${getterSetterSuffix}() {
             return ${content.srcName};
@@ -43,7 +43,7 @@
 
                 <#if complexType.namedTypedContents?has_content>
                 <#list complexType.namedTypedContents as content>
-                ${builtObjectName}.set${content.srcName?capitalize}(${content.srcName});
+                ${builtObjectName}.set${content.srcName?cap_first}(${content.srcName});
                 </#list>
 
                 </#if>
@@ -64,7 +64,10 @@ public final class ${className} {
 
     private ${className}() {
     }
-    <#if isExtension()>
+    <#if extension>
+
+    public static void initialize() {
+    }
     </#if>
     <#list enums as enum>
 
@@ -83,7 +86,7 @@ public final class ${className} {
     </#list>
     <#list requests as request>
 
-    public static final class ${request.srcName} {
+    public static final class ${request} {
         <@generateComplexTypeFields request/>
 
         public static final int OPCODE = ${request.opcode};
@@ -93,10 +96,20 @@ public final class ${className} {
     }
     <#if request.reply??>
 
-    public static final class ${request.reply.srcName} {
+    public static final class ${request.reply} {
         <@generateComplexTypeFields request.reply/>
 
-        private ${request.reply.srcName}() {
+        private ${request.reply}() {
+        }
+
+        static ${request.reply} fromBytes(final byte[] bytes) {
+            int position = 0;
+            final var reply = new ${request.reply};
+
+            <#list request.reply.contents as content>
+            </#list>
+
+            return reply;
         }
         <@generateComplexTypeGetters request.reply/>
     }

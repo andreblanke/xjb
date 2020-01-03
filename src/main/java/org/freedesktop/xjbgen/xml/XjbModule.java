@@ -14,12 +14,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import freemarker.template.utility.StringUtil;
-
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import org.freedesktop.xjbgen.XjbGenerationContext;
+import org.freedesktop.xjbgen.util.Strings;
 import org.freedesktop.xjbgen.xml.type.XjbAtomicType;
 import org.freedesktop.xjbgen.xml.type.XjbEnum;
 import org.freedesktop.xjbgen.xml.type.XjbType;
@@ -117,7 +116,7 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
      * @return The name of the Java class generated from this object.
      */
     public @NotNull String getClassName() {
-        return isExtension() ? StringUtil.capitalize(extensionName) : "XProto";
+        return isExtension() ? Strings.capitalize(extensionName) : "XProto";
     }
 
     /**

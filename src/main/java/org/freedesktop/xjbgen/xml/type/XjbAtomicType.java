@@ -3,7 +3,6 @@ package org.freedesktop.xjbgen.xml.type;
 import java.util.Arrays;
 import java.util.Map;
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import static java.util.function.Function.identity;
@@ -51,7 +50,7 @@ public enum XjbAtomicType implements XjbType {
     }
 
     @Override
-    public String toString() {
+    public @NotNull String toString() {
         return getSrcName();
     }
 

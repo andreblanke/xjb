@@ -20,8 +20,8 @@ import org.jetbrains.annotations.NotNull;
 import org.reflections8.Reflections;
 import org.reflections8.scanners.ResourcesScanner;
 
-import org.freedesktop.xjbgen.xml.XjbModule;
 import org.freedesktop.xjbgen.util.TopologicalOrderIterator;
+import org.freedesktop.xjbgen.xml.XjbModule;
 
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toUnmodifiableMap;

@@ -41,9 +41,13 @@ public abstract class XjbComplexType<P extends XjbElement<?>> extends XjbTypeEle
     })
     private List<XjbStructureContent> contents = new ArrayList<>();
 
+    private int byteSize;
+
     @Override
     public int byteSize() {
-        return contents.stream().mapToInt(XjbStructureContent::byteSize).sum();
+        if (byteSize == 0)
+            byteSize = contents.stream().mapToInt(XjbStructureContent::byteSize).sum();
+        return byteSize;
     }
 
     public @NotNull List<XjbNamedTypedStructureContent> getNamedTypedContents() {
