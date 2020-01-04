@@ -14,12 +14,17 @@ import javax.xml.validation.SchemaFactory;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import freemarker.template.TemplateModelException;
 
 import org.jetbrains.annotations.NotNull;
 
 import org.reflections8.Reflections;
 import org.reflections8.scanners.ResourcesScanner;
+import org.reflections8.scanners.SubTypesScanner;
+import org.reflections8.scanners.TypeAnnotationsScanner;
 
+import org.freedesktop.xjbgen.template.DataModel;
+import org.freedesktop.xjbgen.template.InstanceOfTemplateMethodModel;
 import org.freedesktop.xjbgen.util.TopologicalOrderIterator;
 import org.freedesktop.xjbgen.xml.XjbModule;
 
@@ -40,6 +45,17 @@ public final class XjbGenerator {
         try {
             final var configuration = new Configuration(VERSION_2_3_29);
             configuration.setClassForTemplateLoading(XjbGenerator.class, "/templates");
+            configuration.setSharedVariable("instance_of", new InstanceOfTemplateMethodModel());
+
+            new Reflections("org.freedesktop.xjbgen.xml", new SubTypesScanner(), new TypeAnnotationsScanner())
+                .getTypesAnnotatedWith(DataModel.class)
+                .forEach(type -> {
+                    try {
+                        configuration.setSharedVariable(type.getSimpleName(), type);
+                    } catch (final TemplateModelException exception) {
+                        throw new RuntimeException(exception);
+                    }
+                });
 
             XJB_MODULE_TEMPLATE = configuration.getTemplate("xjb-module.java.ftl");
 

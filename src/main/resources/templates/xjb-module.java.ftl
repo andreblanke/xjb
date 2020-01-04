@@ -1,4 +1,7 @@
 <#-- @ftlvariable name="" type="org.freedesktop.xjbgen.xml.XjbModule" -->
+<#-- @ftlvariable name="XjbAtomicType" type="java.lang.Class" -->
+<#-- @ftlvariable name="XjbFieldStructureContent" type="java.lang.Class" -->
+<#-- @ftlvariable name="XjbPadStructureContent" type="java.lang.Class" -->
 <#macro generateComplexTypeFields complexType>
     <#list complexType.namedTypedContents as content>
 
@@ -60,6 +63,7 @@
 </#macro>
 package org.freedesktop.xjb;
 
+@javax.annotation.Generated("xjbgen")
 public final class ${className} {
 
     private ${className}() {
@@ -103,10 +107,61 @@ public final class ${className} {
         }
 
         static ${request.reply} fromBytes(final byte[] bytes) {
-            int position = 0;
-            final var reply = new ${request.reply};
-
+            final var buffer = java.nio.ByteBuffer.wrap(bytes);
+            final var reply  = new ${request.reply};
             <#list request.reply.contents as content>
+
+            <#if instance_of(content, XjbPadStructureContent)>
+                <#if content?is_last>
+            /* Skipping ${content.byteSize()} byte(s) of padding at end of buffer. */
+                <#else>
+            /* Skip ${content.byteSize()} byte(s) of padding. */
+            buffer.position(buffer.position() + ${content.byteSize()});
+                </#if>
+            <#elseif instance_of(content, XjbFieldStructureContent)>
+                <#if instance_of(content.srcType, XjbAtomicType)>
+                    <#switch content.srcType.xmlName>
+                        <#case "CARD8">
+                        <#case "BYTE">
+            ${content.srcName} = Byte.toUnsignedInt(buffer.get());
+                            <#break/>
+                        <#case "CARD16">
+            ${content.srcName} = Short.toUnsignedInt(buffer.getShort())
+                            <#break/>
+                        <#case "CARD32">
+            ${content.srcName} = Integer.toUnsignedLong(buffer.getInt());
+                            <#break/>
+                        <#case "CARD64">
+            ${content.srcName} = buffer.getLong();
+                            <#break/>
+                        <#case "INT8">
+            ${content.srcName} = buffer.get();
+                            <#break/>
+                        <#case "INT16">
+            ${content.srcName} = buffer.getShort();
+                            <#break/>
+                        <#case "INT32">
+            ${content.srcName} = buffer.getInt();
+                            <#break/>
+                        <#case "INT64">
+            ${content.srcName} = buffer.getLong();
+                            <#break/>
+                        <#case "BOOL">
+            ${content.srcName} = (buffer.get() == 1);
+                            <#break/>
+                        <#case "float">
+            ${content.srcName} = buffer.getFloat();
+                            <#break/>
+                        <#case "double">
+            ${content.srcName} = buffer.getDouble();
+                            <#break/>
+                        <#case "double">
+            ${content.srcName} = buffer.get();
+                            <#break/>
+                    </#switch>
+                </#if>
+            buffer.position(buffer.position() + ${content.byteSize()});
+            </#if>
             </#list>
 
             return reply;

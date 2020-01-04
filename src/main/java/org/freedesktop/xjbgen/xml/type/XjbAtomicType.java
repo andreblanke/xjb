@@ -5,24 +5,29 @@ import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
 
+import org.freedesktop.xjbgen.template.DataModel;
+
+import java.nio.ByteBuffer;
+
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
+@DataModel
 public enum XjbAtomicType implements XjbType {
 
-    CARD_8 ("CARD8",  int.class,     Integer.BYTES, true),
-    CARD_16("CARD16", int.class,     Integer.BYTES, true),
-    CARD_32("CARD32", long.class,    Long.BYTES,    true),
-    CARD_64("CARD64", long.class,    Long.BYTES,    true),
-    INT_8  ("INT8",   byte.class,    Byte.BYTES,    false),
-    INT_16 ("INT16",  short.class,   Short.BYTES,   false),
-    INT_32 ("INT32",  int.class,     Integer.BYTES, false),
-    INT_64 ("INT64",  long.class,    Long.BYTES,    false),
-    BYTE   ("BYTE",   int.class,     Integer.BYTES, true),
-    BOOLEAN("BOOL",   boolean.class, 1,             false),
-    FLOAT  ("float",  float.class,   Float.BYTES,   false),
-    DOUBLE ("double", double.class,  Double.BYTES,  false),
-    CHAR   ("char",   byte.class,    Byte.BYTES,    false);
+    CARD_8 ("CARD8",  int.class,     1, true),
+    CARD_16("CARD16", int.class,     2, true),
+    CARD_32("CARD32", long.class,    4, true),
+    CARD_64("CARD64", long.class,    8, true),
+    INT_8  ("INT8",   byte.class,    1, false),
+    INT_16 ("INT16",  short.class,   2, false),
+    INT_32 ("INT32",  int.class,     4, false),
+    INT_64 ("INT64",  long.class,    8, false),
+    BYTE   ("BYTE",   int.class,     1, true),
+    BOOLEAN("BOOL",   boolean.class, 1, false),
+    FLOAT  ("float",  float.class,   4, false),
+    DOUBLE ("double", double.class,  8, false),
+    CHAR   ("char",   byte.class,    1, false);
 
     private final @NotNull String xmlName;
 
