@@ -99,6 +99,18 @@ public final class ${className} {
         ${enum.srcName}(final int value) {
             this.value = value;
         }
+
+        public static ${enum.srcName} valueOf(final int value) {
+            for (var item : values()) {
+                if (item.getValue() == value)
+                    return item;
+            }
+            return null;
+        }
+
+        public int getValue() {
+            return value;
+        }
     }
     </#list>
     <#list requests as request>
