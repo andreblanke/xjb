@@ -18,7 +18,7 @@ public class XjbXidType extends XjbTypeElement<XjbModule> {
     @Contract(pure = true)
     public @NotNull String toString() {
         return String.format(
-            "@XidType(\"%1$s.%2$s\") int",
+            "@%1$s.%2$s int",
             getModule().getClassName(),
             getSrcName());
     }

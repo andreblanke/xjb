@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlElements;
 
 import org.jetbrains.annotations.NotNull;
 
+import org.freedesktop.xjbgen.template.DataModel;
 import org.freedesktop.xjbgen.xml.XjbElement;
 import org.freedesktop.xjbgen.xml.XjbModule;
 import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression;
@@ -18,6 +19,7 @@ import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression.*;
  *
  * {@code XjbEnum}s are not considered a complex type.
  */
+@DataModel
 public final class XjbEnum extends XjbTypeElement<XjbModule>{
 
     @XmlAttribute(name = "name", required = true)

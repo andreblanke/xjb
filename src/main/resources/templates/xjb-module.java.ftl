@@ -1,5 +1,6 @@
 <#-- @ftlvariable name="" type="org.freedesktop.xjbgen.xml.XjbModule" -->
 <#-- @ftlvariable name="XjbAtomicType" type="java.lang.Class" -->
+<#-- @ftlvariable name="XjbEnum" type="java.lang.Class" -->
 <#-- @ftlvariable name="XjbFieldStructureContent" type="java.lang.Class" -->
 <#-- @ftlvariable name="XjbPadStructureContent" type="java.lang.Class" -->
 <#macro generateComplexTypeFields complexType>
@@ -73,6 +74,18 @@ public final class ${className} {
     public static void initialize() {
     }
     </#if>
+    <#list xidTypes as xidType>
+
+    @java.lang.annotation.Target({
+        java.lang.annotation.ElementType.FIELD,
+        java.lang.annotation.ElementType.LOCAL_VARIABLE,
+        java.lang.annotation.ElementType.PARAMETER
+    })
+    @java.lang.annotation.Retention(java.lang.annotation.RetentionType.RUNTIME)
+    @java.lang.annotation.Documented
+    public @interface ${xidType.srcName} {
+    }
+    </#list>
     <#list enums as enum>
 
     public enum ${enum.srcName} {
@@ -158,7 +171,11 @@ public final class ${className} {
                         <#case "double">
             ${content.srcName} = buffer.get();
                             <#break/>
+                        <#case "char">
+            ${content.srcName} = (char) buffer.get();
                     </#switch>
+                <#elseif instance_of(content.srcType, XjbEnum)>
+            ${content.srcName} = ${content.srcType.srcName}.valueOf();
                 </#if>
             buffer.position(buffer.position() + ${content.byteSize()});
             </#if>

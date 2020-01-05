@@ -7,8 +7,6 @@ import org.jetbrains.annotations.NotNull;
 
 import org.freedesktop.xjbgen.template.DataModel;
 
-import java.nio.ByteBuffer;
-
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
@@ -27,7 +25,7 @@ public enum XjbAtomicType implements XjbType {
     BOOLEAN("BOOL",   boolean.class, 1, false),
     FLOAT  ("float",  float.class,   4, false),
     DOUBLE ("double", double.class,  8, false),
-    CHAR   ("char",   byte.class,    1, false);
+    CHAR   ("char",   char.class,    1, false);
 
     private final @NotNull String xmlName;
 
