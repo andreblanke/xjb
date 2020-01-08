@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression;
 import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression.*;
 
-class XjbModuleTest {
+public final class XjbModuleTest {
 
     @ValueSource(strings = {
         "/bigreq.xml",
@@ -45,7 +45,7 @@ class XjbModuleTest {
         "/xvmc.xml"
     })
     @ParameterizedTest
-    void testDeserialization(final String xprotoXmlFileLocation) throws Exception {
+    public void testDeserialization(final String xprotoXmlFileLocation) throws Exception {
         final Unmarshaller unmarshaller =
             JAXBContext
                 .newInstance(XjbModule.class, XjbIntegerExpression.class, XjbBitExpression.class, XjbValueExpression.class)
