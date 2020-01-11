@@ -1,8 +1,4 @@
 <#-- @ftlvariable name="" type="org.freedesktop.xjbgen.xml.XjbModule" -->
-<#-- @ftlvariable name="XjbAtomicType" type="java.lang.Class" -->
-<#-- @ftlvariable name="XjbEnum" type="java.lang.Class" -->
-<#-- @ftlvariable name="XjbFieldStructureContent" type="java.lang.Class" -->
-<#-- @ftlvariable name="XjbPadStructureContent" type="java.lang.Class" -->
 <#macro generateComplexTypeFields complexType>
     <#list complexType.namedTypedContents as content>
 
@@ -88,7 +84,7 @@ public final class ${className} {
     </#list>
     <#list enums as enum>
 
-    public enum ${enum.srcName} {
+    public enum ${enum} {
 
         <#list enum.items as item>
         ${item.srcName}(${item.expression})${item_has_next?then(",", ";")}
@@ -96,11 +92,11 @@ public final class ${className} {
 
         private final int value;
 
-        ${enum.srcName}(final int value) {
+        ${enum}(final int value) {
             this.value = value;
         }
 
-        public static ${enum.srcName} valueOf(final int value) {
+        public static ${enum} valueOf(final int value) {
             for (var item : values()) {
                 if (item.getValue() == value)
                     return item;
@@ -136,61 +132,8 @@ public final class ${className} {
             final var reply  = new ${request.reply};
             <#list request.reply.contents as content>
 
-            <#if instance_of(content, XjbPadStructureContent)>
-                <#if content?is_last>
-            /* Skipping ${content.byteSize()} byte(s) of padding at end of buffer. */
-                <#else>
-            /* Skip ${content.byteSize()} byte(s) of padding. */
+            ${content.fromBytesSrc}
             buffer.position(buffer.position() + ${content.byteSize()});
-                </#if>
-            <#elseif instance_of(content, XjbFieldStructureContent)>
-                <#if instance_of(content.srcType, XjbAtomicType)>
-                    <#switch content.srcType.xmlName>
-                        <#case "CARD8">
-                        <#case "BYTE">
-            ${content.srcName} = Byte.toUnsignedInt(buffer.get());
-                            <#break/>
-                        <#case "CARD16">
-            ${content.srcName} = Short.toUnsignedInt(buffer.getShort())
-                            <#break/>
-                        <#case "CARD32">
-            ${content.srcName} = Integer.toUnsignedLong(buffer.getInt());
-                            <#break/>
-                        <#case "CARD64">
-            ${content.srcName} = buffer.getLong();
-                            <#break/>
-                        <#case "INT8">
-            ${content.srcName} = buffer.get();
-                            <#break/>
-                        <#case "INT16">
-            ${content.srcName} = buffer.getShort();
-                            <#break/>
-                        <#case "INT32">
-            ${content.srcName} = buffer.getInt();
-                            <#break/>
-                        <#case "INT64">
-            ${content.srcName} = buffer.getLong();
-                            <#break/>
-                        <#case "BOOL">
-            ${content.srcName} = (buffer.get() == 1);
-                            <#break/>
-                        <#case "float">
-            ${content.srcName} = buffer.getFloat();
-                            <#break/>
-                        <#case "double">
-            ${content.srcName} = buffer.getDouble();
-                            <#break/>
-                        <#case "double">
-            ${content.srcName} = buffer.get();
-                            <#break/>
-                        <#case "char">
-            ${content.srcName} = (char) buffer.get();
-                    </#switch>
-                <#elseif instance_of(content.srcType, XjbEnum)>
-            ${content.srcName} = ${content.srcType.srcName}.valueOf();
-                </#if>
-            buffer.position(buffer.position() + ${content.byteSize()});
-            </#if>
             </#list>
 
             return reply;

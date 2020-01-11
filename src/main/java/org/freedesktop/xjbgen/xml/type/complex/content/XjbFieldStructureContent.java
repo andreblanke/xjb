@@ -1,7 +1,22 @@
 package org.freedesktop.xjbgen.xml.type.complex.content;
 
-import org.freedesktop.xjbgen.template.DataModel;
+import javax.xml.bind.annotation.XmlAttribute;
 
-@DataModel
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+
 public final class XjbFieldStructureContent extends XjbNamedTypedStructureContent {
+
+    @XmlAttribute(name = "enum")
+    private String enum_;
+
+    @Override
+    @Contract(pure = true)
+    public @NotNull String getFromBytesSrc() {
+        return getSrcType().getFromBytesSrc(this).formatted("reply", getSrcName(), "buffer");
+    }
+
+    public String getEnum() {
+        return enum_;
+    }
 }
