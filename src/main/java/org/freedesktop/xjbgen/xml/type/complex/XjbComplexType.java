@@ -36,6 +36,7 @@ public abstract class XjbComplexType<P extends XjbElement<?>> extends XjbTypeEle
     })
     private List<XjbStructureContent> contents = new ArrayList<>();
 
+    // <editor-fold desc="XjbType">
     private int byteSize;
 
     @Override
@@ -44,6 +45,12 @@ public abstract class XjbComplexType<P extends XjbElement<?>> extends XjbTypeEle
             byteSize = contents.stream().mapToInt(XjbStructureContent::byteSize).sum();
         return byteSize;
     }
+
+    @Override
+    public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        return "%1$s.%2$s = " + content.getSrcType().toString() + ".fromBytes(%3$s.slice());";
+    }
+    // </editor-fold>
 
     public @NotNull List<XjbNamedTypedStructureContent> getNamedTypedContents() {
         return contents

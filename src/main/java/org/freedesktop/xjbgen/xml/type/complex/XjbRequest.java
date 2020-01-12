@@ -32,7 +32,7 @@ public final class XjbRequest extends XjbComplexType<XjbModule> {
     }
 
     @Override
-    public @NotNull String getFromBytesSrc(XjbFieldStructureContent content) {
+    public @NotNull String getFromBytesSrc(@NotNull XjbFieldStructureContent content) {
         throw new UnsupportedOperationException();
     }
 
@@ -63,7 +63,7 @@ public final class XjbRequest extends XjbComplexType<XjbModule> {
         }
 
         @Override
-        public @NotNull String getFromBytesSrc(XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc(@NotNull XjbFieldStructureContent content) {
             throw new UnsupportedOperationException();
         }
     }
