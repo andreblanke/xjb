@@ -73,6 +73,7 @@ public final class ${className} {
     <#list xidTypes as xidType>
 
     @java.lang.annotation.Target({
+        java.lang.annotation.ElementType.ANNOTATION_TYPE,
         java.lang.annotation.ElementType.FIELD,
         java.lang.annotation.ElementType.LOCAL_VARIABLE,
         java.lang.annotation.ElementType.PARAMETER
@@ -82,9 +83,24 @@ public final class ${className} {
     public @interface ${xidType.srcName} {
     }
     </#list>
+    <#list xidUnions as xidUnion>
+
+    <#list xidUnion.types as type>
+    @${type}
+    </#list>
+    @java.lang.annotation.Target({
+        java.lang.annotation.ElementType.FIELD,
+        java.lang.annotation.ElementType.LOCAL_VARIABLE,
+        java.lang.annotation.ElementType.PARAMETER
+    })
+    @java.lang.annotation.Retention(java.lang.annotation.RetentionType.RUNTIME)
+    @java.lang.annotation.Documented
+    public @interface ${xidUnion.srcName} {
+    }
+    </#list>
     <#list enums as enum>
 
-    public enum ${enum} {
+    public enum ${enum.srcName} {
 
         <#list enum.items as item>
         ${item.srcName}(${item.expression})${item_has_next?then(",", ";")}
@@ -92,11 +108,11 @@ public final class ${className} {
 
         private final int value;
 
-        ${enum}(final int value) {
+        ${enum.srcName}(final int value) {
             this.value = value;
         }
 
-        public static ${enum} valueOf(final int value) {
+        public static ${enum.srcName} valueOf(final int value) {
             for (var item : values()) {
                 if (item.getValue() == value)
                     return item;
@@ -111,7 +127,7 @@ public final class ${className} {
     </#list>
     <#list requests as request>
 
-    public static final class ${request} {
+    public static final class ${request.srcName} {
         <@generateComplexTypeFields request/>
 
         public static final int OPCODE = ${request.opcode};
@@ -121,15 +137,15 @@ public final class ${className} {
     }
     <#if request.reply??>
 
-    public static final class ${request.reply} {
+    public static final class ${request.reply.srcName} {
         <@generateComplexTypeFields request.reply/>
 
-        private ${request.reply}() {
+        private ${request.reply.srcName}() {
         }
 
-        static ${request.reply} fromBytes(final byte[] bytes) {
+        static ${request.reply.srcName} fromBytes(final byte[] bytes) {
             final var buffer = java.nio.ByteBuffer.wrap(bytes);
-            final var reply  = new ${request.reply};
+            final var reply  = new ${request.reply.srcName};
             <#list request.reply.contents as content>
 
             ${content.fromBytesSrc}

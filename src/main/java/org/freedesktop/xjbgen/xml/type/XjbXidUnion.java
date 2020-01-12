@@ -15,8 +15,6 @@ import org.freedesktop.xjbgen.xml.XjbElement;
 import org.freedesktop.xjbgen.xml.XjbModule;
 import org.freedesktop.xjbgen.xml.type.complex.content.XjbFieldStructureContent;
 
-import static java.util.stream.Collectors.joining;
-
 public final class XjbXidUnion extends XjbTypeElement<XjbModule> {
 
     @XmlAttribute(name = "name", required = true)
@@ -28,10 +26,7 @@ public final class XjbXidUnion extends XjbTypeElement<XjbModule> {
     @Override
     @Contract(pure = true)
     public @NotNull String toString() {
-        final String xidUnionValue = (types.size() == 1)
-            ? "\"" + getSrcName() + "\""
-            : "{\"" + types.stream().map(Type::toString).collect(joining("\", \"")) + "\"}";
-        return "@XidUnion(%s) int".formatted(xidUnionValue);
+        return "@%s int".formatted(getSrcName());
     }
 
     // <editor-fold desc="XjbType">
@@ -46,10 +41,14 @@ public final class XjbXidUnion extends XjbTypeElement<XjbModule> {
     }
 
     @Override
-    public String getXmlName() {
+    public @NotNull String getXmlName() {
         return xmlName;
     }
     // </editor-fold>
+
+    public @NotNull List<Type> getTypes() {
+        return types;
+    }
 
     public static final class Type extends XjbElement<XjbXidUnion> {
 
