@@ -27,4 +27,6 @@ public interface XjbType extends XjbNamed {
      * @return
      */
     @NotNull String getFromBytesSrc(XjbFieldStructureContent content);
+
+    @NotNull String getQualifiedSrcName();
 }

@@ -4,6 +4,7 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 
 import org.freedesktop.xjbgen.xml.XjbElement;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class XjbTypeElement<P extends XjbElement<?>> extends XjbElement<P> implements XjbType {
 
@@ -18,5 +19,10 @@ public abstract class XjbTypeElement<P extends XjbElement<?>> extends XjbElement
     @Override
     public String getXmlName() {
         return xmlName;
+    }
+
+    @Override
+    public @NotNull String getQualifiedSrcName() {
+        return getModule().getClassName() + '.' + getSrcName();
     }
 }

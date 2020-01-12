@@ -2,14 +2,14 @@
 <#macro generateComplexTypeFields complexType>
     <#list complexType.namedTypedContents as content>
 
-        private ${content.srcType} ${content.srcName};
+        private ${content.srcType.qualifiedSrcName} ${content.srcName};
     </#list>
 </#macro>
 
 <#macro generateFromBytesStaticFactoryMethod complexType>
-        static ${complexType.srcName} fromBytes(final byte[] bytes) {
+        static ${complexType.qualifiedSrcName} fromBytes(final byte[] bytes) {
             final var buffer = java.nio.ByteBuffer.wrap(bytes);
-            final var reply  = new ${complexType.srcName};
+            final var reply  = new ${complexType.qualifiedSrcName};
         <#list complexType.contents as content>
 
             ${content.fromBytesSrc}
@@ -24,7 +24,7 @@
     <#list complexType.namedTypedContents as content>
         <#local getterSetterSuffix = content.srcName?cap_first/>
 
-        public ${content.srcType} get${getterSetterSuffix}() {
+        public ${content.srcType.qualifiedSrcName} get${getterSetterSuffix}() {
             return ${content.srcName};
         }
     </#list>
@@ -34,12 +34,12 @@
         public static final class Builder {
             <#list complexType.namedTypedContents as content>
 
-            private ${content.srcType} ${content.srcName};
+            private ${content.srcType.qualifiedSrcName} ${content.srcName};
             </#list>
 
-            public ${complexType.srcName} build() {
+            public ${complexType.qualifiedSrcName} build() {
                 <#local builtObjectName = complexType.srcName[0]?lower_case + complexType.srcName[1..]/>
-                final var ${builtObjectName} = new ${complexType.srcName}();
+                final var ${builtObjectName} = new ${complexType.qualifiedSrcName}();
 
                 <#if complexType.namedTypedContents?has_content>
                 <#list complexType.namedTypedContents as content>
@@ -51,7 +51,7 @@
             }
             <#list complexType.namedTypedContents as content>
 
-            public Builder ${content.srcName}(final ${content.srcType} ${content.srcName}) {
+            public Builder ${content.srcName}(final ${content.srcType.qualifiedSrcName} ${content.srcName}) {
                 this.${content.srcName} = ${content.srcName};
                 return this;
             }

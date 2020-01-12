@@ -147,4 +147,9 @@ public enum XjbAtomicType implements XjbType {
     public @NotNull String getSrcName() {
         return javaType.getSimpleName();
     }
+
+    @Override
+    public @NotNull String getQualifiedSrcName() {
+        return getSrcName();
+    }
 }
