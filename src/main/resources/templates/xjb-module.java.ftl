@@ -6,26 +6,26 @@
     </#list>
 </#macro>
 
+<#macro generateFromBytesStaticFactoryMethod complexType>
+        static ${complexType.srcName} fromBytes(final byte[] bytes) {
+            final var buffer = java.nio.ByteBuffer.wrap(bytes);
+            final var reply  = new ${complexType.srcName};
+        <#list complexType.contents as content>
+
+            ${content.fromBytesSrc}
+            buffer.position(buffer.position() + ${content.byteSize()});
+        </#list>
+
+            return reply;
+        }
+</#macro>
+
 <#macro generateComplexTypeGetters complexType>
     <#list complexType.namedTypedContents as content>
         <#local getterSetterSuffix = content.srcName?cap_first/>
 
         public ${content.srcType} get${getterSetterSuffix}() {
             return ${content.srcName};
-        }
-    </#list>
-</#macro>
-
-<#macro generateComplexTypeGettersAndSetters complexType>
-    <#list complexType.namedTypedContents as content>
-        <#local getterSetterSuffix = content.srcName?cap_first/>
-
-        public ${content.srcType} get${getterSetterSuffix}() {
-            return ${content.srcName};
-        }
-
-        public void set${getterSetterSuffix}(final ${content.srcType} ${content.srcName}) {
-            this.${content.srcName} = ${content.srcName};
         }
     </#list>
 </#macro>
@@ -43,7 +43,7 @@
 
                 <#if complexType.namedTypedContents?has_content>
                 <#list complexType.namedTypedContents as content>
-                ${builtObjectName}.set${content.srcName?cap_first}(${content.srcName});
+                ${builtObjectName}.${content.srcName} = ${content.srcName};
                 </#list>
 
                 </#if>
@@ -70,6 +70,22 @@ public final class ${className} {
     public static void initialize() {
     }
     </#if>
+    <#list structs as struct>
+
+    public static final class ${struct.srcName} {
+        <@generateComplexTypeFields struct/>
+        <#if struct.namedTypedContents?has_content>
+
+        private ${struct.srcName}() {
+        }
+        </#if>
+
+        <@generateFromBytesStaticFactoryMethod struct/>
+        <@generateComplexTypeGetters struct/>
+
+        <@generateComplexTypeBuilder struct/>
+    }
+    </#list>
     <#list xidTypes as xidType>
 
     @java.lang.annotation.Target({
@@ -131,7 +147,12 @@ public final class ${className} {
         <@generateComplexTypeFields request/>
 
         public static final int OPCODE = ${request.opcode};
-        <@generateComplexTypeGettersAndSetters request/>
+        <#if request.namedTypedContents?has_content>
+
+        private ${request.srcName}() {
+        }
+        </#if>
+        <@generateComplexTypeGetters request/>
 
         <@generateComplexTypeBuilder request/>
     }
@@ -143,17 +164,7 @@ public final class ${className} {
         private ${request.reply.srcName}() {
         }
 
-        static ${request.reply.srcName} fromBytes(final byte[] bytes) {
-            final var buffer = java.nio.ByteBuffer.wrap(bytes);
-            final var reply  = new ${request.reply.srcName};
-            <#list request.reply.contents as content>
-
-            ${content.fromBytesSrc}
-            buffer.position(buffer.position() + ${content.byteSize()});
-            </#list>
-
-            return reply;
-        }
+        <@generateFromBytesStaticFactoryMethod request.reply/>
         <@generateComplexTypeGetters request.reply/>
     }
     </#if>

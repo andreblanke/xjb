@@ -134,6 +134,10 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
         return header;
     }
 
+    public List<XjbStruct> getStructs() {
+        return structs;
+    }
+
     public List<XjbXidType> getXidTypes() {
         return xidTypes;
     }

@@ -4,11 +4,11 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
-import org.freedesktop.xjbgen.xml.type.complex.content.XjbFieldStructureContent;
 import org.jetbrains.annotations.NotNull;
 
 import org.freedesktop.xjbgen.xml.XjbModule;
 import org.freedesktop.xjbgen.xml.type.XjbTypeElement;
+import org.freedesktop.xjbgen.xml.type.complex.content.XjbFieldStructureContent;
 
 public final class XjbRequest extends XjbComplexType<XjbModule> {
 
