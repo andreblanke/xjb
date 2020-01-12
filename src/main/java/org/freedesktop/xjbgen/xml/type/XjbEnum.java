@@ -21,9 +21,6 @@ import org.freedesktop.xjbgen.xml.type.complex.content.XjbFieldStructureContent;
  */
 public final class XjbEnum extends XjbTypeElement<XjbModule>{
 
-    @XmlAttribute(name = "name", required = true)
-    private String xmlName;
-
     @XmlElement(name = "item", required = true)
     private List<Item> items;
 
@@ -35,11 +32,6 @@ public final class XjbEnum extends XjbTypeElement<XjbModule>{
     @Override
     public @NotNull String getFromBytesSrc(final XjbFieldStructureContent content) {
         return "%1$s.%2$s = " + toString() + ".valueOf(%3$s.getInt());";
-    }
-
-    @Override
-    public @NotNull String getXmlName() {
-        return xmlName;
     }
 
     public List<Item> getItems() {
