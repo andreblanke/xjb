@@ -12,6 +12,7 @@ import org.freedesktop.xjbgen.xml.XjbElement;
 import org.freedesktop.xjbgen.xml.type.XjbType;
 import org.freedesktop.xjbgen.xml.type.XjbTypeElement;
 import org.freedesktop.xjbgen.xml.type.complex.content.XjbFieldStructureContent;
+import org.freedesktop.xjbgen.xml.type.complex.content.XjbListStructureContent;
 import org.freedesktop.xjbgen.xml.type.complex.content.XjbNamedTypedStructureContent;
 import org.freedesktop.xjbgen.xml.type.complex.content.XjbPadStructureContent;
 import org.freedesktop.xjbgen.xml.type.complex.content.XjbStructureContent;
@@ -32,7 +33,8 @@ public abstract class XjbComplexType<P extends XjbElement<?>> extends XjbTypeEle
 
     @XmlElements({
         @XmlElement(name = "pad",   type = XjbPadStructureContent.class),
-        @XmlElement(name = "field", type = XjbFieldStructureContent.class)
+        @XmlElement(name = "field", type = XjbFieldStructureContent.class),
+        @XmlElement(name = "list",  type = XjbListStructureContent.class)
     })
     private List<XjbStructureContent> contents = new ArrayList<>();
 

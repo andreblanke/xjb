@@ -19,12 +19,7 @@ import org.jetbrains.annotations.NotNull;
 
 import org.freedesktop.xjbgen.XjbGenerationContext;
 import org.freedesktop.xjbgen.util.Strings;
-import org.freedesktop.xjbgen.xml.type.XjbAtomicType;
-import org.freedesktop.xjbgen.xml.type.XjbEnum;
-import org.freedesktop.xjbgen.xml.type.XjbType;
-import org.freedesktop.xjbgen.xml.type.XjbTypedef;
-import org.freedesktop.xjbgen.xml.type.XjbXidType;
-import org.freedesktop.xjbgen.xml.type.XjbXidUnion;
+import org.freedesktop.xjbgen.xml.type.*;
 import org.freedesktop.xjbgen.xml.type.complex.XjbRequest;
 import org.freedesktop.xjbgen.xml.type.complex.XjbStruct;
 import org.freedesktop.xjbgen.xml.type.complex.XjbUnion;
@@ -76,6 +71,19 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
     private List<XjbRequest> requests = new ArrayList<>();
 
     private final Map<String, XjbType> registeredTypes = new HashMap<>(XjbAtomicType.getXmlNameMappings());
+
+    public XjbModule() {
+        registeredTypes.put(
+            XjbFileDescriptorType
+                .getInstance()
+                .getXmlName(),
+            XjbFileDescriptorType.getInstance());
+        registeredTypes.put(
+            XjbVoidType
+                .getInstance()
+                .getXmlName(),
+            XjbVoidType.getInstance());
+    }
 
     @Override
     public Collection<? extends XjbModule> predecessors() {

@@ -29,4 +29,8 @@ public interface XjbType extends XjbNamed {
     @NotNull String getFromBytesSrc(XjbFieldStructureContent content);
 
     @NotNull String getQualifiedSrcName();
+
+    default XjbType getBoxedType() {
+        return this;
+    }
 }

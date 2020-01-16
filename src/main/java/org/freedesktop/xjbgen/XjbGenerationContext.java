@@ -2,6 +2,8 @@ package org.freedesktop.xjbgen;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -16,13 +18,13 @@ public final class XjbGenerationContext {
 
     private final Map<String, XjbModule> registeredModules = new HashMap<>();
 
-    private static final XjbGenerationContext instance = new XjbGenerationContext();
+    private static final XjbGenerationContext INSTANCE = new XjbGenerationContext();
 
     private XjbGenerationContext() {
     }
 
     public static XjbGenerationContext getInstance() {
-        return instance;
+        return INSTANCE;
     }
 
     public void registerModule(@NotNull final XjbModule module) {
@@ -38,11 +40,14 @@ public final class XjbGenerationContext {
         final int separatorIndex = xmlType.indexOf(':');
 
         if (separatorIndex == -1) {
-            var type =
-                module
-                    .getRegisteredTypes()
-                    .get(xmlType);
-            return (type != null) ? type : lookupTypeInImports(module, xmlType);
+            return Optional
+                .ofNullable(
+                    module
+                        .getRegisteredTypes()
+                        .get(xmlType))
+                .or(() -> Optional.ofNullable(lookupTypeInImports(module, xmlType)))
+                .orElseThrow(() -> new NoSuchElementException(
+                    "Could not find type '%1$s' while processing %2$s.xml.".formatted(xmlType, module.getHeader())));
         }
         final String header   = xmlType.substring(0, separatorIndex);
         final String typeName = xmlType.substring(separatorIndex + 1);

@@ -2,7 +2,7 @@
 <#macro generateComplexTypeFields complexType>
     <#list complexType.namedTypedContents as content>
 
-        private ${content.srcType.qualifiedSrcName} ${content.srcName};
+        ${content}
     </#list>
 </#macro>
 
@@ -92,7 +92,8 @@ public final class ${className} {
         java.lang.annotation.ElementType.ANNOTATION_TYPE,
         java.lang.annotation.ElementType.FIELD,
         java.lang.annotation.ElementType.LOCAL_VARIABLE,
-        java.lang.annotation.ElementType.PARAMETER
+        java.lang.annotation.ElementType.PARAMETER,
+        java.lang.annotation.ElementType.TYPE_USE
     })
     @java.lang.annotation.Retention(java.lang.annotation.RetentionType.RUNTIME)
     @java.lang.annotation.Documented
@@ -107,7 +108,8 @@ public final class ${className} {
     @java.lang.annotation.Target({
         java.lang.annotation.ElementType.FIELD,
         java.lang.annotation.ElementType.LOCAL_VARIABLE,
-        java.lang.annotation.ElementType.PARAMETER
+        java.lang.annotation.ElementType.PARAMETER,
+        java.lang.annotation.ElementType.TYPE_USE
     })
     @java.lang.annotation.Retention(java.lang.annotation.RetentionType.RUNTIME)
     @java.lang.annotation.Documented

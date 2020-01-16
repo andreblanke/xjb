@@ -5,10 +5,15 @@ import javax.xml.bind.annotation.XmlAttribute;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class XjbFieldStructureContent extends XjbNamedTypedStructureContent {
+public class XjbFieldStructureContent extends XjbNamedTypedStructureContent {
 
     @XmlAttribute(name = "enum")
     private String enum_;
+
+    @Override
+    public String toString() {
+        return "private %1$s %2$s;".formatted(getSrcType().getQualifiedSrcName(), getSrcName());
+    }
 
     @Override
     @Contract(pure = true)

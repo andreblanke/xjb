@@ -4,6 +4,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.util.Map;
+import java.util.logging.Logger;
 import java.util.regex.Pattern;
 
 import javax.xml.bind.JAXBContext;
@@ -35,6 +36,8 @@ public final class XjbGenerator {
     private static final JAXBContext JAXB_XJB_MODULE_CONTEXT;
 
     private static final Schema XCB_SCHEMA;
+
+    private static final Logger LOGGER = Logger.getLogger(XjbGenerator.class.getSimpleName());
 
     static {
         try {
@@ -70,6 +73,8 @@ public final class XjbGenerator {
 
         new TopologicalOrderIterator<>(registeredModules.values()).forEachRemaining(module -> {
             try {
+                LOGGER.info("Generating %1$s.java from %2$s.xml.".formatted(module.getClassName(), module.getHeader()));
+
                 XJB_MODULE_TEMPLATE.process(module, new FileWriter(module.getClassName() + ".java"));
             } catch (final IOException exception) {
                 throw new UncheckedIOException(exception);
