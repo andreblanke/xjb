@@ -15,8 +15,8 @@ public abstract class XjbXidTypeElement extends XjbTypeElement<XjbModule> {
     }
 
     @Override
-    public @NotNull String getFromBytesSrc() {
-        return "%1$s.getInt();";
+    public @NotNull String getFromBytesExpression() {
+        return "%1$s.getInt()";
     }
 
     @Override

@@ -29,8 +29,8 @@ public final class XjbEnum extends XjbTypeElement<XjbModule>{
     }
 
     @Override
-    public @NotNull String getFromBytesSrc() {
-        return getQualifiedSrcName() + ".valueOf(%1$s.getInt());";
+    public @NotNull String getFromBytesExpression() {
+        return getQualifiedSrcName() + ".valueOf(%1$s.getInt())";
     }
 
     public List<Item> getItems() {

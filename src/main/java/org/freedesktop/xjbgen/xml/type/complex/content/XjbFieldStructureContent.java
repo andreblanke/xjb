@@ -18,7 +18,7 @@ public class XjbFieldStructureContent extends XjbNamedTypedStructureContent {
     @Override
     @Contract(pure = true)
     public @NotNull String getFromBytesSrc() {
-        return "reply." + getSrcName() + " = " + getSrcType().getFromBytesSrc().formatted("buffer");
+        return "reply." + getSrcName() + " = " + getSrcType().getFromBytesExpression().formatted("buffer") + ';';
     }
 
     public String getEnum() {

@@ -5,8 +5,6 @@ import java.util.Map;
 
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.xml.type.complex.content.XjbFieldStructureContent;
-
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
@@ -14,157 +12,92 @@ public enum XjbAtomicType implements XjbType {
 
     CARD_8("CARD8", int.class, Integer.class, 1, true) {
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return "Byte.toUnsignedInt(%1$s.get());";
-        }
-
-        @Override
-        public @NotNull XjbType getBoxedType() {
-            return new XjbAbstractBoxedAtomicType("Integer.valueOf(Byte.toUnsignedInt(%1$s.get()));");
+        public @NotNull String getFromBytesExpression() {
+            return "Byte.toUnsignedInt(%1$s.get())";
         }
     },
 
     CARD_16("CARD16", int.class, Integer.class, 2, true) {
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return "Short.toUnsignedInt(%1$s.getShort());";
-        }
-
-        @Override
-        public @NotNull XjbType getBoxedType() {
-            return new XjbAbstractBoxedAtomicType("Integer.valueOf(Short.toUnsignedInt(%1$s.getShort()));");
+        public @NotNull String getFromBytesExpression() {
+            return "Short.toUnsignedInt(%1$s.getShort())";
         }
     },
 
     CARD_32("CARD32", long.class, Long.class, 4, true) {
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return "Integer.toUnsignedLong(%1$s.getInt());";
-        }
-
-        @Override
-        public @NotNull XjbType getBoxedType() {
-            return new XjbAbstractBoxedAtomicType("Long.valueOf(Integer.toUnsignedLong(%1$s.getInt()));");
+        public @NotNull String getFromBytesExpression() {
+            return "Integer.toUnsignedLong(%1$s.getInt())";
         }
     },
 
     CARD_64("CARD64", long.class, Long.class, 8, true) {
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return "%1$s.getLong();";
-        }
-
-        @Override
-        public @NotNull XjbType getBoxedType() {
-            return new XjbAbstractBoxedAtomicType("Long.valueOf(%1$s.getLong());");
+        public @NotNull String getFromBytesExpression() {
+            return "%1$s.getLong()";
         }
     },
 
     INT_8("INT8", byte.class, Byte.class, 1, false) {
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return "%1$s.get();";
-        }
-
-        @Override
-        public @NotNull XjbType getBoxedType() {
-            return new XjbAbstractBoxedAtomicType("Byte.valueOf(%1$s.get());");
+        public @NotNull String getFromBytesExpression() {
+            return "%1$s.get()";
         }
     },
 
     INT_16("INT16", short.class, Short.class, 2, false) {
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return "%1$s.getShort();";
-        }
-
-        @Override
-        public @NotNull XjbType getBoxedType() {
-            return new XjbAbstractBoxedAtomicType("Short.valueOf(%1$s.getShort());");
+        public @NotNull String getFromBytesExpression() {
+            return "%1$s.getShort()";
         }
     },
 
     INT_32("INT32", int.class, Integer.class, 4, false) {
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return "%1$s.getInt();";
-        }
-
-        @Override
-        public @NotNull XjbType getBoxedType() {
-            return new XjbAbstractBoxedAtomicType("Integer.valueOf(%1$s.getInt());");
+        public @NotNull String getFromBytesExpression() {
+            return "%1$s.getInt()";
         }
     },
 
     INT_64("INT64", long.class, Long.class, 8, false) {
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return "%1$s.getLong();";
-        }
-
-        @Override
-        public @NotNull XjbType getBoxedType() {
-            return new XjbAbstractBoxedAtomicType("Long.valueOf(%1$s.getLong());");
+        public @NotNull String getFromBytesExpression() {
+            return "%1$s.getLong()";
         }
     },
 
     BYTE("BYTE", int.class, Integer.class, 1, true) {
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return "Byte.toUnsignedInt(%1$s.get());";
-        }
-
-        @Override
-        public @NotNull XjbType getBoxedType() {
-            return new XjbAbstractBoxedAtomicType("Integer.valueOf(Byte.toUnsignedInt(%1$s.get()));");
+        public @NotNull String getFromBytesExpression() {
+            return "Byte.toUnsignedInt(%1$s.get())";
         }
     },
 
     BOOLEAN("BOOL", boolean.class, Boolean.class, 1, false) {
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return "(%1$s.get() != 0);";
-        }
-
-        @Override
-        public @NotNull XjbType getBoxedType() {
-            return new XjbAbstractBoxedAtomicType("Boolean.valueOf(%1$s.get() != 0);");
+        public @NotNull String getFromBytesExpression() {
+            return "(%1$s.get() != 0)";
         }
     },
 
     FLOAT("float", float.class, Float.class, 4, false) {
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return "%1$s.getFloat();";
-        }
-
-        @Override
-        public @NotNull XjbType getBoxedType() {
-            return new XjbAbstractBoxedAtomicType("Float.valueOf(%1$s.getFloat());");
+        public @NotNull String getFromBytesExpression() {
+            return "%1$s.getFloat()";
         }
     },
 
     DOUBLE("double", double.class, Double.class, 8, false) {
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return "%1$s.getDouble();";
-        }
-
-        @Override
-        public @NotNull XjbType getBoxedType() {
-            return new XjbAbstractBoxedAtomicType("Double.valueOf(%1$s.getDouble());");
+        public @NotNull String getFromBytesExpression() {
+            return "%1$s.getDouble()";
         }
     },
 
     CHAR("char", char.class, Character.class, 1, false) {
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return "(char) %1$s.get();";
-        }
-
-        @Override
-        public @NotNull XjbType getBoxedType() {
-            return new XjbAbstractBoxedAtomicType("Character.valueOf((char) %1$s.get());");
+        public @NotNull String getFromBytesExpression() {
+            return "(char) %1$s.get()";
         }
     };
 
@@ -198,9 +131,6 @@ public enum XjbAtomicType implements XjbType {
     }
 
     @Override
-    public abstract @NotNull XjbType getBoxedType();
-
-    @Override
     public @NotNull String toString() {
         return getSrcName();
     }
@@ -225,13 +155,12 @@ public enum XjbAtomicType implements XjbType {
         return getSrcName();
     }
 
+    @Override
+    public @NotNull XjbType getBoxedType() {
+        return new XjbAbstractBoxedAtomicType();
+    }
+
     private final class XjbAbstractBoxedAtomicType implements XjbType {
-
-        private final @NotNull String fromBytesSrc;
-
-        private XjbAbstractBoxedAtomicType(@NotNull final String fromBytesSrc) {
-            this.fromBytesSrc = fromBytesSrc;
-        }
 
         @Override
         public final int byteSize() {
@@ -239,8 +168,8 @@ public enum XjbAtomicType implements XjbType {
         }
 
         @Override
-        public @NotNull String getFromBytesSrc() {
-            return fromBytesSrc;
+        public @NotNull String getFromBytesExpression() {
+            return "%1$s.valueOf(%2$s)".formatted(getQualifiedSrcName(), XjbAtomicType.this.getFromBytesExpression());
         }
 
         @Override

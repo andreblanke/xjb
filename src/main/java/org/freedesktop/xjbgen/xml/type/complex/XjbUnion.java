@@ -7,7 +7,7 @@ import org.freedesktop.xjbgen.xml.XjbModule;
 public final class XjbUnion extends XjbComplexType<XjbModule> {
 
     @Override
-    public @NotNull String getFromBytesSrc() {
-        return "%1$s.getInt();";
+    public @NotNull String getFromBytesExpression() {
+        return "%1$s.getInt()";
     }
 }

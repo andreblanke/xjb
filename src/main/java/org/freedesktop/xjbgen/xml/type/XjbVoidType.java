@@ -20,7 +20,7 @@ public final class XjbVoidType implements XjbType {
     }
 
     @Override
-    public @NotNull String getFromBytesSrc() {
+    public @NotNull String getFromBytesExpression() {
         throw new UnsupportedOperationException();
     }
 

@@ -20,8 +20,8 @@ public final class XjbFileDescriptorType implements XjbType {
     }
 
     @Override
-    public @NotNull String getFromBytesSrc() {
-        return "%1$s.getInt();";
+    public @NotNull String getFromBytesExpression() {
+        return "%1$s.getInt()";
     }
 
     @Override

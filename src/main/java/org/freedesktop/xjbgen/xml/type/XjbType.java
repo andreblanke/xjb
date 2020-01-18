@@ -22,7 +22,7 @@ public interface XjbType extends XjbNamed {
      *
      * @return
      */
-    @NotNull String getFromBytesSrc();
+    @NotNull String getFromBytesExpression();
 
     @NotNull String getQualifiedSrcName();
 

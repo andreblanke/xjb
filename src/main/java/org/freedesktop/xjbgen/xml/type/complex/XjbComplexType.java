@@ -49,8 +49,8 @@ public abstract class XjbComplexType<P extends XjbElement<?>> extends XjbTypeEle
     }
 
     @Override
-    public @NotNull String getFromBytesSrc() {
-        return getQualifiedSrcName() + ".fromByteBuffer(%1$s.slice());";
+    public @NotNull String getFromBytesExpression() {
+        return getQualifiedSrcName() + ".fromByteBuffer(%1$s.slice())";
     }
     // </editor-fold>
 

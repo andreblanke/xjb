@@ -7,6 +7,6 @@ public abstract class XjbStructureContent extends XjbElement<XjbComplexType<?>> 
 
     public abstract int byteSize();
 
-    /** @see org.freedesktop.xjbgen.xml.type.XjbType#getFromBytesSrc()  */
+    /** @see org.freedesktop.xjbgen.xml.type.XjbType#getFromBytesExpression()  */
     public abstract String getFromBytesSrc();
 }
