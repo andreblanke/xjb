@@ -26,11 +26,11 @@ public interface XjbType extends XjbNamed {
      *
      * @return
      */
-    @NotNull String getFromBytesSrc(XjbFieldStructureContent content);
+    @NotNull String getFromBytesSrc(@NotNull XjbFieldStructureContent content);
 
     @NotNull String getQualifiedSrcName();
 
-    default XjbType getBoxedType() {
+    default @NotNull XjbType getBoxedType() {
         return this;
     }
 }

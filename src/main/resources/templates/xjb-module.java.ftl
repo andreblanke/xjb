@@ -8,8 +8,11 @@
 
 <#macro generateFromBytesStaticFactoryMethod complexType>
         static ${complexType.qualifiedSrcName} fromBytes(final byte[] bytes) {
-            final var buffer = java.nio.ByteBuffer.wrap(bytes);
-            final var reply  = new ${complexType.qualifiedSrcName};
+            return fromByteBuffer(java.nio.ByteBuffer.wrap(bytes));
+        }
+
+        static ${complexType.qualifiedSrcName} fromByteBuffer(final java.nio.ByteBuffer buffer) {
+            final var reply = new ${complexType.qualifiedSrcName};
         <#list complexType.contents as content>
 
             ${content.fromBytesSrc}
@@ -60,7 +63,7 @@
 </#macro>
 package org.freedesktop.xjb;
 
-@javax.annotation.Generated("xjbgen")
+@javax.annotation.Generated("org.freedesktop.xjbgen.XjbGenerator")
 public final class ${className} {
 
     private ${className}() {
@@ -84,6 +87,14 @@ public final class ${className} {
         <@generateComplexTypeGetters struct/>
 
         <@generateComplexTypeBuilder struct/>
+    }
+    </#list>
+    <#list eventStructs as eventStruct>
+
+    public static final class ${eventStruct.srcName} {
+        <@generateComplexTypeFields eventStruct/>
+
+        <@generateComplexTypeGetters eventStruct/>
     }
     </#list>
     <#list xidTypes as xidType>

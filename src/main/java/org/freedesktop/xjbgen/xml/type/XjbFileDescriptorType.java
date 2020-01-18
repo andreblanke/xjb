@@ -22,8 +22,8 @@ public final class XjbFileDescriptorType implements XjbType {
     }
 
     @Override
-    public @NotNull String getFromBytesSrc(final XjbFieldStructureContent content) {
-        return "%1$s.%2$s = %3$s.getInt();";
+    public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        return "%1$s.getInt();";
     }
 
     @Override

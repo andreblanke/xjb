@@ -22,7 +22,7 @@ public final class XjbVoidType implements XjbType {
     }
 
     @Override
-    public @NotNull String getFromBytesSrc(final XjbFieldStructureContent content) {
+    public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
         throw new UnsupportedOperationException();
     }
 

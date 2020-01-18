@@ -20,9 +20,7 @@ import org.jetbrains.annotations.NotNull;
 import org.freedesktop.xjbgen.XjbGenerationContext;
 import org.freedesktop.xjbgen.util.Strings;
 import org.freedesktop.xjbgen.xml.type.*;
-import org.freedesktop.xjbgen.xml.type.complex.XjbRequest;
-import org.freedesktop.xjbgen.xml.type.complex.XjbStruct;
-import org.freedesktop.xjbgen.xml.type.complex.XjbUnion;
+import org.freedesktop.xjbgen.xml.type.complex.*;
 import org.freedesktop.xjbgen.util.PredecessorFunction;
 
 import static java.util.stream.Collectors.toList;
@@ -54,6 +52,9 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
 
     @XmlElement(name = "union")
     private List<XjbUnion> unions = new ArrayList<>();
+
+    @XmlElement(name = "eventstruct")
+    private List<XjbEventStruct> eventStructs = new ArrayList<>();
 
     @XmlElement(name = "xidtype")
     private List<XjbXidType> xidTypes = new ArrayList<>();
@@ -144,6 +145,10 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
 
     public List<XjbStruct> getStructs() {
         return structs;
+    }
+
+    public List<XjbEventStruct> getEventStructs() {
+        return eventStructs;
     }
 
     public List<XjbXidType> getXidTypes() {

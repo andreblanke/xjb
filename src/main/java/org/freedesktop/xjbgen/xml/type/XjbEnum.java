@@ -30,8 +30,8 @@ public final class XjbEnum extends XjbTypeElement<XjbModule>{
     }
 
     @Override
-    public @NotNull String getFromBytesSrc(final XjbFieldStructureContent content) {
-        return "%1$s.%2$s = " + toString() + ".valueOf(%3$s.getInt());";
+    public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        return getQualifiedSrcName() + ".valueOf(%3$s.getInt());";
     }
 
     public List<Item> getItems() {

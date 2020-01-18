@@ -17,7 +17,7 @@ public abstract class XjbXidTypeElement extends XjbTypeElement<XjbModule> {
 
     @Override
     public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
-        return "%1$s.%1$s = %3$s.getInt();";
+        return "%1$s.getInt();";
     }
 
     @Override
