@@ -14,7 +14,7 @@ public enum XjbAtomicType implements XjbType {
 
     CARD_8("CARD8", int.class, Integer.class, 1, true) {
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return "Byte.toUnsignedInt(%1$s.get());";
         }
 
@@ -26,7 +26,7 @@ public enum XjbAtomicType implements XjbType {
 
     CARD_16("CARD16", int.class, Integer.class, 2, true) {
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return "Short.toUnsignedInt(%1$s.getShort());";
         }
 
@@ -38,7 +38,7 @@ public enum XjbAtomicType implements XjbType {
 
     CARD_32("CARD32", long.class, Long.class, 4, true) {
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return "Integer.toUnsignedLong(%1$s.getInt());";
         }
 
@@ -50,7 +50,7 @@ public enum XjbAtomicType implements XjbType {
 
     CARD_64("CARD64", long.class, Long.class, 8, true) {
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return "%1$s.getLong();";
         }
 
@@ -62,7 +62,7 @@ public enum XjbAtomicType implements XjbType {
 
     INT_8("INT8", byte.class, Byte.class, 1, false) {
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return "%1$s.get();";
         }
 
@@ -74,7 +74,7 @@ public enum XjbAtomicType implements XjbType {
 
     INT_16("INT16", short.class, Short.class, 2, false) {
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return "%1$s.getShort();";
         }
 
@@ -86,7 +86,7 @@ public enum XjbAtomicType implements XjbType {
 
     INT_32("INT32", int.class, Integer.class, 4, false) {
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return "%1$s.getInt();";
         }
 
@@ -98,7 +98,7 @@ public enum XjbAtomicType implements XjbType {
 
     INT_64("INT64", long.class, Long.class, 8, false) {
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return "%1$s.getLong();";
         }
 
@@ -110,7 +110,7 @@ public enum XjbAtomicType implements XjbType {
 
     BYTE("BYTE", int.class, Integer.class, 1, true) {
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return "Byte.toUnsignedInt(%1$s.get());";
         }
 
@@ -122,7 +122,7 @@ public enum XjbAtomicType implements XjbType {
 
     BOOLEAN("BOOL", boolean.class, Boolean.class, 1, false) {
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return "(%1$s.get() != 0);";
         }
 
@@ -134,7 +134,7 @@ public enum XjbAtomicType implements XjbType {
 
     FLOAT("float", float.class, Float.class, 4, false) {
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return "%1$s.getFloat();";
         }
 
@@ -146,7 +146,7 @@ public enum XjbAtomicType implements XjbType {
 
     DOUBLE("double", double.class, Double.class, 8, false) {
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return "%1$s.getDouble();";
         }
 
@@ -158,7 +158,7 @@ public enum XjbAtomicType implements XjbType {
 
     CHAR("char", char.class, Character.class, 1, false) {
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return "(char) %1$s.get();";
         }
 
@@ -239,7 +239,7 @@ public enum XjbAtomicType implements XjbType {
         }
 
         @Override
-        public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+        public @NotNull String getFromBytesSrc() {
             return fromBytesSrc;
         }
 

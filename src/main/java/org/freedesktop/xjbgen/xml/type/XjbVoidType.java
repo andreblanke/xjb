@@ -3,8 +3,6 @@ package org.freedesktop.xjbgen.xml.type;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.xml.type.complex.content.XjbFieldStructureContent;
-
 public final class XjbVoidType implements XjbType {
 
     private static final XjbType INSTANCE = new XjbVoidType();
@@ -22,7 +20,7 @@ public final class XjbVoidType implements XjbType {
     }
 
     @Override
-    public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+    public @NotNull String getFromBytesSrc() {
         throw new UnsupportedOperationException();
     }
 

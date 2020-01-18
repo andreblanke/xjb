@@ -12,7 +12,6 @@ import org.freedesktop.xjbgen.xml.XjbElement;
 import org.freedesktop.xjbgen.xml.XjbModule;
 import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression;
 import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression.*;
-import org.freedesktop.xjbgen.xml.type.complex.content.XjbFieldStructureContent;
 
 /**
  * Represents a Java {@code enum} type which can take on any of the values returned by {@link #getItems()}.
@@ -30,8 +29,8 @@ public final class XjbEnum extends XjbTypeElement<XjbModule>{
     }
 
     @Override
-    public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
-        return getQualifiedSrcName() + ".valueOf(%3$s.getInt());";
+    public @NotNull String getFromBytesSrc() {
+        return getQualifiedSrcName() + ".valueOf(%1$s.getInt());";
     }
 
     public List<Item> getItems() {

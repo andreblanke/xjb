@@ -49,7 +49,7 @@ public abstract class XjbComplexType<P extends XjbElement<?>> extends XjbTypeEle
     }
 
     @Override
-    public @NotNull String getFromBytesSrc(@NotNull final XjbFieldStructureContent content) {
+    public @NotNull String getFromBytesSrc() {
         return getQualifiedSrcName() + ".fromByteBuffer(%1$s.slice());";
     }
     // </editor-fold>
