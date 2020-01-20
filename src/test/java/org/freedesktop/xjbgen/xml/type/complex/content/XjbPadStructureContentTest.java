@@ -24,10 +24,10 @@ public final class XjbPadStructureContentTest {
 
         when(padContent.byteSize()).thenReturn(8);
         when(padContent.getParent()).thenReturn(parent);
-        when(padContent.getFromBytesSrc()).thenCallRealMethod();
+        when(padContent.getAdvanceBufferSrc()).thenCallRealMethod();
 
         when(parent.getContents()).thenReturn(List.of(padContent));
 
-        assertEquals("/* Skipping 8 byte(s) of padding at end of buffer. */", padContent.getFromBytesSrc());
+        assertEquals("", padContent.getAdvanceBufferSrc());
     }
 }
