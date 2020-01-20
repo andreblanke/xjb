@@ -1,9 +1,17 @@
 package org.freedesktop.xjbgen.xml.type.complex.content;
 
+import javax.xml.bind.annotation.XmlValue;
+
+import org.eclipse.persistence.oxm.annotations.XmlValueExtension;
+
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 public final class XjbListStructureContent extends XjbFieldStructureContent {
+
+    @XmlValue
+    @XmlValueExtension
+    private Object lengthExpression;
 
     @Override
     @Contract(pure = true)

@@ -23,5 +23,11 @@ public abstract class XjbXidTypeElement extends XjbTypeElement<XjbModule> {
     public @NotNull String getQualifiedSrcName() {
         return "@%s int".formatted(super.getQualifiedSrcName());
     }
+
+    @Override
+    public @NotNull XjbType getBoxedType() {
+        System.out.println(getSrcName());
+        return XjbAtomicType.INT_32.getBoxedType();
+    }
     // </editor-fold>
 }

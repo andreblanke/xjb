@@ -16,7 +16,7 @@
         <#list complexType.contents as content>
 
             ${content.fromBytesSrc}
-            buffer.position(buffer.position() + ${content.byteSize()});
+            ${content.advanceBufferSrc}
         </#list>
 
             return reply;
@@ -66,6 +66,7 @@ package org.freedesktop.xjb;
 @javax.annotation.Generated("org.freedesktop.xjbgen.XjbGenerator")
 public final class ${className} {
 
+    /* Prevent instantiation. */
     private ${className}() {
     }
     <#if extension>
