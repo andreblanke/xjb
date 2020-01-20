@@ -1,11 +1,12 @@
 package org.freedesktop.xjbgen.xml.type.complex.content;
 
+import org.freedesktop.xjbgen.xml.type.Type;
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.xml.XjbElement;
-import org.freedesktop.xjbgen.xml.type.complex.XjbComplexType;
+import org.freedesktop.xjbgen.xml.Element;
+import org.freedesktop.xjbgen.xml.type.complex.ComplexType;
 
-public abstract class XjbStructureContent extends XjbElement<XjbComplexType<?>> {
+public abstract class StructureContent extends Element<ComplexType<?>> {
 
     public abstract int byteSize();
 
@@ -20,6 +21,6 @@ public abstract class XjbStructureContent extends XjbElement<XjbComplexType<?>> 
         return "buffer.position(buffer.position() + %d);".formatted(byteSize());
     }
 
-    /** @see org.freedesktop.xjbgen.xml.type.XjbType#getFromBytesExpression()  */
+    /** @see Type#getFromBytesExpression()  */
     public abstract @NotNull String getFromBytesSrc();
 }

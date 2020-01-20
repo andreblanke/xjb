@@ -6,10 +6,10 @@ import javax.xml.bind.annotation.XmlElement;
 
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.xml.XjbModule;
-import org.freedesktop.xjbgen.xml.type.XjbTypeElement;
+import org.freedesktop.xjbgen.xml.Module;
+import org.freedesktop.xjbgen.xml.type.TypeElement;
 
-public final class XjbRequest extends XjbComplexType<XjbModule> {
+public final class Request extends ComplexType<Module> {
 
     @XmlAttribute(required = true)
     private int opcode;
@@ -35,10 +35,10 @@ public final class XjbRequest extends XjbComplexType<XjbModule> {
         throw new UnsupportedOperationException();
     }
 
-    public static final class Reply extends XjbComplexType<XjbRequest> {
+    public static final class Reply extends ComplexType<Request> {
 
         /**
-         * Overrides the default {@link XjbTypeElement#afterUnmarshal(Unmarshaller, Object)} method responsible for
+         * Overrides the default {@link TypeElement#afterUnmarshal(Unmarshaller, Object)} method responsible for
          * registering this type.
          *
          * {@code Reply} types are not meant to be registered, as they do not have their own XML name and are solely

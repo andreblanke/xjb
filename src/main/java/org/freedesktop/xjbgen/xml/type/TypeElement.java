@@ -3,10 +3,10 @@ package org.freedesktop.xjbgen.xml.type;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 
-import org.freedesktop.xjbgen.xml.XjbElement;
+import org.freedesktop.xjbgen.xml.Element;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class XjbTypeElement<P extends XjbElement<?>> extends XjbElement<P> implements XjbType {
+public abstract class TypeElement<P extends Element<?>> extends Element<P> implements Type {
 
     @XmlAttribute(name = "name")
     private String xmlName;

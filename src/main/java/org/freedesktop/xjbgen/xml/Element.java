@@ -12,21 +12,21 @@ import javax.xml.bind.annotation.XmlTransient;
  * @param <P> The type of the parent {@code XjbElement}.
  */
 @XmlTransient
-public abstract class XjbElement<P extends XjbElement<?>> {
+public abstract class Element<P extends Element<?>> {
 
     private P parent;
 
-    private XjbModule module;
+    private Module module;
 
     @SuppressWarnings({"unchecked", "unused"})
     public void beforeUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
         this.parent = (P) parent;
     }
 
-    public XjbModule getModule() {
+    public Module getModule() {
         if (module != null)
             return module;
-        return (module = (parent == null) ? ((XjbModule) this) : parent.getModule());
+        return (module = (parent == null) ? ((Module) this) : parent.getModule());
     }
 
     public P getParent() {

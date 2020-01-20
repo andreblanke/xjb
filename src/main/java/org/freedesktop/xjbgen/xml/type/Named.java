@@ -1,6 +1,6 @@
 package org.freedesktop.xjbgen.xml.type;
 
-public interface XjbNamed {
+public interface Named {
 
     String getXmlName();
 

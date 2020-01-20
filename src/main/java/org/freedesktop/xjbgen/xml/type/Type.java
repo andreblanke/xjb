@@ -5,7 +5,7 @@ import org.jetbrains.annotations.NotNull;
 /**
  * Represents a type used in the generated source code.
  */
-public interface XjbType extends XjbNamed {
+public interface Type extends Named {
 
     /**
      * Computes the size in bytes of the binary representation of this {@code XjbType}.
@@ -26,7 +26,7 @@ public interface XjbType extends XjbNamed {
 
     @NotNull String getQualifiedSrcName();
 
-    default @NotNull XjbType getBoxedType() {
+    default @NotNull Type getBoxedType() {
         return this;
     }
 }

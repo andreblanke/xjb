@@ -7,16 +7,16 @@ import org.eclipse.persistence.oxm.annotations.XmlValueExtension;
 
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.xml.XjbElement;
+import org.freedesktop.xjbgen.xml.Element;
 
 @XmlTransient
-public abstract class XjbIntegerExpression extends XjbElement<XjbElement<?>> {
+public abstract class IntegerExpression extends Element<Element<?>> {
 
     public abstract String toString();
 
     public abstract int getValue();
 
-    public static final class XjbBitExpression extends XjbIntegerExpression {
+    public static final class BitExpression extends IntegerExpression {
 
         @XmlValue
         @XmlValueExtension
@@ -33,16 +33,16 @@ public abstract class XjbIntegerExpression extends XjbElement<XjbElement<?>> {
         }
     }
 
-    public static final class XjbValueExpression extends XjbIntegerExpression {
+    public static final class ValueExpression extends IntegerExpression {
 
         @XmlValue
         @XmlValueExtension
         private int literal;
 
-        public XjbValueExpression() {
+        public ValueExpression() {
         }
 
-        public XjbValueExpression(final int literal) {
+        public ValueExpression(final int literal) {
             this.literal = literal;
         }
 

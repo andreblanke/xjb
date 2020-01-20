@@ -1,4 +1,4 @@
-<#-- @ftlvariable name="" type="org.freedesktop.xjbgen.xml.XjbModule" -->
+<#-- @ftlvariable name="" type="org.freedesktop.xjbgen.xml.Module" -->
 <#macro generateComplexTypeFields complexType>
     <#list complexType.namedTypedContents as content>
 
@@ -63,7 +63,7 @@
 </#macro>
 package org.freedesktop.xjb;
 
-@javax.annotation.Generated("org.freedesktop.xjbgen.XjbGenerator")
+@javax.annotation.Generated("org.freedesktop.xjbgen.Generator")
 public final class ${className} {
 
     /* Prevent instantiation. */

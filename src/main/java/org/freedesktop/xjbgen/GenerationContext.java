@@ -7,36 +7,36 @@ import java.util.Optional;
 
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.xml.XjbImport;
-import org.freedesktop.xjbgen.xml.XjbModule;
-import org.freedesktop.xjbgen.xml.type.XjbType;
+import org.freedesktop.xjbgen.xml.Import;
+import org.freedesktop.xjbgen.xml.Module;
+import org.freedesktop.xjbgen.xml.type.Type;
 
 import static java.util.Map.Entry;
 import static java.util.stream.Collectors.toMap;
 
-public final class XjbGenerationContext {
+public final class GenerationContext {
 
-    private final Map<String, XjbModule> registeredModules = new HashMap<>();
+    private final Map<String, Module> registeredModules = new HashMap<>();
 
-    private static final XjbGenerationContext INSTANCE = new XjbGenerationContext();
+    private static final GenerationContext INSTANCE = new GenerationContext();
 
-    private XjbGenerationContext() {
+    private GenerationContext() {
     }
 
-    public static XjbGenerationContext getInstance() {
+    public static GenerationContext getInstance() {
         return INSTANCE;
     }
 
-    public void registerModule(@NotNull final XjbModule module) {
+    public void registerModule(@NotNull final Module module) {
         registeredModules.put(module.getHeader(), module);
     }
 
-    public XjbModule lookupModule(@NotNull final XjbImport xjbImport) {
+    public Module lookupModule(@NotNull final Import xjbImport) {
         return registeredModules.get(xjbImport.getHeader());
     }
 
     @NotNull
-    public XjbType lookupType(@NotNull final XjbModule module, @NotNull final String xmlType) {
+    public Type lookupType(@NotNull final Module module, @NotNull final String xmlType) {
         final int separatorIndex = xmlType.indexOf(':');
 
         if (separatorIndex == -1) {
@@ -59,7 +59,7 @@ public final class XjbGenerationContext {
                 .get(typeName);
     }
 
-    private XjbType lookupTypeInImports(@NotNull final XjbModule module, @NotNull final String xmlType) {
+    private Type lookupTypeInImports(@NotNull final Module module, @NotNull final String xmlType) {
         return module
             .predecessors()
             .stream()

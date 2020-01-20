@@ -3,11 +3,11 @@ package org.freedesktop.xjbgen.xml.type;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 
-import org.freedesktop.xjbgen.XjbGenerationContext;
-import org.freedesktop.xjbgen.xml.XjbElement;
-import org.freedesktop.xjbgen.xml.XjbModule;
+import org.freedesktop.xjbgen.GenerationContext;
+import org.freedesktop.xjbgen.xml.Element;
+import org.freedesktop.xjbgen.xml.Module;
 
-public final class XjbTypedef extends XjbElement<XjbModule> {
+public final class Typedef extends Element<Module> {
 
     @XmlAttribute(name = "oldname")
     private String oldName;
@@ -17,10 +17,10 @@ public final class XjbTypedef extends XjbElement<XjbModule> {
 
     @SuppressWarnings("unused")
     public void afterUnmarshal(final Unmarshaller unmarshaller, final Object Parent) {
-        final XjbModule module = getModule();
+        final Module module = getModule();
 
-        final XjbType aliased =
-            XjbGenerationContext
+        final Type aliased =
+            GenerationContext
                 .getInstance()
                 .lookupType(module, oldName);
 

@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public class XjbFieldStructureContent extends XjbNamedTypedStructureContent {
+public class FieldStructureContent extends NamedTypedStructureContent {
 
     @XmlAttribute(name = "enum")
     private String enum_;

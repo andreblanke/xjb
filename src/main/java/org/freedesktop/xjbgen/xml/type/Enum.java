@@ -8,17 +8,17 @@ import javax.xml.bind.annotation.XmlElements;
 
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.xml.XjbElement;
-import org.freedesktop.xjbgen.xml.XjbModule;
-import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression;
-import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression.*;
+import org.freedesktop.xjbgen.xml.Element;
+import org.freedesktop.xjbgen.xml.Module;
+import org.freedesktop.xjbgen.xml.expr.IntegerExpression;
+import org.freedesktop.xjbgen.xml.expr.IntegerExpression.*;
 
 /**
  * Represents a Java {@code enum} type which can take on any of the values returned by {@link #getItems()}.
  *
  * {@code XjbEnum}s are not considered a complex type.
  */
-public final class XjbEnum extends XjbTypeElement<XjbModule>{
+public final class Enum extends TypeElement<Module> {
 
     @XmlElement(name = "item", required = true)
     private List<Item> items;
@@ -37,36 +37,36 @@ public final class XjbEnum extends XjbTypeElement<XjbModule>{
         return items;
     }
 
-    /** Represents one possible value of an {@link XjbEnum}. */
-    public static final class Item extends XjbElement<XjbEnum> implements XjbNamed {
+    /** Represents one possible value of an {@link Enum}. */
+    public static final class Item extends Element<Enum> implements Named {
 
         @XmlAttribute(name = "name", required = true)
         private String xmlName;
 
         @XmlElements({
-            @XmlElement(name = "bit",   type = XjbBitExpression.class),
-            @XmlElement(name = "value", type = XjbValueExpression.class)
+            @XmlElement(name = "bit",   type = BitExpression.class),
+            @XmlElement(name = "value", type = ValueExpression.class)
         })
-        private XjbIntegerExpression expression;
+        private IntegerExpression expression;
 
         @Override
         public @NotNull String getXmlName() {
             return xmlName;
         }
 
-        public XjbIntegerExpression getExpression() {
+        public IntegerExpression getExpression() {
             if (expression == null) {
                 final int index = getParent().getItems().indexOf(this);
 
                 if (index == 0)
-                    return (expression = new XjbValueExpression());
+                    return (expression = new ValueExpression());
 
-                final XjbIntegerExpression previousItemExpression =
+                final IntegerExpression previousItemExpression =
                     getParent()
                         .getItems()
                         .get(index - 1)
                         .getExpression();
-                expression = new XjbValueExpression(previousItemExpression.getValue() + 1);
+                expression = new ValueExpression(previousItemExpression.getValue() + 1);
             }
             return expression;
         }

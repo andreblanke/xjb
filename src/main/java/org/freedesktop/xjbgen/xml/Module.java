@@ -14,10 +14,11 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import org.freedesktop.xjbgen.xml.type.Enum;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.XjbGenerationContext;
+import org.freedesktop.xjbgen.GenerationContext;
 import org.freedesktop.xjbgen.util.Strings;
 import org.freedesktop.xjbgen.xml.type.*;
 import org.freedesktop.xjbgen.xml.type.complex.*;
@@ -33,7 +34,7 @@ import static java.util.stream.Collectors.toList;
  * @see org.freedesktop.xjbgen.util.TopologicalOrderIterator
  */
 @XmlRootElement(name = "xcb")
-public final class XjbModule extends XjbElement<XjbElement<?>> implements PredecessorFunction<XjbModule> {
+public final class Module extends Element<Element<?>> implements PredecessorFunction<Module> {
 
     @XmlAttribute(required = true)
     private String header;
@@ -45,52 +46,52 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
     private String extensionXName;
 
     @XmlElement(name = "import")
-    private Set<XjbImport> imports = new HashSet<>();
+    private Set<Import> imports = new HashSet<>();
 
     @XmlElement(name = "struct")
-    private List<XjbStruct> structs = new ArrayList<>();
+    private List<Struct> structs = new ArrayList<>();
 
     @XmlElement(name = "union")
-    private List<XjbUnion> unions = new ArrayList<>();
+    private List<Union> unions = new ArrayList<>();
 
     @XmlElement(name = "eventstruct")
-    private List<XjbEventStruct> eventStructs = new ArrayList<>();
+    private List<EventStruct> eventStructs = new ArrayList<>();
 
     @XmlElement(name = "xidtype")
-    private List<XjbXidType> xidTypes = new ArrayList<>();
+    private List<XidType> xidTypes = new ArrayList<>();
 
     @XmlElement(name = "xidunion")
-    private List<XjbXidUnion> xidUnions = new ArrayList<>();
+    private List<XidUnion> xidUnions = new ArrayList<>();
 
     @XmlElement(name = "enum")
-    private List<XjbEnum> enums = new ArrayList<>();
+    private List<Enum> enums = new ArrayList<>();
 
     @XmlElement(name = "typedef")
-    private List<XjbTypedef> typedefs = new ArrayList<>();
+    private List<Typedef> typedefs = new ArrayList<>();
 
     @XmlElement(name = "request")
-    private List<XjbRequest> requests = new ArrayList<>();
+    private List<Request> requests = new ArrayList<>();
 
-    private final Map<String, XjbType> registeredTypes = new HashMap<>(XjbAtomicType.getXmlNameMappings());
+    private final Map<String, Type> registeredTypes = new HashMap<>(AtomicType.getXmlNameMappings());
 
-    public XjbModule() {
+    public Module() {
         registeredTypes.put(
-            XjbFileDescriptorType
+            FileDescriptorType
                 .getInstance()
                 .getXmlName(),
-            XjbFileDescriptorType.getInstance());
+            FileDescriptorType.getInstance());
         registeredTypes.put(
-            XjbVoidType
+            VoidType
                 .getInstance()
                 .getXmlName(),
-            XjbVoidType.getInstance());
+            VoidType.getInstance());
     }
 
     @Override
-    public Collection<? extends XjbModule> predecessors() {
+    public Collection<? extends Module> predecessors() {
         return imports
             .stream()
-            .map(XjbGenerationContext.getInstance()::lookupModule)
+            .map(GenerationContext.getInstance()::lookupModule)
             .collect(toList());
     }
 
@@ -98,20 +99,20 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
     public void afterUnmarshal(final Unmarshaller unmarshaller, final Object parent) {
         /* Every extension implicitly imports the XProto module. */
         if (isExtension())
-            imports.add(XjbImport.XPROTO_IMPORT);
-        XjbGenerationContext.getInstance().registerModule(this);
+            imports.add(Import.XPROTO_IMPORT);
+        GenerationContext.getInstance().registerModule(this);
     }
 
-    public void registerType(@NotNull final XjbType type) {
+    public void registerType(@NotNull final Type type) {
         registerType(type.getXmlName(), type);
     }
 
-    public void registerType(@NotNull final String xmlName, @NotNull final XjbType type) {
+    public void registerType(@NotNull final String xmlName, @NotNull final Type type) {
         registeredTypes.put(xmlName, type);
     }
 
     @Contract(pure = true)
-    public @NotNull Map<String, XjbType> getRegisteredTypes() {
+    public @NotNull Map<String, Type> getRegisteredTypes() {
         return Collections.unmodifiableMap(registeredTypes);
     }
 
@@ -143,27 +144,27 @@ public final class XjbModule extends XjbElement<XjbElement<?>> implements Predec
         return header;
     }
 
-    public List<XjbStruct> getStructs() {
+    public List<Struct> getStructs() {
         return structs;
     }
 
-    public List<XjbEventStruct> getEventStructs() {
+    public List<EventStruct> getEventStructs() {
         return eventStructs;
     }
 
-    public List<XjbXidType> getXidTypes() {
+    public List<XidType> getXidTypes() {
         return xidTypes;
     }
 
-    public List<XjbXidUnion> getXidUnions() {
+    public List<XidUnion> getXidUnions() {
         return xidUnions;
     }
 
-    public List<XjbEnum> getEnums() {
+    public List<Enum> getEnums() {
         return enums;
     }
 
-    public List<XjbRequest> getRequests() {
+    public List<Request> getRequests() {
         return requests;
     }
     // </editor-fold>

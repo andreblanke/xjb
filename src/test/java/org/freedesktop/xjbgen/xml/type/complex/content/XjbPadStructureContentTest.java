@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import org.freedesktop.xjbgen.xml.type.complex.XjbComplexType;
+import org.freedesktop.xjbgen.xml.type.complex.ComplexType;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -19,8 +19,8 @@ public final class XjbPadStructureContentTest {
     @Test
     @SuppressWarnings("unchecked")
     public void testGetFromBytesSrcSkipsLastPadStructureContent() {
-        final var padContent = mock(XjbPadStructureContent.class);
-        final var parent     = mock(XjbComplexType.class);
+        final var padContent = mock(PadStructureContent.class);
+        final var parent     = mock(ComplexType.class);
 
         when(padContent.byteSize()).thenReturn(8);
         when(padContent.getParent()).thenReturn(parent);

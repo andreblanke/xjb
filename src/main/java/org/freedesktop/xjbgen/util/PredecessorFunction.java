@@ -1,5 +1,7 @@
 package org.freedesktop.xjbgen.util;
 
+import org.freedesktop.xjbgen.xml.Module;
+
 import java.util.Collection;
 
 /**
@@ -8,7 +10,7 @@ import java.util.Collection;
  *
  * @param <N> The type of the predecessors which, in most situations, will be the type implementing this interface.
  *
- * @see org.freedesktop.xjbgen.xml.XjbModule
+ * @see Module
  */
 public interface PredecessorFunction<N extends PredecessorFunction<N>> {
 

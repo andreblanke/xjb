@@ -2,9 +2,9 @@ package org.freedesktop.xjbgen.xml.type;
 
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.xml.XjbModule;
+import org.freedesktop.xjbgen.xml.Module;
 
-public abstract class XjbXidTypeElement extends XjbTypeElement<XjbModule> {
+public abstract class XidTypeElement extends TypeElement<Module> {
 
     private static final int BYTE_SIZE = Integer.BYTES;
 
@@ -25,9 +25,9 @@ public abstract class XjbXidTypeElement extends XjbTypeElement<XjbModule> {
     }
 
     @Override
-    public @NotNull XjbType getBoxedType() {
+    public @NotNull Type getBoxedType() {
         System.out.println(getSrcName());
-        return XjbAtomicType.INT_32.getBoxedType();
+        return AtomicType.INT_32.getBoxedType();
     }
     // </editor-fold>
 }

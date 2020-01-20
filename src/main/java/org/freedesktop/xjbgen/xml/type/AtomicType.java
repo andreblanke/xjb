@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import static java.util.function.Function.identity;
 import static java.util.stream.Collectors.toMap;
 
-public enum XjbAtomicType implements XjbType {
+public enum AtomicType implements Type {
 
     CARD_8("CARD8", int.class, Integer.class, 1, true) {
         @Override
@@ -111,7 +111,7 @@ public enum XjbAtomicType implements XjbType {
 
     private final boolean unsigned;
 
-    XjbAtomicType(
+    AtomicType(
             @NotNull final String xmlName,
             @NotNull final Class<?> javaType,
             @NotNull final Class<?> boxedJavaType,
@@ -124,10 +124,10 @@ public enum XjbAtomicType implements XjbType {
         this.unsigned      = unsigned;
     }
 
-    public static Map<String, XjbAtomicType> getXmlNameMappings() {
+    public static Map<String, AtomicType> getXmlNameMappings() {
         return Arrays
             .stream(values())
-            .collect(toMap(XjbAtomicType::getXmlName, identity()));
+            .collect(toMap(AtomicType::getXmlName, identity()));
     }
 
     @Override
@@ -156,35 +156,35 @@ public enum XjbAtomicType implements XjbType {
     }
 
     @Override
-    public @NotNull XjbType getBoxedType() {
-        return new XjbAbstractBoxedAtomicType();
+    public @NotNull Type getBoxedType() {
+        return new AbstractBoxedAtomicType();
     }
 
-    private final class XjbAbstractBoxedAtomicType implements XjbType {
+    private final class AbstractBoxedAtomicType implements Type {
 
         @Override
         public final int byteSize() {
-            return XjbAtomicType.this.byteSize();
+            return AtomicType.this.byteSize();
         }
 
         @Override
         public @NotNull String getFromBytesExpression() {
-            return "%1$s.valueOf(%2$s)".formatted(getQualifiedSrcName(), XjbAtomicType.this.getFromBytesExpression());
+            return "%1$s.valueOf(%2$s)".formatted(getQualifiedSrcName(), AtomicType.this.getFromBytesExpression());
         }
 
         @Override
         public final @NotNull String getQualifiedSrcName() {
-            return XjbAtomicType.this.boxedJavaType.getName();
+            return AtomicType.this.boxedJavaType.getName();
         }
 
         @Override
         public final @NotNull String getSrcName() {
-            return XjbAtomicType.this.boxedJavaType.getSimpleName();
+            return AtomicType.this.boxedJavaType.getSimpleName();
         }
 
         @Override
         public final @NotNull String getXmlName() {
-            return XjbAtomicType.this.getXmlName();
+            return AtomicType.this.getXmlName();
         }
     }
 }

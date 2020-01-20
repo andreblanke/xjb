@@ -6,7 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 
-public final class XjbEventStruct extends XjbStruct {
+public final class EventStruct extends Struct {
 
     @XmlElement(name = "allowed")
     private List<EventTypeSelector> eventTypeSelectorList = new ArrayList<>();

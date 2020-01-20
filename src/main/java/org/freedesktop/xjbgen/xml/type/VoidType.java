@@ -3,35 +3,35 @@ package org.freedesktop.xjbgen.xml.type;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class XjbFileDescriptorType implements XjbType {
+public final class VoidType implements Type {
 
-    private static final XjbType INSTANCE = new XjbFileDescriptorType();
+    private static final Type INSTANCE = new VoidType();
 
-    private XjbFileDescriptorType() {
+    private VoidType() {
     }
 
-    public static XjbType getInstance() {
+    public static Type getInstance() {
         return INSTANCE;
     }
 
     @Override
     public int byteSize() {
-        return Integer.BYTES;
+        return -1;
     }
 
     @Override
     public @NotNull String getFromBytesExpression() {
-        return "%1$s.getInt()";
+        throw new UnsupportedOperationException();
     }
 
     @Override
     public @NotNull String getQualifiedSrcName() {
-        return "/* fd */ int";
+        return "java.lang.Object";
     }
 
     @Override
     @Contract(pure = true)
     public @NotNull String getXmlName() {
-        return "fd";
+        return "void";
     }
 }

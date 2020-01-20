@@ -2,14 +2,14 @@ package org.freedesktop.xjbgen.xml.type.complex.content;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
-import org.freedesktop.xjbgen.xml.type.XjbNamed;
+import org.freedesktop.xjbgen.xml.type.Named;
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.XjbGenerationContext;
-import org.freedesktop.xjbgen.xml.XjbModule;
-import org.freedesktop.xjbgen.xml.type.XjbType;
+import org.freedesktop.xjbgen.GenerationContext;
+import org.freedesktop.xjbgen.xml.Module;
+import org.freedesktop.xjbgen.xml.type.Type;
 
-public abstract class XjbNamedTypedStructureContent extends XjbStructureContent implements XjbNamed {
+public abstract class NamedTypedStructureContent extends StructureContent implements Named {
 
     @XmlAttribute(name = "name", required = true)
     private String xmlName;
@@ -33,14 +33,14 @@ public abstract class XjbNamedTypedStructureContent extends XjbStructureContent 
         return xmlType;
     }
 
-    private XjbType srcType;
+    private Type srcType;
 
-    public @NotNull XjbType getSrcType() {
+    public @NotNull Type getSrcType() {
         if (srcType == null) {
-            final XjbModule module = getModule();
+            final Module module = getModule();
 
             srcType =
-                XjbGenerationContext
+                GenerationContext
                     .getInstance()
                     .lookupType(module, getXmlType());
         }

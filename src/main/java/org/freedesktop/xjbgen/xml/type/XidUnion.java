@@ -9,9 +9,9 @@ import org.eclipse.persistence.oxm.annotations.XmlValueExtension;
 
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.xml.XjbElement;
+import org.freedesktop.xjbgen.xml.Element;
 
-public final class XjbXidUnion extends XjbXidTypeElement {
+public final class XidUnion extends XidTypeElement {
 
     @XmlElement(name = "type", required = true)
     private List<Type> types;
@@ -20,7 +20,7 @@ public final class XjbXidUnion extends XjbXidTypeElement {
         return types;
     }
 
-    public static final class Type extends XjbElement<XjbXidUnion> {
+    public static final class Type extends Element<XidUnion> {
 
         @XmlValue
         @XmlValueExtension

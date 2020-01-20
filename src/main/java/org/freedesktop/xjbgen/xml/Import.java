@@ -8,13 +8,13 @@ import org.eclipse.persistence.oxm.annotations.XmlValueExtension;
 
 import org.jetbrains.annotations.NotNull;
 
-public final class XjbImport extends XjbElement<XjbModule> {
+public final class Import extends Element<Module> {
 
     @XmlValue
     @XmlValueExtension
     private String header;
 
-    static final XjbImport XPROTO_IMPORT = new XjbImport();
+    static final Import XPROTO_IMPORT = new Import();
 
     static {
         XPROTO_IMPORT.header = "xproto";
@@ -22,10 +22,10 @@ public final class XjbImport extends XjbElement<XjbModule> {
 
     @Override
     public boolean equals(final Object object) {
-        return (object instanceof XjbImport) && equals((XjbImport) object);
+        return (object instanceof Import) && equals((Import) object);
     }
 
-    public boolean equals(final XjbImport other) {
+    public boolean equals(final Import other) {
         return (other != null) && Objects.equals(getHeader(), other.getHeader());
     }
 

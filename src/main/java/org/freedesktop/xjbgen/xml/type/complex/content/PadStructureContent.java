@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-public final class XjbPadStructureContent extends XjbStructureContent {
+public final class PadStructureContent extends StructureContent {
 
     @XmlAttribute
     private int bytes;
@@ -27,7 +27,7 @@ public final class XjbPadStructureContent extends XjbStructureContent {
      * {@inheritDoc}
      *
      * No source code fragment is returned if this {@code XjbPadStructureContent} is the last
-     * {@link XjbStructureContent} of its parent to avoid an unnecessary advancement of the {@code buffer}'s position.
+     * {@link StructureContent} of its parent to avoid an unnecessary advancement of the {@code buffer}'s position.
      */
     @Override
     public @NotNull String getAdvanceBufferSrc() {
@@ -37,7 +37,7 @@ public final class XjbPadStructureContent extends XjbStructureContent {
     }
 
     /**
-     * Checks whether this {@code XjbPadStructureContent} is the last {@link XjbStructureContent} of its parent.
+     * Checks whether this {@code XjbPadStructureContent} is the last {@link StructureContent} of its parent.
      *
      * @return {@code true} if this {@code XjbPadStructureContent} is the last {@code XjbStructureContent} of its
      *         parent, otherwise {@code false}.

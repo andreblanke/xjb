@@ -6,8 +6,8 @@ import javax.xml.bind.Unmarshaller;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression;
-import org.freedesktop.xjbgen.xml.expr.XjbIntegerExpression.*;
+import org.freedesktop.xjbgen.xml.expr.IntegerExpression;
+import org.freedesktop.xjbgen.xml.expr.IntegerExpression.*;
 
 public final class XjbModuleTest {
 
@@ -48,7 +48,7 @@ public final class XjbModuleTest {
     public void testDeserialization(final String xprotoXmlFileLocation) throws Exception {
         final Unmarshaller unmarshaller =
             JAXBContext
-                .newInstance(XjbModule.class, XjbIntegerExpression.class, XjbBitExpression.class, XjbValueExpression.class)
+                .newInstance(Module.class, IntegerExpression.class, BitExpression.class, ValueExpression.class)
                 .createUnmarshaller();
 
         unmarshaller
