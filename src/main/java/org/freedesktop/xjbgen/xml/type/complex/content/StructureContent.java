@@ -1,9 +1,10 @@
 package org.freedesktop.xjbgen.xml.type.complex.content;
 
-import org.freedesktop.xjbgen.xml.type.Type;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import org.freedesktop.xjbgen.xml.Element;
+import org.freedesktop.xjbgen.xml.type.Type;
 import org.freedesktop.xjbgen.xml.type.complex.ComplexType;
 
 public abstract class StructureContent extends Element<ComplexType<?>> {
@@ -17,7 +18,7 @@ public abstract class StructureContent extends Element<ComplexType<?>> {
      * @return A source code fragment which advances the {@link java.nio.ByteBuffer#position()} of the {@code buffer}
      *         variable.
      */
-    public @NotNull String getAdvanceBufferSrc() {
+    public @Nullable String getAdvanceBufferSrc() {
         return "buffer.position(buffer.position() + %d);".formatted(byteSize());
     }
 

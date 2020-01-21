@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.*;
 
-public final class XjbPadStructureContentTest {
+public final class PadStructureContentTest {
 
     /*
      * Doesn't matter whether we use XjbComplexType, XjbStruct or anything else. None of those classes expose any
@@ -28,6 +28,6 @@ public final class XjbPadStructureContentTest {
 
         when(parent.getContents()).thenReturn(List.of(padContent));
 
-        assertEquals("", padContent.getAdvanceBufferSrc());
+        assertNull(padContent.getAdvanceBufferSrc());
     }
 }

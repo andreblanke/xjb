@@ -4,6 +4,7 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class PadStructureContent extends StructureContent {
 
@@ -30,9 +31,9 @@ public final class PadStructureContent extends StructureContent {
      * {@link StructureContent} of its parent to avoid an unnecessary advancement of the {@code buffer}'s position.
      */
     @Override
-    public @NotNull String getAdvanceBufferSrc() {
+    public @Nullable String getAdvanceBufferSrc() {
         return isLastStructureContent()
-            ? ""
+            ? null
             : super.getAdvanceBufferSrc();
     }
 

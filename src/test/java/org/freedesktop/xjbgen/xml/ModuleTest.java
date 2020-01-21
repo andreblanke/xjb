@@ -9,7 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.freedesktop.xjbgen.xml.expr.IntegerExpression;
 import org.freedesktop.xjbgen.xml.expr.IntegerExpression.*;
 
-public final class XjbModuleTest {
+public final class ModuleTest {
 
     @ValueSource(strings = {
         "/bigreq.xml",
@@ -52,6 +52,6 @@ public final class XjbModuleTest {
                 .createUnmarshaller();
 
         unmarshaller
-            .unmarshal(XjbModuleTest.class.getResource(xprotoXmlFileLocation));
+            .unmarshal(ModuleTest.class.getResource(xprotoXmlFileLocation));
     }
 }

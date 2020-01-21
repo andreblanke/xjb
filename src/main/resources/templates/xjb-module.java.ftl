@@ -16,7 +16,9 @@
         <#list complexType.contents as content>
 
             ${content.fromBytesSrc}
+            <#if content.advanceBufferSrc?has_content>
             ${content.advanceBufferSrc}
+            </#if>
         </#list>
 
             return reply;
