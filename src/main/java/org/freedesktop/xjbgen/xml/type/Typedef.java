@@ -3,7 +3,7 @@ package org.freedesktop.xjbgen.xml.type;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 
-import org.freedesktop.xjbgen.GenerationContext;
+import org.freedesktop.xjbgen.XjbGenerationContext;
 import org.freedesktop.xjbgen.xml.Element;
 import org.freedesktop.xjbgen.xml.Module;
 
@@ -20,7 +20,7 @@ public final class Typedef extends Element<Module> {
         final Module module = getModule();
 
         final Type aliased =
-            GenerationContext
+            XjbGenerationContext
                 .getInstance()
                 .lookupType(module, oldName);
 

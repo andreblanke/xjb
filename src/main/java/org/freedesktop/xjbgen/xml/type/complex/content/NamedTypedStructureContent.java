@@ -2,11 +2,11 @@ package org.freedesktop.xjbgen.xml.type.complex.content;
 
 import javax.xml.bind.annotation.XmlAttribute;
 
-import org.freedesktop.xjbgen.xml.type.Named;
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.GenerationContext;
+import org.freedesktop.xjbgen.XjbGenerationContext;
 import org.freedesktop.xjbgen.xml.Module;
+import org.freedesktop.xjbgen.xml.type.Named;
 import org.freedesktop.xjbgen.xml.type.Type;
 
 public abstract class NamedTypedStructureContent extends StructureContent implements Named {
@@ -40,7 +40,7 @@ public abstract class NamedTypedStructureContent extends StructureContent implem
             final Module module = getModule();
 
             srcType =
-                GenerationContext
+                XjbGenerationContext
                     .getInstance()
                     .lookupType(module, getXmlType());
         }

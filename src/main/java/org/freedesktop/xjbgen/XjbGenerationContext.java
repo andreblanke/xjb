@@ -14,16 +14,16 @@ import org.freedesktop.xjbgen.xml.type.Type;
 import static java.util.Map.Entry;
 import static java.util.stream.Collectors.toMap;
 
-public final class GenerationContext {
+public final class XjbGenerationContext {
 
     private final Map<String, Module> registeredModules = new HashMap<>();
 
-    private static final GenerationContext INSTANCE = new GenerationContext();
+    private static final XjbGenerationContext INSTANCE = new XjbGenerationContext();
 
-    private GenerationContext() {
+    private XjbGenerationContext() {
     }
 
-    public static GenerationContext getInstance() {
+    public static XjbGenerationContext getInstance() {
         return INSTANCE;
     }
 

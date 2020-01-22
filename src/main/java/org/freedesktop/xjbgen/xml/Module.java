@@ -18,7 +18,7 @@ import org.freedesktop.xjbgen.xml.type.Enum;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.GenerationContext;
+import org.freedesktop.xjbgen.XjbGenerationContext;
 import org.freedesktop.xjbgen.util.Strings;
 import org.freedesktop.xjbgen.xml.type.*;
 import org.freedesktop.xjbgen.xml.type.complex.*;
@@ -91,7 +91,7 @@ public final class Module extends Element<Element<?>> implements PredecessorFunc
     public Collection<? extends Module> predecessors() {
         return imports
             .stream()
-            .map(GenerationContext.getInstance()::lookupModule)
+            .map(XjbGenerationContext.getInstance()::lookupModule)
             .collect(toList());
     }
 
@@ -100,7 +100,7 @@ public final class Module extends Element<Element<?>> implements PredecessorFunc
         /* Every extension implicitly imports the XProto module. */
         if (isExtension())
             imports.add(Import.XPROTO_IMPORT);
-        GenerationContext.getInstance().registerModule(this);
+        XjbGenerationContext.getInstance().registerModule(this);
     }
 
     public void registerType(@NotNull final Type type) {

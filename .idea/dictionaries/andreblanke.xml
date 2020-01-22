@@ -5,6 +5,7 @@
       <w>dpms</w>
       <w>eventstruct</w>
       <w>externalizable</w>
+      <w>fieldref</w>
       <w>freedesktop</w>
       <w>newname</w>
       <w>oldname</w>

@@ -112,7 +112,7 @@
           </descriptorRefs>
           <archive>
             <manifest>
-              <mainClass>org.freedesktop.xjbgen.Generator</mainClass>
+              <mainClass>org.freedesktop.xjbgen.XjbGenerator</mainClass>
             </manifest>
           </archive>
         </configuration>

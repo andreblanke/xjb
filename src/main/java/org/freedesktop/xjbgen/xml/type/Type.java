@@ -2,9 +2,14 @@ package org.freedesktop.xjbgen.xml.type;
 
 import org.jetbrains.annotations.NotNull;
 
+import javax.xml.bind.annotation.XmlTransient;
+
 /**
  * Represents a type used in the generated source code.
+ *
+ * This interface is marked annotated with {@link XmlTransient} to avoid a name collision with {@link XidUnion.Type}.
  */
+@XmlTransient
 public interface Type extends Named {
 
     /**

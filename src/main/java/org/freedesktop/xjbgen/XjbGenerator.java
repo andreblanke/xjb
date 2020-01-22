@@ -29,7 +29,7 @@ import static java.util.stream.Collectors.toUnmodifiableMap;
 
 import static freemarker.template.Configuration.VERSION_2_3_29;
 
-public final class Generator {
+public final class XjbGenerator {
 
     private static final Template XJB_MODULE_TEMPLATE;
 
@@ -37,12 +37,12 @@ public final class Generator {
 
     private static final Schema XCB_SCHEMA;
 
-    private static final Logger LOGGER = Logger.getLogger(Generator.class.getSimpleName());
+    private static final Logger LOGGER = Logger.getLogger(XjbGenerator.class.getSimpleName());
 
     static {
         try {
             final var configuration = new Configuration(VERSION_2_3_29);
-            configuration.setClassForTemplateLoading(Generator.class, "/templates");
+            configuration.setClassForTemplateLoading(XjbGenerator.class, "/templates");
 
             XJB_MODULE_TEMPLATE = configuration.getTemplate("xjb-module.java.ftl");
 
@@ -51,7 +51,7 @@ public final class Generator {
             XCB_SCHEMA =
                 SchemaFactory
                     .newDefaultInstance()
-                    .newSchema(Generator.class.getResource("/xcbproto/xcb.xsd"));
+                    .newSchema(XjbGenerator.class.getResource("/xcbproto/xcb.xsd"));
         } catch (final RuntimeException exception) {
             throw exception;
         } catch (final Exception exception) {
@@ -60,7 +60,7 @@ public final class Generator {
     }
 
     public static void main(final String... args) {
-        new Generator().generateXJavaBindings();
+        new XjbGenerator().generateXJavaBindings();
     }
 
     public void generateXJavaBindings() {
@@ -68,7 +68,7 @@ public final class Generator {
             new Reflections("xcbproto", new ResourcesScanner())
                 .getResources(Pattern.compile(".*\\.xml"))
                 .stream()
-                .map(Generator::deserializeModule)
+                .map(XjbGenerator::deserializeModule)
                 .collect(toUnmodifiableMap(Module::getHeader, identity()));
 
         new TopologicalOrderIterator<>(registeredModules.values()).forEachRemaining(module -> {
@@ -89,7 +89,7 @@ public final class Generator {
             final var unmarshaller = JAXB_XJB_MODULE_CONTEXT.createUnmarshaller();
             unmarshaller.setSchema(XCB_SCHEMA);
 
-            return (Module) unmarshaller.unmarshal(Generator.class.getClassLoader().getResource(xcbprotoResource));
+            return (Module) unmarshaller.unmarshal(XjbGenerator.class.getClassLoader().getResource(xcbprotoResource));
         } catch (final JAXBException exception) {
             throw new RuntimeException(exception);
         }
