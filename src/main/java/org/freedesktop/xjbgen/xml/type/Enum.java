@@ -10,8 +10,7 @@ import org.jetbrains.annotations.NotNull;
 
 import org.freedesktop.xjbgen.xml.Element;
 import org.freedesktop.xjbgen.xml.Module;
-import org.freedesktop.xjbgen.xml.expr.IntegerExpression;
-import org.freedesktop.xjbgen.xml.expr.IntegerExpression.*;
+import org.freedesktop.xjbgen.xml.expr.*;
 
 /**
  * Represents a Java {@code enum} type which can take on any of the values returned by {@link #getItems()}.

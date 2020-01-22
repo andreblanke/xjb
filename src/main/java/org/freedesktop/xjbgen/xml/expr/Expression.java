@@ -1,4 +1,10 @@
 package org.freedesktop.xjbgen.xml.expr;
 
-public abstract class Expression {
+import org.jetbrains.annotations.NotNull;
+
+import org.freedesktop.xjbgen.xml.Element;
+
+public abstract class Expression extends Element<Element<?>> {
+
+    public abstract @NotNull String toString();
 }
