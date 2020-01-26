@@ -74,3 +74,6 @@ implementations.
 This project is licensed under the Apache License, Version 2.0. For more information see [LICENSE](LICENSE).
 
 ## See also
+
+* [X Go Binding](https://github.com/BurntSushi/xgb)
+* [X protocol Emacs Lisp Binding](https://github.com/BurntSushi/xgb)
