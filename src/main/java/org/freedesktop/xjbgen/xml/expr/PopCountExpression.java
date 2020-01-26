@@ -1,4 +1,4 @@
-package org.freedesktop.xjbgen.xml.type.complex.content;
+package org.freedesktop.xjbgen.xml.expr;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
@@ -6,12 +6,9 @@ import javax.xml.bind.annotation.XmlValue;
 
 import org.eclipse.persistence.oxm.annotations.XmlValueExtension;
 
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import org.freedesktop.xjbgen.xml.expr.*;
-
-public final class ListStructureContent extends FieldStructureContent {
+public final class PopCountExpression extends Expression {
 
     @XmlValue
     @XmlValueExtension
@@ -24,16 +21,10 @@ public final class ListStructureContent extends FieldStructureContent {
         @XmlElement(name = "unop",     type = UnaryOperatorExpression.class),
         @XmlElement(name = "value",    type = ValueExpression.class)
     })
-    private Expression lengthExpression;
+    private Expression expression;
 
     @Override
-    @Contract(pure = true)
     public @NotNull String toString() {
-        return "private java.util.List<%1$s> %2$s;".formatted(getSrcType().getBoxedType().getQualifiedSrcName(), getSrcName());
-    }
-
-    @Override
-    public @NotNull String getFromBytesSrc() {
-        return "TODO " + lengthExpression.toString();
+        return "java.lang.Long.bitCount(%s)".formatted(expression.toString());
     }
 }

@@ -6,8 +6,7 @@ import javax.xml.bind.Unmarshaller;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
-import org.freedesktop.xjbgen.xml.expr.IntegerExpression;
-import org.freedesktop.xjbgen.xml.expr.IntegerExpression.*;
+import org.freedesktop.xjbgen.xml.expr.*;
 
 public final class ModuleTest {
 

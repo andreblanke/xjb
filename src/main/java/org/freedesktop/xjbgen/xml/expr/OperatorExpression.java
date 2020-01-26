@@ -14,12 +14,17 @@ public final class OperatorExpression {
     @XmlValue
     @XmlValueExtension
     @XmlElements({
+        @XmlElement(name = "bit",      type = BitExpression.class),
+        @XmlElement(name = "enumref",  type = EnumReferenceExpression.class),
         @XmlElement(name = "fieldref", type = FieldReferenceExpression.class),
-        @XmlElement(name = "op",       type = OperatorExpression.class)
+        @XmlElement(name = "op",       type = OperatorExpression.class),
+        @XmlElement(name = "popcount", type = PopCountExpression.class),
+        @XmlElement(name = "unop",     type = UnaryOperatorExpression.class),
+        @XmlElement(name = "value",    type = ValueExpression.class)
     })
     private Expression[] expressions = new Expression[2];
 
-    @XmlAttribute(required = true)
+    @XmlAttribute(name = "op", required = true)
     private String operator;
 
     @Override
