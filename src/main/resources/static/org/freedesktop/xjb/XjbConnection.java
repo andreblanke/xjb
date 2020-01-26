@@ -27,6 +27,9 @@ public final class XjbConnection implements AutoCloseable {
         return establish(displayName, null);
     }
 
+    /**
+     * https://regex101.com/r/X6Ix1y/1
+     */
     static final Pattern DISPLAY_ENVIRONMENT_VARIABLE_FORMAT =
         Pattern.compile(
             """
