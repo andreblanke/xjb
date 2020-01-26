@@ -27,8 +27,22 @@ public final class XjbConnection implements AutoCloseable {
         return establish(displayName, null);
     }
 
-    static final Pattern DISPLAY_ENVIRONMENT_VARIABLE_FORMAT = Pattern.compile(
-        "^(?:(?<socketPath>/.+?)|(?:(?<host>[^/:]+)(?:/(?<protocol>[^:]+))?)?:(?<display>[0-9][1-9]*))(?:\\.(?<screen>[0-9][1-9]*))?$");
+    static final Pattern DISPLAY_ENVIRONMENT_VARIABLE_FORMAT =
+        Pattern.compile(
+            """
+            ^(?x) # Embedded flags expression to enable comment mode
+                 (?: # Start of the non-capturing group containing either a socketPath or an optional host name.
+                    (?<socketPath>/.+?) # Match a file path to a socket
+                                       | # or
+                                        (?: # optionally match a host name consisting of
+                                           (?<host>.+?) # a host,
+                                                       (?:/(?<protocol>[^:]+))? # optionally followed by a protocol.
+                                                                               )? # End of the optional host name.
+                                                                                 : # Required separator between the optional host name and
+                                                                                  (?<display>[0-9]+) # the display number.
+                                                                                                    ) # End of the choice between socketPath and the host name.
+                                                                                                     (?:\\.(?<screen>[0-9]+))?$ # Both may be followed by an optional screen number.
+            """);
 
     public static @NotNull XjbConnection establish(@NotNull final String displayName, @Nullable final AuthInfo authInfo)
             throws IOException {
