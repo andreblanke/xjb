@@ -12,13 +12,13 @@ public class FieldStructureContent extends NamedTypedStructureContent {
 
     @Override
     public String toString() {
-        return "private %1$s %2$s;".formatted(getSrcType().getQualifiedSrcName(), getSrcName());
+        return String.format("private %1$s %2$s;", getSrcType().getQualifiedSrcName(), getSrcName());
     }
 
     @Override
     @Contract(pure = true)
     public @NotNull String getFromBytesSrc() {
-        return "reply." + getSrcName() + " = " + getSrcType().getFromBytesExpression().formatted("buffer") + ';';
+        return "reply." + getSrcName() + " = " + String.format(getSrcType().getFromBytesExpression(), "buffer") + ';';
     }
 
     public String getEnum() {

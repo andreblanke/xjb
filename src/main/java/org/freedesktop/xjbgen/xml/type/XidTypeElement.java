@@ -21,7 +21,7 @@ public abstract class XidTypeElement extends TypeElement<Module> {
 
     @Override
     public @NotNull String getQualifiedSrcName() {
-        return "@%s int".formatted(super.getQualifiedSrcName());
+        return String.format("@%s int", super.getQualifiedSrcName());
     }
 
     @Override

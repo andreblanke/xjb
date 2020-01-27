@@ -73,7 +73,7 @@ public final class XjbGenerator {
 
         new TopologicalOrderIterator<>(registeredModules.values()).forEachRemaining(module -> {
             try {
-                LOGGER.info("Generating %1$s.java from %2$s.xml.".formatted(module.getClassName(), module.getHeader()));
+                LOGGER.info(String.format("Generating %1$s.java from %2$s.xml.", module.getClassName(), module.getHeader()));
 
                 XJB_MODULE_TEMPLATE.process(module, new FileWriter(module.getClassName() + ".java"));
             } catch (final IOException exception) {

@@ -47,7 +47,7 @@ public final class XjbGenerationContext {
                         .get(xmlType))
                 .or(() -> Optional.ofNullable(lookupTypeInImports(module, xmlType)))
                 .orElseThrow(() -> new NoSuchElementException(
-                    "Could not find type '%1$s' while processing %2$s.xml.".formatted(xmlType, module.getHeader())));
+                    String.format("Could not find type '%1$s' while processing %2$s.xml.", xmlType, module.getHeader())));
         }
         final String header   = xmlType.substring(0, separatorIndex);
         final String typeName = xmlType.substring(separatorIndex + 1);

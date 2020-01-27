@@ -25,6 +25,6 @@ public final class PopCountExpression extends Expression {
 
     @Override
     public @NotNull String toString() {
-        return "java.lang.Long.bitCount(%s)".formatted(expression.toString());
+        return String.format("java.lang.Long.bitCount(%s)", expression.toString());
     }
 }

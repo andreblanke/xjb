@@ -29,7 +29,7 @@ public final class ListStructureContent extends FieldStructureContent {
     @Override
     @Contract(pure = true)
     public @NotNull String toString() {
-        return "private java.util.List<%1$s> %2$s;".formatted(getSrcType().getBoxedType().getQualifiedSrcName(), getSrcName());
+        return String.format("private java.util.List<%1$s> %2$s;", getSrcType().getBoxedType().getQualifiedSrcName(), getSrcName());
     }
 
     @Override

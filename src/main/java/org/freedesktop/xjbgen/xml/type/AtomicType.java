@@ -169,7 +169,7 @@ public enum AtomicType implements Type {
 
         @Override
         public @NotNull String getFromBytesExpression() {
-            return "%1$s.valueOf(%2$s)".formatted(getQualifiedSrcName(), AtomicType.this.getFromBytesExpression());
+            return String.format("%1$s.valueOf(%2$s)", getQualifiedSrcName(), AtomicType.this.getFromBytesExpression());
         }
 
         @Override

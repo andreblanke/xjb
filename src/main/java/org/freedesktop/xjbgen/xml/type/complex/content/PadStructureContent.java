@@ -21,7 +21,7 @@ public final class PadStructureContent extends StructureContent {
     public @NotNull String getFromBytesSrc() {
         return isLastStructureContent()
             ? "/* Skipping 8 byte(s) of padding at end of buffer without advancing. */"
-            : "/* Skip %1$d byte(s) of padding. */".formatted(byteSize());
+            : String.format("/* Skip %1$d byte(s) of padding. */", byteSize());
     }
 
     /**

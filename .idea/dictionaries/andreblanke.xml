@@ -3,16 +3,20 @@
     <words>
       <w>andreblanke</w>
       <w>bigreq</w>
+      <w>displaynumber</w>
       <w>dpms</w>
       <w>enumref</w>
       <w>eventstruct</w>
       <w>externalizable</w>
       <w>fieldref</w>
       <w>freedesktop</w>
+      <w>inet</w>
       <w>newname</w>
       <w>oldname</w>
       <w>popcount</w>
       <w>randr</w>
+      <w>screennumber</w>
+      <w>solaris</w>
       <w>structs</w>
       <w>tsol</w>
       <w>unmarshalled</w>

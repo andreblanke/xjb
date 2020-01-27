@@ -19,7 +19,7 @@ public abstract class StructureContent extends Element<ComplexType<?>> {
      *         variable.
      */
     public @Nullable String getAdvanceBufferSrc() {
-        return "buffer.position(buffer.position() + %d);".formatted(byteSize());
+        return String.format("buffer.position(buffer.position() + %d);", byteSize());
     }
 
     /** @see Type#getFromBytesExpression()  */
