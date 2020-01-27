@@ -12,6 +12,8 @@ able to communicate with an X server.
     * [JAXB implementation](#jaxb-implementation)
 * [License](#license)
 * [See also](#see-also)
+    * [Related projects](#related-projects)
+    * [Further reading](#further-reading)
 
 ## Project structure
 
@@ -75,5 +77,11 @@ This project is licensed under the Apache License, Version 2.0. For more informa
 
 ## See also
 
+### Related projects
+
 * [X Go Binding](https://github.com/BurntSushi/xgb)
 * [X protocol Emacs Lisp Binding](https://github.com/BurntSushi/xgb)
+
+### Further reading
+
+* [X Window System Protocol](https://www.x.org/releases/X11R7.7/doc/xproto/x11protocol.pdf)
