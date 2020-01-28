@@ -3,6 +3,7 @@
     <words>
       <w>andreblanke</w>
       <w>bigreq</w>
+      <w>disp</w>
       <w>displaynumber</w>
       <w>dpms</w>
       <w>enumref</w>
@@ -22,6 +23,7 @@
       <w>unmarshalled</w>
       <w>unop</w>
       <w>vidmode</w>
+      <w>xauthority</w>
       <w>xcbproto</w>
       <w>xevie</w>
       <w>xfixes</w>

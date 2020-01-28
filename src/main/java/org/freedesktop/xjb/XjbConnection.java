@@ -96,6 +96,10 @@ public final class XjbConnection implements AutoCloseable {
     }
 
     private void connect(final SocketAddress remote, final AuthInfo authInfo) throws IOException {
+        final var reader = XAuthorityReader.forStandardLocations();
+
+        reader.readEntries();
+
         socketChannel = SocketChannel.open(remote);
         socketChannel.write(
             ByteBuffer.allocate(1 + 1 + 5 * 2)
