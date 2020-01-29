@@ -12,7 +12,9 @@ able to communicate with an X server.
     * [JAXB implementation](#jaxb-implementation)
 * [License](#license)
 * [See also](#see-also)
+    * [Similar projects](#similar-projects)
     * [Related projects](#related-projects)
+    * [Relevant JDK Bug System entries](#relevant-jdk-bug-system-entries)
     * [Further reading](#further-reading)
 
 ## Project structure
@@ -77,10 +79,19 @@ This project is licensed under the Apache License, Version 2.0. For more informa
 
 ## See also
 
-### Related projects
+### Similar projects
 
 * [X Go Binding](https://github.com/BurntSushi/xgb)
 * [X protocol Emacs Lisp Binding](https://github.com/BurntSushi/xgb)
+
+### Related projects
+
+* [libXau](https://gitlab.freedesktop.org/xorg/lib/libxau)
+
+### Relevant JDK Bug System entries:
+
+* [JDK-8169296: Need a way get local nodename](https://bugs.openjdk.java.net/browse/JDK-8169296)
+* [JDK-8231358: Support UNIX domain socket channels](https://bugs.openjdk.java.net/browse/JDK-8231358)
 
 ### Further reading
 
