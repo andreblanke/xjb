@@ -2,7 +2,6 @@ package org.freedesktop.xjb;
 
 import java.io.IOException;
 import java.io.UncheckedIOException;
-import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -33,8 +32,11 @@ public final class XjbConnection implements AutoCloseable {
     private SocketChannel socketChannel;
 
     private XjbConnection(final int displayNumber, final int preferredScreenNumber) {
+        if (displayNumber < 0)
+            throw new IllegalArgumentException();
         if (preferredScreenNumber < 0)
             throw new IllegalArgumentException();
+        this.displayNumber         = displayNumber;
         this.preferredScreenNumber = preferredScreenNumber;
     }
 
@@ -151,10 +153,9 @@ public final class XjbConnection implements AutoCloseable {
         final int paddedAuthNameLength = Padding.pad(authInfo.getName().length());
         final int paddedAuthDataLength = Padding.pad(authInfo.getData().length());
 
-        ByteBuffer x;
         socketChannel = SocketChannel.open(remote);
         socketChannel.write(
-            x = ByteBuffer.allocate(1 + 1 + 5 * 2 + paddedAuthNameLength + paddedAuthDataLength)
+            ByteBuffer.allocate(1 + 1 + 5 * 2 + paddedAuthNameLength + paddedAuthDataLength)
                 .put((byte) 'B')      /* byte_order */
                 .put((byte) 0)        /* pad0       */
                 .putShort((short) 11) /* protocol_major_version */
@@ -165,8 +166,6 @@ public final class XjbConnection implements AutoCloseable {
                 .put(authInfo.getName().getBytes(StandardCharsets.ISO_8859_1))
                 .put(new byte[paddedAuthNameLength - authInfo.getName().length()])
                 .put(authInfo.getData().getBytes(StandardCharsets.ISO_8859_1)));
-
-        System.out.println(new BigInteger(x.array()).toString(16));
 
         final ByteBuffer commonReplyHeader = ByteBuffer.allocate(8);
         socketChannel.read(commonReplyHeader);
