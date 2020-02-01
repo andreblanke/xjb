@@ -81,8 +81,9 @@ This project is licensed under the Apache License, Version 2.0. For more informa
 
 ### Similar projects
 
+* [X C Binding](https://gitlab.freedesktop.org/xorg/lib/libxcb)
 * [X Go Binding](https://github.com/BurntSushi/xgb)
-* [X protocol Emacs Lisp Binding](https://github.com/BurntSushi/xgb)
+* [X Emacs Lisp Binding](https://github.com/ch11ng/xelb)
 
 ### Related projects
 
