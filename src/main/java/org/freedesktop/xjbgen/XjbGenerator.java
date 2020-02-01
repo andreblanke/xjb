@@ -80,7 +80,7 @@ public final class XjbGenerator {
             try {
                 LOGGER.info(String.format("Generating %1$s.java from %2$s.xml.", module.getClassName(), module.getHeader()));
 
-                XJB_MODULE_TEMPLATE.process(module, new FileWriter(targetDirectory.resolveSibling(module.getClassName() + ".java").toFile()));
+                XJB_MODULE_TEMPLATE.process(module, new FileWriter(targetDirectory.resolve(module.getClassName() + ".java").toFile()));
             } catch (final IOException exception) {
                 throw new UncheckedIOException(exception);
             } catch (final TemplateException exception) {

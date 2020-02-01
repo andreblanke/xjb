@@ -5,4 +5,4 @@ target/
 !/.idea/dictionaries
 *.iml
 
-/*.java
+/generated-sources
