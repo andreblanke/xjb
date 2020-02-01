@@ -12,7 +12,7 @@
         }
 
         static ${complexType.qualifiedSrcName} fromByteBuffer(final java.nio.ByteBuffer buffer) {
-            final var reply = new ${complexType.qualifiedSrcName};
+            final var object = new ${complexType.qualifiedSrcName};
         <#list complexType.contents as content>
 
             ${content.fromBytesSrc}

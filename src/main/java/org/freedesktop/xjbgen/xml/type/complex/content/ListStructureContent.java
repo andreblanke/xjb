@@ -36,11 +36,26 @@ public final class ListStructureContent extends FieldStructureContent {
     @Override
     public @NotNull String getFromBytesSrc() {
         return isString()
-            ? String.format("reply.%1$s = new java.lang.String(%2$s.array(), %2$s.position(), %3$s, java.nio.charsets.StandardCharsets.ISO_8859_1);", getSrcName(), "buffer", lengthExpression)
-            : "TODO " + lengthExpression.toString();
+            ? String.format("object.%1$s = new java.lang.String(%2$s.array(), %2$s.position(), %3$s, java.nio.charsets.StandardCharsets.ISO_8859_1);", getSrcName(), BYTE_BUFFER_NAME, lengthExpression)
+            : String.format(
+                "object.%1$s = new java.util.ArrayList<%2$s>(%3$s); { for (int i = 0; i < %4$s; ++i) object.%1$s.add(%5$s); }",
+                BYTE_BUFFER_NAME,
+                getSrcType().getBoxedType().getQualifiedSrcName(),
+                lengthExpression,
+                getSizeSrc(),
+                getSrcType().getBoxedType().getFromBytesExpression());
     }
 
-    public boolean isString() {
+    @Override
+    public @NotNull String getAdvanceBufferSrc() {
+        return String.format("%1$s.position(%1$s.position() + %2$s);", BYTE_BUFFER_NAME, getSizeSrc());
+    }
+
+    private boolean isString() {
         return getSrcType() == AtomicType.CHAR;
+    }
+
+    private @NotNull String getSizeSrc() {
+        return String.format("%1$s.%2$s()", getSrcName(), isString() ? "length" : "size");
     }
 }

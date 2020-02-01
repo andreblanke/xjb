@@ -99,6 +99,13 @@ public enum AtomicType implements Type {
         public @NotNull String getFromBytesExpression() {
             return "(char) %1$s.get()";
         }
+    },
+
+    VOID("void", int.class, Integer.class, 1, true) {
+        @Override
+        public @NotNull String getFromBytesExpression() {
+            return "Byte.toUnsignedInt(%1$s.get())";
+        }
     };
 
     private final @NotNull String xmlName;

@@ -80,11 +80,6 @@ public final class Module extends Element<Element<?>> implements PredecessorFunc
                 .getInstance()
                 .getXmlName(),
             FileDescriptorType.getInstance());
-        registeredTypes.put(
-            VoidType
-                .getInstance()
-                .getXmlName(),
-            VoidType.getInstance());
     }
 
     @Override

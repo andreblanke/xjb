@@ -9,6 +9,8 @@ import org.freedesktop.xjbgen.xml.type.complex.ComplexType;
 
 public abstract class StructureContent extends Element<ComplexType<?>> {
 
+    public static final String BYTE_BUFFER_NAME = "buffer";
+
     public abstract int byteSize();
 
     /**
@@ -19,7 +21,7 @@ public abstract class StructureContent extends Element<ComplexType<?>> {
      *         variable.
      */
     public @Nullable String getAdvanceBufferSrc() {
-        return String.format("buffer.position(buffer.position() + %d);", byteSize());
+        return String.format("%1$s.position(buffer.position() + %2$d);", BYTE_BUFFER_NAME, byteSize());
     }
 
     /** @see Type#getFromBytesExpression()  */
