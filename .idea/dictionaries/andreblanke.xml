@@ -12,14 +12,17 @@
       <w>fieldref</w>
       <w>freedesktop</w>
       <w>inet</w>
+      <w>listelement</w>
       <w>newname</w>
       <w>nodename</w>
       <w>oldname</w>
+      <w>paramref</w>
       <w>popcount</w>
       <w>randr</w>
       <w>screennumber</w>
       <w>solaris</w>
       <w>structs</w>
+      <w>sumof</w>
       <w>tsol</w>
       <w>unmarshalled</w>
       <w>unop</w>

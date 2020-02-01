@@ -3,6 +3,8 @@ package org.freedesktop.xjbgen;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -59,11 +61,11 @@ public final class XjbGenerator {
         }
     }
 
-    public static void main(final String... args) {
-        new XjbGenerator().generateXJavaBindings();
+    public static void main(final String... args) throws IOException {
+        new XjbGenerator().generateXJavaBindings(Path.of("generated-sources"));
     }
 
-    public void generateXJavaBindings() {
+    public void generateXJavaBindings(final Path targetDirectory) throws IOException {
         final Map<String, Module> registeredModules =
             new Reflections("xcbproto", new ResourcesScanner())
                 .getResources(Pattern.compile(".*\\.xml"))
@@ -71,11 +73,14 @@ public final class XjbGenerator {
                 .map(XjbGenerator::deserializeModule)
                 .collect(toUnmodifiableMap(Module::getHeader, identity()));
 
+        if (Files.notExists(targetDirectory))
+            Files.createDirectory(targetDirectory);
+
         new TopologicalOrderIterator<>(registeredModules.values()).forEachRemaining(module -> {
             try {
                 LOGGER.info(String.format("Generating %1$s.java from %2$s.xml.", module.getClassName(), module.getHeader()));
 
-                XJB_MODULE_TEMPLATE.process(module, new FileWriter(module.getClassName() + ".java"));
+                XJB_MODULE_TEMPLATE.process(module, new FileWriter(targetDirectory.resolveSibling(module.getClassName() + ".java").toFile()));
             } catch (final IOException exception) {
                 throw new UncheckedIOException(exception);
             } catch (final TemplateException exception) {
