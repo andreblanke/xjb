@@ -7,6 +7,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import org.freedesktop.xjbgen.xml.expr.*;
+import org.freedesktop.xjbgen.xml.type.AtomicType;
 
 public final class ListStructureContent extends FieldStructureContent {
 
@@ -27,11 +28,19 @@ public final class ListStructureContent extends FieldStructureContent {
     @Override
     @Contract(pure = true)
     public @NotNull String toString() {
-        return String.format("private java.util.List<%1$s> %2$s;", getSrcType().getBoxedType().getQualifiedSrcName(), getSrcName());
+        return isString()
+            ? String.format("private java.lang.String %1$s;", getSrcName())
+            : String.format("private java.util.List<%1$s> %2$s;", getSrcType().getBoxedType().getQualifiedSrcName(), getSrcName());
     }
 
     @Override
     public @NotNull String getFromBytesSrc() {
-        return "TODO " + lengthExpression.toString();
+        return isString()
+            ? String.format("reply.%1$s = new java.lang.String(%2$s.array(), %2$s.position(), %3$s, java.nio.charsets.StandardCharsets.ISO_8859_1);", getSrcName(), "buffer", lengthExpression)
+            : "TODO " + lengthExpression.toString();
+    }
+
+    public boolean isString() {
+        return getSrcType() == AtomicType.CHAR;
     }
 }
