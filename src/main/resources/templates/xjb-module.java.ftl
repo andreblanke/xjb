@@ -7,11 +7,11 @@
 </#macro>
 
 <#macro generateFromBytesStaticFactoryMethod complexType>
-        ${complexType.qualifiedSrcName}(final byte[] bytes) {
+        ${complexType.srcName}(final byte[] bytes) {
             this(java.nio.ByteBuffer.wrap(bytes));
         }
 
-        ${complexType.qualifiedSrcName}(final java.nio.ByteBuffer buffer) {
+        ${complexType.srcName}(final java.nio.ByteBuffer buffer) {
         <#list complexType.contents as content>
 
             ${content.fromBytesSrc}
