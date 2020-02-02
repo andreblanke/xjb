@@ -36,14 +36,14 @@ public final class ListStructureContent extends FieldStructureContent {
     @Override
     public @NotNull String getFromBytesSrc() {
         return isString()
-            ? String.format("object.%1$s = new java.lang.String(%2$s.array(), %2$s.position(), %3$s, java.nio.charsets.StandardCharsets.ISO_8859_1);", getSrcName(), BYTE_BUFFER_NAME, lengthExpression)
+            ? String.format("%1$s = new java.lang.String(%2$s.array(), %2$s.position(), %3$s, java.nio.charsets.StandardCharsets.ISO_8859_1);", getSrcName(), BYTE_BUFFER_NAME, lengthExpression)
             : String.format(
-                "object.%1$s = new java.util.ArrayList<%2$s>(%3$s); { for (int i = 0; i < %4$s; ++i) object.%1$s.add(%5$s); }",
-                BYTE_BUFFER_NAME,
+                "%1$s = new java.util.ArrayList<%2$s>(%3$s); for (int i = 0; i < %4$s; ++i) %1$s.add(%5$s);",
+                getSrcName(),
                 getSrcType().getBoxedType().getQualifiedSrcName(),
                 lengthExpression,
                 getSizeSrc(),
-                getSrcType().getBoxedType().getFromBytesExpression());
+                String.format(getSrcType().getBoxedType().getFromBytesExpression(), BYTE_BUFFER_NAME));
     }
 
     @Override

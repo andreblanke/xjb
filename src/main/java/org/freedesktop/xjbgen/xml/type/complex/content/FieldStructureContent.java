@@ -18,7 +18,7 @@ public class FieldStructureContent extends NamedTypedStructureContent {
     @Override
     @Contract(pure = true)
     public @NotNull String getFromBytesSrc() {
-        return String.format("object.%1$s = %2$s;", getSrcName(), String.format(getSrcType().getFromBytesExpression(), BYTE_BUFFER_NAME));
+        return String.format("%1$s = %2$s;", getSrcName(), String.format(getSrcType().getFromBytesExpression(), BYTE_BUFFER_NAME));
     }
 
     public String getEnum() {

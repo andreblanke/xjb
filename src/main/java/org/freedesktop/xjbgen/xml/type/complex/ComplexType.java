@@ -50,7 +50,7 @@ public abstract class ComplexType<P extends Element<?>> extends TypeElement<P> {
 
     @Override
     public @NotNull String getFromBytesExpression() {
-        return getQualifiedSrcName() + ".fromByteBuffer(%1$s.slice())";
+        return "new " + getQualifiedSrcName() + "(%1$s.slice())";
     }
     // </editor-fold>
 
