@@ -5,6 +5,7 @@ import javax.xml.bind.annotation.XmlElements;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import org.freedesktop.xjbgen.xml.expr.*;
 import org.freedesktop.xjbgen.xml.type.AtomicType;
@@ -38,7 +39,9 @@ public final class ListStructureContent extends FieldStructureContent {
         return isString()
             ? String.format("%1$s = new java.lang.String(%2$s.array(), %2$s.position(), %3$s, java.nio.charsets.StandardCharsets.ISO_8859_1);", getSrcName(), BYTE_BUFFER_NAME, lengthExpression)
             : String.format(
-                "%1$s = new java.util.ArrayList<%2$s>(%3$s); for (int i = 0; i < %4$s; ++i) %1$s.add(%5$s);",
+                "%1$s = new java.util.ArrayList<%2$s>(%3$s);\n" +
+                "            for (int i = 0; i < %4$s; ++i)\n" +
+                "                %1$s.add(%5$s);",
                 getSrcName(),
                 getSrcType().getBoxedType().getQualifiedSrcName(),
                 lengthExpression,
@@ -47,8 +50,10 @@ public final class ListStructureContent extends FieldStructureContent {
     }
 
     @Override
-    public @NotNull String getAdvanceBufferSrc() {
-        return String.format("%1$s.position(%1$s.position() + %2$s);", BYTE_BUFFER_NAME, getSizeSrc());
+    public @Nullable String getAdvanceBufferSrc() {
+        return isString()
+            ? String.format("%1$s.position(%1$s.position() + %2$s * %3$d);", BYTE_BUFFER_NAME, getSizeSrc(), AtomicType.CHAR.byteSize())
+            : null;
     }
 
     private boolean isString() {

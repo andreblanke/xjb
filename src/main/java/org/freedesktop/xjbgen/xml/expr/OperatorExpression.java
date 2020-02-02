@@ -27,6 +27,6 @@ public final class OperatorExpression extends Expression {
 
     @Override
     public @NotNull String toString() {
-        return (expressions[0].toString() + operator + expressions[1].toString());
+        return String.format("%1$s %2$s %3$s", expressions[0], operator, expressions[1]);
     }
 }

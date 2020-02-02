@@ -11,11 +11,7 @@ import org.jetbrains.annotations.NotNull;
 import org.freedesktop.xjbgen.xml.Element;
 import org.freedesktop.xjbgen.xml.type.Type;
 import org.freedesktop.xjbgen.xml.type.TypeElement;
-import org.freedesktop.xjbgen.xml.type.complex.content.FieldStructureContent;
-import org.freedesktop.xjbgen.xml.type.complex.content.ListStructureContent;
-import org.freedesktop.xjbgen.xml.type.complex.content.NamedTypedStructureContent;
-import org.freedesktop.xjbgen.xml.type.complex.content.PadStructureContent;
-import org.freedesktop.xjbgen.xml.type.complex.content.StructureContent;
+import org.freedesktop.xjbgen.xml.type.complex.content.*;
 
 import static java.util.stream.Collectors.toList;
 
@@ -50,7 +46,7 @@ public abstract class ComplexType<P extends Element<?>> extends TypeElement<P> {
 
     @Override
     public @NotNull String getFromBytesExpression() {
-        return "new " + getQualifiedSrcName() + "(%1$s.slice())";
+        return "new " + getQualifiedSrcName() + "(%1$s)";
     }
     // </editor-fold>
 

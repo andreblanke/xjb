@@ -14,7 +14,7 @@ public final class FieldReferenceExpression extends Expression {
 
     @Override
     public @NotNull String toString() {
-        return "object." + getIdentifier();
+        return "this." + getIdentifier();
     }
 
     public String getIdentifier() {
