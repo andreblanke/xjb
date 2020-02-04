@@ -1,8 +1,12 @@
 package org.freedesktop.xjbgen.xml.type;
 
-import org.jetbrains.annotations.NotNull;
+import java.util.Locale;
 
 import javax.xml.bind.annotation.XmlTransient;
+
+import org.jetbrains.annotations.NotNull;
+
+import org.freedesktop.xjbgen.util.Strings;
 
 /**
  * Represents a type used in the generated source code.
@@ -30,4 +34,13 @@ public interface Type extends Named {
     @NotNull String getFromBytesExpression();
 
     @NotNull String getQualifiedSrcName();
+
+    @Override
+    default String getSrcName() {
+        final var xmlName = getXmlName();
+
+        if (Strings.ALL_CAPS_PREDICATE.test(xmlName))
+            return xmlName.charAt(0) + xmlName.substring(1).toLowerCase(Locale.ROOT);
+        return xmlName;
+    }
 }
