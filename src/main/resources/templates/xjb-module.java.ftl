@@ -6,7 +6,7 @@
     </#list>
 </#macro>
 
-<#macro generateFromBytesStaticFactoryMethod complexType>
+<#macro generateDeserializationConstructors complexType>
         ${complexType.srcName}(final byte[] bytes) {
             this(java.nio.ByteBuffer.wrap(bytes));
         }
@@ -83,7 +83,7 @@ public final class ${className} {
         }
         </#if>
 
-        <@generateFromBytesStaticFactoryMethod struct/>
+        <@generateDeserializationConstructors struct/>
         <@generateComplexTypeGetters struct/>
 
         <@generateComplexTypeBuilder struct/>
@@ -171,13 +171,31 @@ public final class ${className} {
     }
     <#if request.reply??>
 
-    public static final class ${request.reply.srcName} {
+    public static final class ${request.reply.srcName} extends org.freedesktop.xjb.Request {
         <@generateComplexTypeFields request.reply/>
 
         private ${request.reply.srcName}() {
         }
 
-        <@generateFromBytesStaticFactoryMethod request.reply/>
+        ${request.reply.srcName}(final byte[] bytes) {
+            this(java.nio.ByteBuffer.wrap(bytes));
+        }
+
+        ${request.reply.srcName}(final java.nio.ByteBuffer buffer) {
+            super(buffer);
+        <#list request.reply.contents as content>
+
+            ${content.fromBytesSrc}
+            <#if content.advanceBufferSrc?has_content>
+            ${content.advanceBufferSrc}
+            </#if>
+
+            <#if content?is_first>
+            sequenceNumber = Short.toUnsignedInt(buffer.getShort());
+            replyLength    = Integer.toUnsignedLong(buffer.getInt());
+            </#if>
+        </#list>
+        }
         <@generateComplexTypeGetters request.reply/>
     }
     </#if>
