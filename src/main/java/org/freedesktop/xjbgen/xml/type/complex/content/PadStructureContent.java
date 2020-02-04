@@ -4,7 +4,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 public final class PadStructureContent extends StructureContent {
 
@@ -21,20 +20,7 @@ public final class PadStructureContent extends StructureContent {
     public @NotNull String getFromBytesSrc() {
         return isLastStructureContent()
             ? "/* Skipping 8 byte(s) of padding at end of buffer without advancing. */"
-            : String.format("/* Skip %1$d byte(s) of padding. */", byteSize());
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * No source code fragment is returned if this {@code XjbPadStructureContent} is the last
-     * {@link StructureContent} of its parent to avoid an unnecessary advancement of the {@code buffer}'s position.
-     */
-    @Override
-    public @Nullable String getAdvanceBufferSrc() {
-        return isLastStructureContent()
-            ? null
-            : super.getAdvanceBufferSrc();
+            : String.format("\n            /* Skip %1$d byte(s) of padding. */\n            buffer.position(buffer.position() + %1$d);", byteSize());
     }
 
     /**

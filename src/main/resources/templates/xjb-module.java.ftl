@@ -183,13 +183,9 @@ public final class ${className} {
 
         ${request.reply.srcName}(final java.nio.ByteBuffer buffer) {
             super(buffer);
+
         <#list request.reply.contents as content>
-
             ${content.fromBytesSrc}
-            <#if content.advanceBufferSrc?has_content>
-            ${content.advanceBufferSrc}
-            </#if>
-
             <#if content?is_first>
             sequenceNumber = Short.toUnsignedInt(buffer.getShort());
             replyLength    = Integer.toUnsignedLong(buffer.getInt());

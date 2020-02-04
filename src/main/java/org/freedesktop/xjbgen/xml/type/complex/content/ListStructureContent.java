@@ -5,7 +5,6 @@ import javax.xml.bind.annotation.XmlElements;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import org.freedesktop.xjbgen.xml.expr.*;
 import org.freedesktop.xjbgen.xml.type.AtomicType;
@@ -47,13 +46,6 @@ public final class ListStructureContent extends FieldStructureContent {
                 lengthExpression,
                 getSizeSrc(),
                 String.format(getSrcType().getBoxedType().getFromBytesExpression(), BYTE_BUFFER_NAME));
-    }
-
-    @Override
-    public @Nullable String getAdvanceBufferSrc() {
-        return isString()
-            ? String.format("%1$s.position(%1$s.position() + %2$s * %3$d);", BYTE_BUFFER_NAME, getSizeSrc(), AtomicType.CHAR.byteSize())
-            : null;
     }
 
     private boolean isString() {
