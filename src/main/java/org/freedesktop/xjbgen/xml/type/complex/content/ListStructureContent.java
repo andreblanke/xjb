@@ -30,7 +30,7 @@ public final class ListStructureContent extends FieldStructureContent {
     public @NotNull String toString() {
         return isString()
             ? String.format("private java.lang.String %1$s;", getSrcName())
-            : String.format("private java.util.List<%1$s> %2$s;", getSrcType().getBoxedType().getQualifiedSrcName(), getSrcName());
+            : String.format("private java.util.List<%1$s> %2$s;", getSrcType().getQualifiedSrcName(), getSrcName());
     }
 
     @Override
@@ -42,10 +42,10 @@ public final class ListStructureContent extends FieldStructureContent {
                 "            for (int i = 0; i < %4$s; ++i)\n" +
                 "                %1$s.add(%5$s);",
                 getSrcName(),
-                getSrcType().getBoxedType().getQualifiedSrcName(),
+                getSrcType().getQualifiedSrcName(),
                 lengthExpression,
                 getSizeSrc(),
-                String.format(getSrcType().getBoxedType().getFromBytesExpression(), BYTE_BUFFER_NAME));
+                String.format(getSrcType().getFromBytesExpression(), BYTE_BUFFER_NAME));
     }
 
     private boolean isString() {

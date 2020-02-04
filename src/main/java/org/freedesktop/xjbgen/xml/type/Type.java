@@ -30,8 +30,4 @@ public interface Type extends Named {
     @NotNull String getFromBytesExpression();
 
     @NotNull String getQualifiedSrcName();
-
-    default @NotNull Type getBoxedType() {
-        return this;
-    }
 }
