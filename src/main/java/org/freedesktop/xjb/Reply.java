@@ -10,7 +10,7 @@ public abstract class Reply {
 
     protected long replyLength;
 
-    protected Reply(@NotNull final ByteBuffer buffer) {
+    Reply(@NotNull final ByteBuffer buffer) {
         /* Skip reply determinant. */
         buffer.position(buffer.position() + 1);
     }

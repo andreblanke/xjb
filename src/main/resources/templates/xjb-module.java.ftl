@@ -7,10 +7,6 @@
 </#macro>
 
 <#macro generateDeserializationConstructors complexType>
-        ${complexType.srcName}(final byte[] bytes) {
-            this(java.nio.ByteBuffer.wrap(bytes));
-        }
-
         ${complexType.srcName}(final java.nio.ByteBuffer buffer) {
         <#list complexType.contents as content>
 
@@ -33,6 +29,7 @@
 </#macro>
 
 <#macro generateComplexTypeBuilder complexType>
+        // <editor-fold desc="${complexType.srcName}.Builder" defaultstate="collapsed">
         public static final class Builder {
             <#list complexType.namedTypedContents as content>
 
@@ -59,6 +56,7 @@
             }
             </#list>
         }
+        // </editor-fold>
 </#macro>
 package org.freedesktop.xjb;
 
@@ -68,20 +66,13 @@ public final class ${className} {
     /* Prevent instantiation. */
     private ${className}() {
     }
-    <#if extension>
-
-    public static void initialize() {
-    }
-    </#if>
     <#list structs as struct>
 
     public static final class ${struct.srcName} {
         <@generateComplexTypeFields struct/>
-        <#if struct.namedTypedContents?has_content>
 
         private ${struct.srcName}() {
         }
-        </#if>
 
         <@generateDeserializationConstructors struct/>
         <@generateComplexTypeGetters struct/>
@@ -156,7 +147,7 @@ public final class ${className} {
     </#list>
     <#list requests as request>
 
-    public static final class ${request.srcName} {
+    public static final class ${request.srcName} extends org.freedesktop.xjb.Request {
         <@generateComplexTypeFields request/>
 
         public static final int OPCODE = ${request.opcode};
@@ -174,21 +165,20 @@ public final class ${className} {
     public static final class ${request.reply.srcName} extends org.freedesktop.xjb.Request {
         <@generateComplexTypeFields request.reply/>
 
-        private ${request.reply.srcName}() {
-        }
-
         ${request.reply.srcName}(final byte[] bytes) {
             this(java.nio.ByteBuffer.wrap(bytes));
         }
 
         ${request.reply.srcName}(final java.nio.ByteBuffer buffer) {
             super(buffer);
-
         <#list request.reply.contents as content>
+
             ${content.fromBytesSrc}
             <#if content?is_first>
+
             sequenceNumber = Short.toUnsignedInt(buffer.getShort());
-            replyLength    = Integer.toUnsignedLong(buffer.getInt());
+
+            replyLength = Integer.toUnsignedLong(buffer.getInt());
             </#if>
         </#list>
         }

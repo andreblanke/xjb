@@ -173,6 +173,10 @@ public final class XjbConnection implements AutoCloseable {
         return this;
     }
 
+    public <R extends Reply> R sendRequest(@NotNull final Request<R> request) {
+        return null;
+    }
+
     public int getPreferredScreenNumber() {
         return preferredScreenNumber;
     }
