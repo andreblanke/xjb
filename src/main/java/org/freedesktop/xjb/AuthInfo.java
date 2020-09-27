@@ -5,7 +5,10 @@ import org.jetbrains.annotations.NotNull;
 /** A container for authorization information to be sent to the X server. */
 public class AuthInfo {
 
-    /** String containing the authentication protocol name, such as "MIT-MAGIC-COOKIE-1" or "XDM-AUTHORIZATION-1". */
+    /**
+     * String containing the authentication protocol name, such as {@code MIT-MAGIC-COOKIE-1} or
+     * {@code XDM-AUTHORIZATION-1}.
+     */
     private final @NotNull String name;
 
     /** Data interpreted in a protocol-specific manner. */
@@ -22,6 +25,7 @@ public class AuthInfo {
         return EMPTY;
     }
 
+    // <editor-fold desc="Getters">
     public @NotNull String getName() {
         return name;
     }
@@ -29,4 +33,5 @@ public class AuthInfo {
     public @NotNull String getData() {
         return data;
     }
+    // </editor-fold>
 }

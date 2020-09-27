@@ -39,6 +39,7 @@ final class XAuthority extends AuthInfo {
      */
     static @NotNull XAuthority fromByteBuffer(@NotNull final ByteBuffer buffer) {
         final int family = Short.toUnsignedInt(buffer.getShort());
+
         final String address = readCountedString(buffer);
         final String display = readCountedString(buffer);
         final String name    = readCountedString(buffer);
@@ -66,6 +67,7 @@ final class XAuthority extends AuthInfo {
         return (addressMatch && displayMatch);
     }
 
+    // <editor-fold desc="Getters">
     @NotNull Family getFamily() {
         return family;
     }
@@ -77,8 +79,10 @@ final class XAuthority extends AuthInfo {
     @NotNull String getDisplay() {
         return display;
     }
+    // </editor-fold>
 
     enum Family {
+
         /**
          * Refers to any family of connections which use a non-network method of communication, such as Unix sockets,
          * shared memory, or loopback serial line.

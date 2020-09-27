@@ -33,7 +33,8 @@ final class XAuthorityReader {
     /**
      * Reads {@link XAuthority} entries from the binary file located at the {@link Path} provided at instantiation time.
      *
-     * @return A {@link List} of {@code XAuthority} objects read from the file provided at instantiation time.
+     * @return A {@link List} of {@code XAuthority} objects read from the file located at the {@code Path} provided at
+     *         instantiation time.
      *
      * @throws InvalidXAuthorityFileException if the binary file is malformed.
      *

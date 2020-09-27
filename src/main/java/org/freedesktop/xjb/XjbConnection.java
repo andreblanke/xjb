@@ -9,7 +9,7 @@ import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
 import java.nio.channels.SocketChannel;
-import java.nio.channels.UnixDomainSocketAddress;
+// import java.nio.channels.UnixDomainSocketAddress;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
@@ -64,16 +64,19 @@ public final class XjbConnection implements AutoCloseable {
 
         final String hostname = matcher.group("hostname");
 
+        final int display = Integer.parseInt(matcher.group("display"));
         final int screen =
             Optional
                 .ofNullable(matcher.group("screen"))
                 .map(Integer::parseInt)
                 .orElse(0);
-        final int display = Integer.parseInt(matcher.group("display"));
 
         final var connection = new XjbConnection(display, screen);
 
-        return connection.connect(hostname, (authInfo != null) ? authInfo : getAuthInfo(hostname, display));
+        if (authInfo == null)
+            authInfo = getAuthInfo(hostname, display);
+
+        return connection.connect(hostname, authInfo);
     }
 
     private static AuthInfo getAuthInfo(final @Nullable String hostname, final int display) throws IOException {
@@ -124,21 +127,29 @@ public final class XjbConnection implements AutoCloseable {
         return connectToInetSocket(hostname, authInfo);
     }
 
-    private XjbConnection connectToUnixDomainSocket(final @NotNull AuthInfo authInfo) throws IOException {
-        try {
-            /*
-             * TODO:
-             *  - try /usr/spool/sockets/X11/%d location on HP-UX
-             *  - try /var/tsol/doors/.X11-unix/X%d location under Solaris Trusted Extensions
-             */
-            /* Attempt to connect via AF_UNIX. */
-            return connect(new UnixDomainSocketAddress("/tmp/.X11-unix/X" + displayNumber), authInfo);
-        } catch (final SocketException exception) {
-            /* Fall back to AF_INET/AF_INET6. */
-            return connectToInetSocket("localhost", authInfo);
-        }
+    private XjbConnection connectToUnixDomainSocket(final @NotNull AuthInfo authInfo) {
+        return null;
     }
 
+//    private XjbConnection connectToUnixDomainSocket(final @NotNull AuthInfo authInfo) throws IOException {
+//        try {
+//            /*
+//             * TODO:
+//             *  - try /usr/spool/sockets/X11/%d location on HP-UX
+//             *  - try /var/tsol/doors/.X11-unix/X%d location under Solaris Trusted Extensions
+//             */
+//            /* Attempt to connect via AF_UNIX. */
+//            return connect(new UnixDomainSocketAddress("/tmp/.X11-unix/X" + displayNumber), authInfo);
+//        } catch (final SocketException exception) {
+//            /* Fall back to AF_INET/AF_INET6. */
+//            return connectToInetSocket("localhost", authInfo);
+//        }
+//    }
+
+    /**
+     * The well-known TCP ports for X11 are 6000 to 6063. The base port is 6000 and screen number is typically added to
+     * the base port.
+     */
     private static final int X_TCP_BASE_PORT = 6_000;
 
     private XjbConnection connectToInetSocket(final @Nullable String hostname, final @NotNull AuthInfo authInfo)

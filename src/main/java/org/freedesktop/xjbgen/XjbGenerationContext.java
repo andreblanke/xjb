@@ -35,6 +35,20 @@ public final class XjbGenerationContext {
         return registeredModules.get(xjbImport.getHeader());
     }
 
+    /**
+     * Looks up a {@link Type} whose name in the XML protocol descriptions is {@code xmlType}.
+     *
+     * @param module
+     *
+     * @param xmlType
+     *
+     * @return
+     *
+     * @throws NoSuchElementException If the {@code xmlType} name does not contain a header describing the
+     *                                {@link Module} to be searched in and no {@code Type} with the provided name
+     *                                {@code xmlType} can be found inside of the given {@code module} or any of the
+     *                                {@code Module}s imported by it.
+     */
     @NotNull
     public Type lookupType(@NotNull final Module module, @NotNull final String xmlType) {
         final int separatorIndex = xmlType.indexOf(':');
@@ -59,6 +73,20 @@ public final class XjbGenerationContext {
                 .get(typeName);
     }
 
+    /**
+     * Looks up a {@link Type} whose name in the XML protocol descriptions is {@code xmlType} defined in the provided
+     * {@link Module}'s imports.
+     *
+     * This function does a shallow search only: types defined in modules which are imported by one of the modules our
+     * provided {@code module} imports are not included in the search.
+     *
+     * @param module
+     *
+     * @param xmlType
+     *
+     * @return A {@link Type} object whose XML name matches that of the provided {@code xmlType} defined in any of the
+     *         {@link Module}s imported by the provided {@code module}.
+     */
     private Type lookupTypeInImports(@NotNull final Module module, @NotNull final String xmlType) {
         return module
             .predecessors()

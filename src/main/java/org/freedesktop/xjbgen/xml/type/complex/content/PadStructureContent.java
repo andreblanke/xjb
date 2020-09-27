@@ -18,9 +18,12 @@ public final class PadStructureContent extends StructureContent {
     @Override
     @Contract(pure = true)
     public @NotNull String getFromBytesSrc() {
+        //noinspection SpellCheckingInspection
         return isLastStructureContent()
-            ? "/* Skipping 8 byte(s) of padding at end of buffer without advancing. */"
-            : String.format("/* Skip %1$d byte(s) of padding. */\n            buffer.position(buffer.position() + %1$d);", byteSize());
+            ? String.format("/* Skipping %1$d byte(s) of padding at end of buffer without advancing. */", byteSize())
+            : String.format(
+                "/* Skip %1$d byte(s) of padding. */\n" +
+                "%2$sbuffer.position(buffer.position() + %1$d);", byteSize(), " ".repeat(12));
     }
 
     /**

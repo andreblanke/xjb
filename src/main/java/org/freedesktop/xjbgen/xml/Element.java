@@ -4,12 +4,12 @@ import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlTransient;
 
 /**
- * The {@code XjbElement} class is the common superclass of all classes representing XML tags of a protocol description.
+ * The {@code Element} class is the common superclass of all classes representing XML tags of a protocol description.
  *
- * Each {@code XjbElement} stores a reference to the parent {@code XjbElement} inside the {@link #parent} attribute,
+ * Each {@code Element} stores a reference to the parent {@code Element} inside the {@link #parent} attribute,
  * which allows walking the tree both from top to bottom, as well as bottom to top.
  *
- * @param <P> The type of the parent {@code XjbElement}.
+ * @param <P> The type of the parent {@code Element}.
  */
 @XmlTransient
 public abstract class Element<P extends Element<?>> {
@@ -23,6 +23,11 @@ public abstract class Element<P extends Element<?>> {
         this.parent = (P) parent;
     }
 
+    /**
+     * Returns the {@link Module} this {@code Element} is part of by walking up the chain of parents of this element.
+     *
+     * @return The {@code Module} this element is part of.
+     */
     public Module getModule() {
         if (module != null)
             return module;

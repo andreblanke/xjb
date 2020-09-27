@@ -14,7 +14,6 @@ import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-import org.freedesktop.xjbgen.xml.type.Enum;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -24,16 +23,24 @@ import org.freedesktop.xjbgen.xml.type.*;
 import org.freedesktop.xjbgen.xml.type.complex.*;
 import org.freedesktop.xjbgen.util.PredecessorFunction;
 
+/*
+ * We need to explicitly import org.freedesktop.xjbgen.xml.type.Enum even though we already import
+ * org.freedesktop.xjbgen.type.*, as Enum would otherwise be an ambiguous reference to either our Enum type or
+ * java.lang.Enum.
+ */
+import org.freedesktop.xjbgen.xml.type.Enum;
+
 import static java.util.stream.Collectors.toList;
 
 /**
  * This class implements the {@link PredecessorFunction} interface to allow iteration of a collection of
- * {@code XjbModule} instance in topological order via the {@link org.freedesktop.xjbgen.util.TopologicalOrderIterator},
- * with the predecessors being the {@code XjbModule} objects this module depends on.
+ * {@code Module} instance in topological order via the {@link org.freedesktop.xjbgen.util.TopologicalOrderIterator},
+ * with the predecessors being the {@code Module} objects this module depends on.
  *
  * @see org.freedesktop.xjbgen.util.TopologicalOrderIterator
  */
 @XmlRootElement(name = "xcb")
+@SuppressWarnings({"FieldMayBeFinal", "unused"})
 public final class Module extends Element<Element<?>> implements PredecessorFunction<Module> {
 
     @XmlAttribute(required = true)
