@@ -17,9 +17,21 @@ import org.freedesktop.xjbgen.util.Strings;
 public interface Type extends Named {
 
     /**
+     * Returns the boxed version of a {@code Type} for usage in conjunction with generics where reference types are
+     * needed and primitives cannot be used (until Project Valhalla).
+     *
+     * @return The boxed version of this type, or itself if this {@code Type} does not have a boxed version.
+     *
+     * @see AtomicType
+     */
+    default Type boxed() {
+        return this;
+    }
+
+    /**
      * Computes the size in bytes of the binary representation of this {@code XjbType}.
      *
-     * @return The size of this {@code XjbType} instance in bytes.
+     * @return The size of this {@code Type} instance in bytes.
      */
     int byteSize();
 
