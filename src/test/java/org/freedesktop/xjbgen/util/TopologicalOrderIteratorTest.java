@@ -17,39 +17,39 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public final class TopologicalOrderIteratorTest {
 
-    private static final class TestPredecessorFunction implements PredecessorFunction<TestPredecessorFunction> {
+    private static final class MockPredecessorFunction implements PredecessorFunction<MockPredecessorFunction> {
 
-        private Collection<? extends TestPredecessorFunction> predecessors;
+        private Collection<? extends MockPredecessorFunction> predecessors;
 
-        private TestPredecessorFunction(@NotNull final TestPredecessorFunction... predecessors) {
+        private MockPredecessorFunction(@NotNull final MockPredecessorFunction... predecessors) {
             this.predecessors = Arrays.asList(predecessors);
         }
 
         @Override
-        public Collection<? extends TestPredecessorFunction> predecessors() {
+        public Collection<? extends MockPredecessorFunction> predecessors() {
             return predecessors;
         }
 
-        private void setPredecessors(final TestPredecessorFunction... predecessors) {
+        private void setPredecessors(final MockPredecessorFunction... predecessors) {
             this.predecessors = Arrays.asList(predecessors);
         }
     }
 
     @Test
     public void testHasNextFalseOnEmptyElementsIterator() {
-        final var iterator = new TopologicalOrderIterator<TestPredecessorFunction>(List.of());
+        final var iterator = new TopologicalOrderIterator<MockPredecessorFunction>(List.of());
 
         assertFalse(iterator.hasNext());
     }
 
     @Test
     public void testIteration() {
-        final var element0 = new TestPredecessorFunction();
-        final var element1 = new TestPredecessorFunction(element0);
-        final var element2 = new TestPredecessorFunction(element0);
-        final var element3 = new TestPredecessorFunction();
-        final var element4 = new TestPredecessorFunction(element1, element2, element3);
-        final var element5 = new TestPredecessorFunction(element4);
+        final var element0 = new MockPredecessorFunction();
+        final var element1 = new MockPredecessorFunction(element0);
+        final var element2 = new MockPredecessorFunction(element0);
+        final var element3 = new MockPredecessorFunction();
+        final var element4 = new MockPredecessorFunction(element1, element2, element3);
+        final var element5 = new MockPredecessorFunction(element4);
 
         element2.setPredecessors(element3);
 
@@ -82,8 +82,8 @@ public final class TopologicalOrderIteratorTest {
     public static Stream<Arguments> testThrowsIllegalArgumentExceptionWhenSimpleCycleDetected() {
         final Arguments size2CycleArguments;
         {
-            final var element0 = new TestPredecessorFunction();
-            final var element1 = new TestPredecessorFunction(element0);
+            final var element0 = new MockPredecessorFunction();
+            final var element1 = new MockPredecessorFunction(element0);
 
             element0.setPredecessors(element1);
 
@@ -92,9 +92,9 @@ public final class TopologicalOrderIteratorTest {
 
         final Arguments selfCycleArguments;
         {
-            final var element0 = new TestPredecessorFunction();
-            final var element1 = new TestPredecessorFunction(element0);
-            final var element2 = new TestPredecessorFunction();
+            final var element0 = new MockPredecessorFunction();
+            final var element1 = new MockPredecessorFunction(element0);
+            final var element2 = new MockPredecessorFunction();
 
             element2.setPredecessors(element0, element1, element2);
 
