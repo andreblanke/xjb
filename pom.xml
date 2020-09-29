@@ -13,7 +13,7 @@
   <version>1.0-SNAPSHOT</version>
 
   <properties>
-    <java.version>15</java.version>
+    <java.version>14</java.version>
     <junit.version>5.5.2</junit.version>
 
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -133,8 +133,9 @@
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration>
-          <source>${java.version}</source>
-          <target>${java.version}</target>
+          <source>14</source>
+          <target>14</target>
+          <compilerArgs>--enable-preview</compilerArgs>
         </configuration>
       </plugin>
 

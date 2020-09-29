@@ -6,6 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 
+import org.freedesktop.xjbgen.xml.doc.Documentation;
 import org.jetbrains.annotations.NotNull;
 
 import org.freedesktop.xjbgen.xml.Element;
@@ -26,6 +27,9 @@ import static java.util.stream.Collectors.toList;
  * @param <P> The type of the parent {@link Element}.
  */
 public abstract class ComplexType<P extends Element<?>> extends TypeElement<P> {
+
+    @XmlElement(name = "doc")
+    private Documentation documentation;
 
     @XmlElements({
         @XmlElement(name = "pad",   type = PadStructureContent.class),
@@ -56,6 +60,10 @@ public abstract class ComplexType<P extends Element<?>> extends TypeElement<P> {
             .filter(NamedTypedStructureContent.class::isInstance)
             .map(NamedTypedStructureContent.class::cast)
             .collect(toList());
+    }
+
+    public Documentation getDocumentation() {
+        return documentation;
     }
 
     public @NotNull List<StructureContent> getContents() {

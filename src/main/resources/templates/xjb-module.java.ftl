@@ -18,6 +18,34 @@
         }
 </#macro>
 
+<#function formatDocumentationContent documentationElement>
+    <#return documentationElement?trim?replace("\n", "\n     * ")/>
+</#function>
+
+<#macro generateComplexTypeDocumentation complexType>
+    <#if complexType.documentation??>
+    /**
+        <#if complexType.documentation.brief??>
+     * ${formatDocumentationContent(complexType.documentation.brief)}
+        </#if>
+        <#if complexType.documentation.description??>
+     *
+     * ${formatDocumentationContent(complexType.documentation.description)}
+        </#if>
+        <#if complexType.documentation.example??>
+     *
+     * <pre>{@code
+     * ${formatDocumentationContent(complexType.documentation.example)}
+     * }</pre>
+        </#if>
+        <#if complexType.documentation.see??>
+     *
+     * @see org.freedesktop.xjb.${complexType.documentation.see.type}#${complexType.documentation.see.name}
+        </#if>
+     */
+    </#if>
+</#macro>
+
 <#macro generateComplexTypeGetters complexType>
     <#list complexType.namedTypedContents as content>
         <#local getterSetterSuffix = content.srcName?cap_first/>
@@ -82,6 +110,7 @@ public final class ${className} {
     </#list>
     <#list eventStructs as eventStruct>
 
+    <@generateComplexTypeDocumentation eventStruct/>
     public static final class ${eventStruct.srcName} {
         <@generateComplexTypeFields eventStruct/>
 
@@ -147,6 +176,7 @@ public final class ${className} {
     </#list>
     <#list requests as request>
 
+    <@generateComplexTypeDocumentation request/>
     public static final class ${request.srcName} extends org.freedesktop.xjb.Request {
         <@generateComplexTypeFields request/>
 
@@ -162,6 +192,7 @@ public final class ${className} {
     }
     <#if request.reply??>
 
+    <@generateComplexTypeDocumentation request.reply/>
     public static final class ${request.reply.srcName} extends org.freedesktop.xjb.Request {
         <@generateComplexTypeFields request.reply/>
 

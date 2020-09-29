@@ -35,23 +35,42 @@ public final class ListStructureContent extends FieldStructureContent {
 
     @Override
     public @NotNull String getFromBytesSrc() {
-        return isString()
-            ? String.format("%1$s = new java.lang.String(%2$s.array(), %2$s.position(), %3$s, java.nio.charsets.StandardCharsets.ISO_8859_1);", getSrcName(), BYTE_BUFFER_NAME, lengthExpression)
-            : String.format(
-                "%1$s = new java.util.ArrayList<%2$s>(%3$s);\n" +
-                "            for (int i = 0; i < %4$s; ++i)\n" +
-                "                %1$s.add(%5$s);",
+        if (isString()) {
+            return String.format(
+                "%1$s = new java.lang.String(%2$s.array(), %2$s.position(), %3$s, java.nio.charsets.StandardCharsets.ISO_8859_1);",
                 getSrcName(),
-                getSrcType().boxed().getQualifiedSrcName(),
-                lengthExpression,
-                getSizeSrc(),
-                String.format(getSrcType().getFromBytesExpression(), BYTE_BUFFER_NAME));
+                BYTE_BUFFER_NAME,
+                lengthExpression
+            );
+        }
+        return String.format(
+            "%1$s = new java.util.ArrayList<%2$s>(%3$s);\n" +
+            "            for (int i = 0; i < %4$s; ++i)\n" +
+            "                %1$s.add(%5$s);",
+            getSrcName(),
+            getSrcType().boxed().getQualifiedSrcName(),
+            lengthExpression,
+            getSizeSrc(),
+            String.format(getSrcType().getFromBytesExpression(), BYTE_BUFFER_NAME)
+        );
     }
 
+    /**
+     * Checks whether this {@code ListStructureContent} is a string, i.e. a list of characters.
+     *
+     * @return {@code true} if the underlying type of this {@code ListStructureContent} is {@link AtomicType#CHAR},
+     *         otherwise {@code false}.
+     */
     private boolean isString() {
         return getSrcType() == AtomicType.CHAR;
     }
 
+    /**
+     * Gets a unit of source code whose value is the length of the list represented by this {@code ListStructureContent}.
+     *
+     * @return {@code srcName.length()} for lists where the underlying type is {@link AtomicType#CHAR}, otherwise
+     *         {@code srcName.size()}.
+     */
     private @NotNull String getSizeSrc() {
         return String.format("%1$s.%2$s()", getSrcName(), isString() ? "length" : "size");
     }
