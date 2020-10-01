@@ -8,8 +8,10 @@ import java.net.SocketAddress;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.channels.SocketChannel;
-// import java.nio.channels.UnixDomainSocketAddress;
+import java.net.UnixDomainSocketAddress;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Optional;
@@ -25,11 +27,11 @@ import org.freedesktop.xjb.util.Padding;
 @SuppressWarnings({"unused", "UnusedReturnValue"})
 public final class XjbConnection implements AutoCloseable {
 
-    private int displayNumber;
-
-    private int preferredScreenNumber;
-
     private SocketChannel socketChannel;
+
+    private final int displayNumber;
+
+    private final int preferredScreenNumber;
 
     private XjbConnection(final int displayNumber, final int preferredScreenNumber) {
         if (displayNumber < 0)
@@ -38,6 +40,10 @@ public final class XjbConnection implements AutoCloseable {
             throw new IllegalArgumentException();
         this.displayNumber         = displayNumber;
         this.preferredScreenNumber = preferredScreenNumber;
+    }
+
+    public static void main(final String... args) throws IOException {
+        XjbConnection.establish();
     }
 
     public static @NotNull XjbConnection establish() throws IOException {
@@ -111,10 +117,6 @@ public final class XjbConnection implements AutoCloseable {
             .orElse(XAuthority.empty());
     }
 
-    public static void main(final String... args) throws IOException {
-        XjbConnection.establish();
-    }
-
     @Override
     public void close() throws IOException {
         socketChannel.close();
@@ -127,28 +129,23 @@ public final class XjbConnection implements AutoCloseable {
         return connectToInetSocket(hostname, authInfo);
     }
 
-    private XjbConnection connectToUnixDomainSocket(final @NotNull AuthInfo authInfo) {
-        return null;
+    private XjbConnection connectToUnixDomainSocket(final @NotNull AuthInfo authInfo) throws IOException {
+        try {
+            /*
+             * TODO:
+             *  - try /usr/spool/sockets/X11/%d location on HP-UX
+             *  - try /var/tsol/doors/.X11-unix/X%d location under Solaris Trusted Extensions
+             */
+            /* Attempt to connect via AF_UNIX. */
+            return connect(UnixDomainSocketAddress.of("/tmp/.X11-unix/X" + 6), authInfo);
+        } catch (final SocketException exception) {
+            /* Fall back to AF_INET/AF_INET6. */
+            return connectToInetSocket("localhost", authInfo);
+        }
     }
 
-//    private XjbConnection connectToUnixDomainSocket(final @NotNull AuthInfo authInfo) throws IOException {
-//        try {
-//            /*
-//             * TODO:
-//             *  - try /usr/spool/sockets/X11/%d location on HP-UX
-//             *  - try /var/tsol/doors/.X11-unix/X%d location under Solaris Trusted Extensions
-//             */
-//            /* Attempt to connect via AF_UNIX. */
-//            return connect(new UnixDomainSocketAddress("/tmp/.X11-unix/X" + displayNumber), authInfo);
-//        } catch (final SocketException exception) {
-//            /* Fall back to AF_INET/AF_INET6. */
-//            return connectToInetSocket("localhost", authInfo);
-//        }
-//    }
-
     /**
-     * The well-known TCP ports for X11 are 6000 to 6063. The base port is 6000 and screen number is typically added to
-     * the base port.
+     * The well-known TCP ports for X11 are 6000 to 6063. The screen number is typically added to the base port of 6000.
      */
     private static final int X_TCP_BASE_PORT = 6_000;
 
@@ -159,6 +156,20 @@ public final class XjbConnection implements AutoCloseable {
         return connect(new InetSocketAddress(inetAddress, X_TCP_BASE_PORT + displayNumber), authInfo);
     }
 
+    private static final Charset CHARSET = StandardCharsets.ISO_8859_1;
+
+    /**
+     * See "Chapter 8. Connection Setup" and "Connection Setup" under "Appendix B. Protocol Encoding"
+     * of the X Window System Protocol for more information.
+     *
+     * @param remote
+     *
+     * @param authInfo
+     *
+     * @return
+     *
+     * @throws IOException If no {@link SocketChannel} from the provided {@code remote}.
+     */
     private XjbConnection connect(final @NotNull SocketAddress remote, final @NotNull AuthInfo authInfo)
             throws IOException {
         final int paddedAuthNameLength = Padding.pad(authInfo.getName().length());
@@ -167,18 +178,19 @@ public final class XjbConnection implements AutoCloseable {
         socketChannel = SocketChannel.open(remote);
         socketChannel.write(
             ByteBuffer.allocate(1 + 1 + 5 * 2 + paddedAuthNameLength + paddedAuthDataLength)
+                .order(ByteOrder.BIG_ENDIAN)
                 .put((byte) 'B')      /* byte_order */
                 .put((byte) 0)        /* pad0       */
                 .putShort((short) 11) /* protocol_major_version */
                 .putShort((short)  0) /* protocol_minor_version */
-                .putShort((short) authInfo.getName().length())   /* authorization_protocol_name_len */
-                .putShort((short) authInfo.getData().length())   /* authorization_protocol_data_len */
+                .putShort((short) authInfo.getName().length()) /* authorization_protocol_name_len */
+                .putShort((short) authInfo.getData().length()) /* authorization_protocol_data_len */
                 .putShort((short)  0) /* pad1       */
-                .put(authInfo.getName().getBytes(StandardCharsets.ISO_8859_1))
+                .put(authInfo.getName().getBytes(CHARSET))
                 .put(new byte[paddedAuthNameLength - authInfo.getName().length()])
-                .put(authInfo.getData().getBytes(StandardCharsets.ISO_8859_1)));
+                .put(authInfo.getData().getBytes(CHARSET)));
 
-        final ByteBuffer commonReplyHeader = ByteBuffer.allocate(8);
+        final ByteBuffer commonReplyHeader = ByteBuffer.allocate(1);
         socketChannel.read(commonReplyHeader);
 
         return this;

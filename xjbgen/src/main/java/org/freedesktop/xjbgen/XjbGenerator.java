@@ -20,8 +20,8 @@ import freemarker.template.TemplateException;
 
 import org.jetbrains.annotations.NotNull;
 
-import org.reflections8.Reflections;
-import org.reflections8.scanners.ResourcesScanner;
+import org.reflections.Reflections;
+import org.reflections.scanners.ResourcesScanner;
 
 import org.freedesktop.xjbgen.util.TopologicalOrderIterator;
 import org.freedesktop.xjbgen.xml.Module;

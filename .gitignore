@@ -4,5 +4,3 @@ target/
 /.idea/*
 !/.idea/dictionaries
 *.iml
-
-/generated-sources
