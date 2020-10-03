@@ -88,7 +88,7 @@
 </#macro>
 package org.freedesktop.xjb;
 
-@javax.annotation.Generated("org.freedesktop.xjbgen.XjbGenerator")
+@javax.annotation.Generated("org.freedesktop.xjbgen.XjbProcessor")
 public final class ${className} {
 
     /* Prevent instantiation. */

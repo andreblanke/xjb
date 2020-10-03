@@ -1,6 +1,9 @@
+# Apache Maven
+**/dependency-reduced-pom.xml
 target/
 
+# IntelliJ IDEA
+*.iml
 # Ignore any IntelliJ IDEA-specific files except for user dictionaries located under /.idea/dictionaries.
 /.idea/*
 !/.idea/dictionaries
-*.iml

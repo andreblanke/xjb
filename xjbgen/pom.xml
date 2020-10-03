@@ -8,7 +8,7 @@
 
   <parent>
     <groupId>org.freedesktop.xjb</groupId>
-    <artifactId>parent</artifactId>
+    <artifactId>pom</artifactId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
@@ -67,6 +67,9 @@
   <build>
     <resources>
       <resource>
+        <directory>${project.basedir}/src/main/resources</directory>
+      </resource>
+      <resource>
         <directory>${project.basedir}/xcbproto/src</directory>
         <includes>
           <include>**/*.xml</include>
@@ -75,6 +78,29 @@
         <targetPath>${project.build.outputDirectory}/xcbproto</targetPath>
       </resource>
     </resources>
+
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <!--
+          We need to pass "-proc:none" to the Java compiler as otherwise the javax.annotation.processing.Processor
+          service file located under META-INF/services is copied to target/classes first and then javac is invoked.
+          Because target/classes is in -classpath of javac it tries to load the processor which we are currently trying
+          to compile.
+          See https://issues.apache.org/jira/browse/MCOMPILER-97 for more information.
+        -->
+        <configuration>
+          <compilerArgs>
+            <compilerArg>-proc:none</compilerArg>
+          </compilerArgs>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+      </plugin>
+    </plugins>
   </build>
 
 </project>

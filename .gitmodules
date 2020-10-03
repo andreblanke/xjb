@@ -1,3 +1,7 @@
 [submodule "xjbgen/xcbproto"]
 	path = xjbgen/xcbproto
 	url = https://gitlab.freedesktop.org/xorg/proto/xcbproto
+[submodule "jdk-sandbox"]
+	path = jdk-sandbox
+	url = https://github.com/openjdk/jdk-sandbox
+	branch = unixdomainchannels
