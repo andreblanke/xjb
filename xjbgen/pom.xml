@@ -70,7 +70,7 @@
         <directory>${project.basedir}/src/main/resources</directory>
       </resource>
       <resource>
-        <directory>${project.basedir}/xcbproto/src</directory>
+        <directory>${parent.basedir}/xcbproto/src</directory>
         <includes>
           <include>**/*.xml</include>
           <include>**/*.xsd</include>
