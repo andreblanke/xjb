@@ -2,6 +2,8 @@
 	path = jdk-sandbox
 	url = https://github.com/openjdk/jdk-sandbox
 	branch = unixdomainchannels
+	ignore = dirty
 [submodule "xcbproto"]
 	path = xcbproto
 	url = https://gitlab.freedesktop.org/xorg/proto/xcbproto
+	ignore = dirty
