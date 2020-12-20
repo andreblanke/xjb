@@ -20,27 +20,29 @@ able to communicate with an X server.
 ## Project structure
 
 ```text
-xjbgen
+xjb
  ├─ .idea/dictionaries/
  │   └─ andreblanke.xml
- └─ src/
-     ├─ main/
-     │   ├─ java
-     │   │   └─ org/freedesktop/
-     │   │       ├─ xjb/  # Contains static source code which is part of XJB
-     │   │       └─ xjbgen/  # Generates the majority of XJB's source code
-     │   └─ resources/
-     │       ├─ org/freedesktop/xjbgen/xml/
-     │       │   └─ jaxb.properties  # Specifies the JAXBContextFactory implementation
-     │       └─ templates/
-     │           └─ xjb-module.java.ftl  # FreeMarker template for generated XJB modules
-     └─ test/
-         ├─ java/
-         │   ├─ org/freedesktop/xjb/  # Unit tests for the static XJB source code
-         │   └─ org/freedesktop/xjbgen/  # Unit tests for the XJB code generator
-         └─ resources/
-             └─ mockito-extensions/
-                 └─ org.mockito.plugins.MockMaker  # Instructs Mockito to allow mocking final classes
+ ├─ xcbproto/
+ ├─ xjb/  # Contains static source code which is part of XJB
+ │   ├─ src/
+ │   │   ├─ main/java/org/freedesktop/xjb/
+ │   │   └─ test/
+ │   │       ├─ java/org/freedesktop/xjb/
+ │   │       └─ resources/org/freedesktop/xjb/
+ │   └─ pom.xml
+ └─ xjbgen/
+     ├─ src/
+     │   ├─ main/
+     │   │   ├─ java
+     │   │   │   └─ org/freedesktop/xjbgen/  # Generates the majority of XJB's source code
+     │   │   └─ resources/
+     │   │       ├─ org/freedesktop/xjbgen/xml/
+     │   │       │   └─ jaxb.properties  # Specifies the JAXBContextFactory implementation
+     │   │       └─ templates/
+     │   │           └─ xjb-module.java.ftl  # FreeMarker template for generated XJB modules
+     │   └─ test/java/org/freedesktop/xjbgen/  # Unit tests for the XJB code generator
+     └─ pom.xml
 ```
 
 ## Usage
