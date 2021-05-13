@@ -7,7 +7,6 @@ able to communicate with an X server.
 
 * [Table of contents](#table-of-contents)
 * [Project structure](#project-structure)
-* [Usage](#usage)
 * [Implementation notes](#implementation-notes)
     * [JAXB implementation](#jaxb-implementation)
 * [License](#license)
@@ -44,22 +43,6 @@ xjb
      │   └─ test/java/org/freedesktop/xjbgen/  # Unit tests for the XJB code generator
      └─ pom.xml
 ```
-
-## Usage
-
-Preparation is needed before you are able to generate XJB, as the static source code,
-i.e. the code of XJB which is not generated from the XML protocol descriptions provided by xcbproto,
-relies on JDK functionality which is not yet released to the public, namely support for Unix sockets.
-
-This support is implemented in the `unixdomainchannels` branch of the
-[JDK sandbox](https://hg.openjdk.java.net/jdk/sandbox/), which is currently based on an incomplete version of
-Java 15.
-
-For more information about the `unixdomainchannels` branch see
-[this issue on the JDK bug system](https://bugs.openjdk.java.net/browse/JDK-8231358).
-
-For instructions on how to build the JDK from source see
-[this document](https://bugs.openjdk.java.net/browse/JDK-8231358).
 
 ## Implementation notes
 
